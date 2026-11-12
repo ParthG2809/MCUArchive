@@ -11,7 +11,7 @@ Marvel-only. No DC or other franchises.
   (pinned in `backend/requirements.txt`, installed in `backend/.venv`). SQLite locally, Postgres on Render.
 - Fonts from Google Fonts: Alfa Slab One (headlines), Libre Franklin (body), Bungee (signage, years, numbers), Special Elite (typewriter text).
 - Hosting (owner decision 2026-11-12): the whole site on Render. Django serves the pages and `/api/` from one origin
-  (`render.yaml`). Not deployed yet. `vercel.json` / `.vercelignore` are left over from the earlier Vercel plan and unused.
+  (`render.yaml`). Live at https://marvel-archive.onrender.com; every push to `main` redeploys. `vercel.json` / `.vercelignore` are left over from the earlier Vercel plan and unused.
 
 ## Structure
 ```

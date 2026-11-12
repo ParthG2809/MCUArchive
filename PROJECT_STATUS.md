@@ -1,6 +1,8 @@
 # Project status: The Marvel Archive
 
-_Last updated: 2026-11-12 (step 6: deploy preparation)_
+_Last updated: 2026-11-12 (step 7: live on Render)_
+
+**Live site:** https://marvel-archive.onrender.com (Render free plan, Blueprint `marvel-archive`, deploys automatically from `main`).
 
 ## Objective
 A frontend-only, multi-page fan site cataloguing every Marvel film and series on four timelines (MCU, Spider-Verse,
@@ -76,6 +78,12 @@ Total: 161 titles (158 released as of 2026-11-12).
 - Git repository initialised (branch `main`); nothing committed yet. 103 files would be committed (about 1.7 MB);
   `.venv`, the local database, build output, `.env` files and `.claude/` are ignored. Secret scan clean.
 
+## Verified (2026-11-12, step 7: live site)
+- https://marvel-archive.onrender.com: pages, CSS/JS, `/api/me` and `/admin/login/` return 200; `CLAUDE.md`, `backend/db.sqlite3` and
+  `render.yaml` return 404; http redirects to https; HSTS and `X-Frame-Options: DENY` present.
+- Not checked on the live site: signing up / saving a watch list and the admin login (no test accounts are created on the production site;
+  the owner should try both once).
+
 ## Known limitations / decisions
 - Story order exists only for the MCU. Other realities offer "by series/lane" and release order.
 - Story-order positions for Phase 4–6 follow common viewing guides; many later titles say "Post-Blip" instead of a year.
@@ -97,7 +105,8 @@ Total: 161 titles (158 released as of 2026-11-12).
   a limited period. A paid plan avoids both. Check Render's current terms before deploying.
 - The theme preference is still per browser, not saved to the account.
 - When the site is served without Django (e.g. `python -m http.server`), the account link stays hidden and everything works per browser as before.
-- Git initialised but nothing committed or pushed; nothing deployed. The GitHub CLI isn't installed, so the GitHub repository is created in the browser.
+- Git: `main` on GitHub (ParthG2809/MCUArchive). The first commit was rewritten (owner request) to remove a Claude co-author line; it is now 4a1f9db.
+- Deployed on Render 2026-11-12 (free web service + free Postgres). Free-plan limits apply: sleeps after ~15 min idle; free database expires after a limited period.
 
 ## Next steps
 1. Owner reviews the two themes (screenshots in `mockups/screens-themes/`).

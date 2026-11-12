@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-12: Step 7 (live)
+- Deployed to Render: https://marvel-archive.onrender.com.
+- `.gitignore`: ignores `.secrets/` (local generated credentials).
+- First commit rewritten without the Claude co-author line (owner request); future commits carry no attribution trailer.
+
 ## 2026-11-12: Development step 6 (deploy preparation)
 - `manage.py ensure_admin`: creates the admin from DJANGO_ADMIN_USERNAME / DJANGO_ADMIN_PASSWORD on deploy (Render free plan has no shell); never overwrites an existing admin. 2 new tests (16 total).
 - `render.yaml`: runs ensure_admin; asks for the two admin values on setup (`sync: false`, never stored in the repository).

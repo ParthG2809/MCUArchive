@@ -12,3 +12,6 @@ __pycache__/
 # Local environment files (never commit secrets)
 .env
 .env.*
+
+# Private local notes (e.g. generated admin credentials)
+.secrets/
