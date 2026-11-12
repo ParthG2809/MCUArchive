@@ -1,0 +1,14 @@
+# Python / Django backend
+backend/.venv/
+backend/db.sqlite3
+backend/public/
+backend/staticfiles/
+__pycache__/
+*.pyc
+
+# Local editor/assistant tooling (contains machine-specific paths)
+.claude/
+
+# Local environment files (never commit secrets)
+.env
+.env.*

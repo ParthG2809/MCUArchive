@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legacy Files: Marvel Before &amp; Beside the MCU | The Marvel Archive</title>
+<meta name="description" content="Marvel on screen outside the MCU: the 1944 Captain America serial, Blade, the 2000s Daredevil, Ghost Rider and Fantastic Four films, Agents of S.H.I.E.L.D., the Netflix Defenders shows and decades of animation, with canon status for each.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bungee&family=Libre+Franklin:ital,wght@0,400;0,600;0,800;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/archive.css">
+<link rel="stylesheet" href="css/timeline.css">
+<link rel="stylesheet" href="css/theme-programme.css">
+<script src="js/theme.js"></script>
+</head>
+<body data-reality="legacy">
+
+<main class="wrap" id="main">
+  <section class="head">
+    <div>
+      <span class="caption">Records floor · Reality #4 · Various Earths</span>
+      <h1 class="misprint">Legacy <span>Files</span></h1>
+      <p>Marvel on screen before and beside the MCU: wartime serials, TV movies, Blade, the 2000s films, the ABC and Netflix shows, and decades of cartoons. Each file says whether it counts.</p>
+    </div>
+    <nav class="index-card" aria-label="Jump to lane">
+      <h2 id="indexTitle">INDEX</h2>
+      <ol id="sectionIndex"></ol>
+    </nav>
+  </section>
+
+  <figure class="feature feature-canon">
+    <figcaption>
+      <span class="caption">Does it count?</span>
+      <p>Every legacy file carries a canon stamp, so you know where it stands with the Sacred Timeline.</p>
+    </figcaption>
+    <dl class="canon-key">
+      <div><dt><span class="tag tag-canon tag-recognised">Added to MCU timeline</span></dt>
+        <dd>Disney+ added the Netflix Defenders shows to its official MCU timeline in January 2024. Daredevil's story continues in Daredevil: Born Again.</dd></div>
+      <div><dt><span class="tag tag-canon tag-disputed">Canon disputed</span></dt>
+        <dd>Made to tie in with the films, like Agents of S.H.I.E.L.D. and Agent Carter, but never confirmed by Marvel Studios.</dd></div>
+      <div><dt><span class="tag tag-canon tag-separate">Own continuity</span></dt>
+        <dd>Stands on its own, like Blade, the 2000s films and the cartoons.</dd></div>
+    </dl>
+  </figure>
+
+  <div class="controls">
+    <div role="group" aria-label="Sort order" class="tabs" id="views"></div>
+    <span class="hint" id="hint"></span>
+  </div>
+  <div class="filters">
+    <div class="chips" role="group" aria-label="Show" id="chips"></div>
+    <label class="check"><input type="checkbox" id="hideWatched"> Hide watched</label>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+
+  <section class="chart" id="chart"></section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="js/data/mcu.js"></script>
+<script src="js/data/spider.js"></script>
+<script src="js/data/mutant.js"></script>
+<script src="js/data/legacy.js"></script>
+<script src="js/posters.js"></script>
+<script src="js/core.js"></script>
+<script src="js/pages/timeline.js"></script>
+</body>
+</html>

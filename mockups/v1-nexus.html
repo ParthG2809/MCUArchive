@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEXUS — Mockup V1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Big+Shoulders+Display:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #07070A;
+  --surface: #111117;
+  --surface-2: #1A1A22;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --text: #F2EEE6;
+  --muted: #8C8A93;
+  --marvel: #E62429;
+  --thread: #FFB547;
+  --spider-red: #E23B3B;
+  --spider-blue: #3D8BFF;
+  --mutant-blue: #2050D8;
+  --mutant-gold: #F5C518;
+  --f-display: "Big Shoulders Display", Impact, sans-serif;
+  --f-body: "Archivo", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --gutter: clamp(16px, 4vw, 56px);
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--void);
+  color: var(--text);
+  font-family: var(--f-body);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+/* film grain */
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.mono { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- top bar ---------- */
+.bar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 32px;
+  padding: 14px var(--gutter);
+  background: rgba(7, 7, 10, .82); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.mark { font-family: var(--f-display); font-weight: 900; font-size: 28px; letter-spacing: .06em; color: var(--text); text-decoration: none; position: relative; }
+.mark::after { content: ""; position: absolute; left: -4px; right: -4px; top: 52%; height: 2px; background: var(--thread); box-shadow: 0 0 12px var(--thread); transform: skewY(-8deg); }
+.bar nav { display: flex; gap: 24px; }
+.bar nav a { font-family: var(--f-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 6px 0; border-bottom: 2px solid transparent; }
+.bar nav a.active, .bar nav a:hover { color: var(--text); border-color: var(--marvel); }
+.jarvis {
+  margin-left: auto; display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 1px solid var(--line-strong); color: var(--muted);
+  font: 500 13px var(--f-body); padding: 8px 12px; border-radius: 6px; cursor: pointer;
+}
+.jarvis kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line-strong); padding: 1px 6px; border-radius: 4px; }
+
+/* ---------- hero ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 48px; padding: 72px var(--gutter) 56px; align-items: end; }
+.hero h1 { font-family: var(--f-display); font-weight: 900; font-size: clamp(56px, 8vw, 128px); line-height: .86; text-transform: uppercase; margin: 18px 0 22px; }
+.hero h1 em { font-style: normal; color: transparent; -webkit-text-stroke: 1.5px var(--text); }
+.hero p.lede { color: var(--muted); max-width: 42ch; font-size: 17px; }
+.portals { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; height: 420px; }
+.portal {
+  position: relative; overflow: hidden; border-radius: 4px; border: 1px solid var(--line);
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 18px 16px;
+  text-decoration: none; color: var(--text); background: var(--surface);
+  transition: flex .5s, transform .4s cubic-bezier(.2,.8,.2,1), border-color .3s;
+}
+.portal:hover { transform: translateY(-8px); border-color: var(--line-strong); }
+.portal h3 { font-family: var(--f-display); font-weight: 900; font-size: clamp(22px, 2.3vw, 36px); overflow-wrap: anywhere; line-height: .9; text-transform: uppercase; position: relative; }
+.portal .mono { position: relative; margin-top: 8px; }
+.portal .earth { position: absolute; top: 16px; left: 16px; font-family: var(--f-mono); font-size: 11px; color: var(--muted); letter-spacing: .1em; }
+.p-mcu { background: radial-gradient(120% 70% at 50% 45%, rgba(255,181,71,.28), transparent 60%), var(--surface); }
+.p-mcu::before { content: ""; position: absolute; left: 0; right: 0; top: 45%; height: 2px; background: var(--thread); box-shadow: 0 0 18px 2px var(--thread); }
+.p-mcu::after { content: ""; position: absolute; left: 50%; top: 45%; width: 2px; height: 30%; background: linear-gradient(var(--thread), transparent); transform-origin: top; transform: rotate(28deg); opacity: .7; }
+.p-spider { background: radial-gradient(circle, rgba(226,59,59,.55) 1.4px, transparent 1.6px) 0 0 / 9px 9px, linear-gradient(160deg, #1b0b10, #0b0f24); }
+.p-spider h3 { text-shadow: 3px 0 0 var(--spider-red), -3px 0 0 var(--spider-blue); }
+.p-mutant { background: repeating-radial-gradient(circle at 50% 38%, transparent 0 18px, rgba(32,80,216,.35) 18px 19px), radial-gradient(circle at 50% 38%, rgba(245,197,24,.3), transparent 45%), var(--surface); }
+.p-mutant h3 { color: var(--mutant-gold); }
+.p-legacy { background: linear-gradient(transparent 0 30%, #000 30% 34%, transparent 34% 42%, #000 42% 45%, transparent 45%), linear-gradient(180deg, #17151a, #0d0c10); }
+.p-legacy::before { content: "CLASSIFIED"; position: absolute; top: 58%; left: 12px; font-family: var(--f-mono); font-size: 11px; color: var(--marvel); border: 1.5px solid var(--marvel); padding: 2px 6px; transform: rotate(-8deg); letter-spacing: .14em; }
+
+/* ---------- sacred timeline ---------- */
+.section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 24px; padding: 64px var(--gutter) 24px; border-top: 1px solid var(--line); }
+.section-head h2 { font-family: var(--f-display); font-weight: 900; font-size: clamp(40px, 5vw, 72px); line-height: .9; text-transform: uppercase; }
+.section-head h2 span { color: var(--thread); }
+.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.phases { display: flex; gap: 6px; }
+.phase-chip {
+  --c: #fff; display: flex; align-items: center; gap: 7px;
+  font: 500 12px var(--f-mono); letter-spacing: .06em; text-transform: uppercase;
+  background: transparent; color: var(--muted); border: 1px solid var(--line-strong); padding: 7px 10px; border-radius: 999px; cursor: pointer;
+}
+.phase-chip i { width: 9px; height: 9px; transform: rotate(45deg); background: var(--c); box-shadow: 0 0 10px var(--c); }
+.phase-chip[aria-pressed="true"] { color: var(--text); border-color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); }
+.order-toggle { display: flex; border: 1px solid var(--line-strong); border-radius: 6px; overflow: hidden; }
+.order-toggle button { font: 600 12px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; padding: 9px 14px; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
+.order-toggle button[aria-pressed="true"] { background: var(--text); color: var(--void); }
+
+.track-wrap { overflow-x: auto; padding: 8px var(--gutter) 40px; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+.track { display: flex; gap: 22px; width: max-content; position: relative; padding-bottom: 64px; }
+.track::after { /* the sacred thread */
+  content: ""; position: absolute; left: -40px; right: -40px; bottom: 26px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--thread) 4%, var(--thread) 96%, transparent);
+  box-shadow: 0 0 14px 1px rgba(255,181,71,.6);
+}
+.card {
+  --stone: #fff; position: relative; width: 190px; flex: none; cursor: pointer;
+  background: var(--surface); border-radius: 3px; padding: 16px 10px 12px;
+  border-left: 3px solid var(--stone);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s, filter .35s;
+}
+/* sprocket holes */
+.card::before, .card::after {
+  content: ""; position: absolute; left: 8px; right: 8px; height: 6px;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.14) 0 8px, transparent 8px 16px);
+}
+.card::before { top: 5px; } .card::after { bottom: -1px; display: none; }
+.card:hover { transform: translateY(-10px); }
+.card.dim { opacity: .18; filter: grayscale(1); }
+.poster { position: relative; aspect-ratio: 2 / 3; border-radius: 2px; overflow: hidden; background: linear-gradient(160deg, color-mix(in srgb, var(--stone) 30%, #111), #0c0c10); }
+.poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .6s; }
+.poster.has-poster img { opacity: 1; }
+.poster.has-poster .fallback { display: none; }
+.poster .fallback { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; font-family: var(--f-display); font-weight: 900; font-size: 26px; line-height: .92; text-transform: uppercase; }
+.card h4 { font-size: 14px; font-weight: 600; margin-top: 10px; line-height: 1.25; min-height: 2.5em; }
+.card .meta { display: flex; justify-content: space-between; margin-top: 6px; }
+.badge { font: 500 10px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; border: 1px solid var(--line-strong); color: var(--muted); }
+.badge.nexus { color: var(--thread); border-color: var(--thread); }
+.badge.soon { color: var(--marvel); border-color: var(--marvel); }
+.watch {
+  position: absolute; top: 22px; right: 16px; z-index: 2; width: 28px; height: 28px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.6); background: rgba(0,0,0,.55); color: transparent; cursor: pointer; font-size: 14px;
+}
+.watch[aria-pressed="true"] { background: var(--stone); border-color: var(--stone); color: #000; }
+.node { position: absolute; left: 50%; bottom: -46px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.node i { width: 12px; height: 12px; border-radius: 50%; background: var(--void); border: 2px solid var(--thread); }
+.card.is-nexus .node i { background: var(--thread); box-shadow: 0 0 0 5px rgba(255,181,71,.18), 0 0 18px var(--thread); }
+.node span { font-family: var(--f-mono); font-size: 11px; color: var(--muted); position: absolute; top: 20px; white-space: nowrap; }
+
+/* ---------- dossier + gauntlet ---------- */
+.split { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 20px; padding: 24px var(--gutter) 64px; }
+.dossier { display: grid; grid-template-columns: 220px 1fr; gap: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 28px; position: relative; overflow: hidden; }
+.dossier::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--stone, var(--thread)); }
+.dossier .poster { width: 220px; }
+.dossier h3 { font-family: var(--f-display); font-weight: 900; font-size: 52px; line-height: .9; text-transform: uppercase; margin: 10px 0 20px; }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+.facts div { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.facts dt { font: 500 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.facts dd { font-size: 15px; font-weight: 600; margin-top: 4px; }
+.nav-links { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+.nav-links a { font: 500 12px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text); text-decoration: none; border: 1px solid var(--line-strong); padding: 9px 12px; border-radius: 4px; }
+.nav-links a:hover { border-color: var(--thread); color: var(--thread); }
+
+.gauntlet { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 28px; display: flex; flex-direction: column; }
+.gauntlet h3 { font-family: var(--f-display); font-weight: 900; font-size: 34px; text-transform: uppercase; line-height: .95; margin: 8px 0 24px; }
+.stones { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-top: auto; }
+.stone { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.gem {
+  --p: 0; position: relative; width: 100%; aspect-ratio: 3 / 4; max-width: 48px;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  background: #23232c; overflow: hidden;
+}
+.gem::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--p) * 100%); background: linear-gradient(180deg, color-mix(in srgb, var(--c) 60%, #fff), var(--c)); transition: height .8s cubic-bezier(.2,.8,.2,1); }
+.stone.full .gem { filter: drop-shadow(0 0 10px var(--c)); }
+.stone span { font: 500 10px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-align: center; }
+.total { display: flex; align-items: baseline; gap: 10px; margin-bottom: 24px; }
+.total b { font-family: var(--f-display); font-weight: 900; font-size: 64px; line-height: 1; }
+
+/* ---------- spider-verse strands ---------- */
+.strands { padding: 0 var(--gutter) 96px; }
+.strand-box { position: relative; background: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1.3px) 0 0 / 12px 12px, var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 28px; overflow: hidden; }
+.strand-box svg { width: 100%; height: auto; display: block; }
+.strand-box text { font-family: var(--f-mono); font-size: 13px; letter-spacing: .1em; fill: var(--muted); }
+.strand-box .lbl { font-family: var(--f-display); font-weight: 900; font-size: 22px; letter-spacing: .02em; }
+
+/* mockup switcher */
+.switcher { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 200; display: flex; gap: 4px; background: rgba(0,0,0,.85); border: 1px solid var(--line-strong); padding: 4px; border-radius: 999px; font: 500 12px var(--f-mono); }
+.switcher a { color: var(--muted); text-decoration: none; padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.switcher a.on { background: var(--text); color: var(--void); }
+
+@media (max-width: 960px) {
+  .hero, .split { grid-template-columns: 1fr; }
+  .portals { height: auto; grid-template-columns: repeat(2, 1fr); }
+  .portal { min-height: 200px; }
+  .bar nav { display: none; }
+  .dossier { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: repeat(2, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="mark" href="#">NEXUS</a>
+  <nav>
+    <a class="active" href="#sacred">MCU</a>
+    <a href="#strands">Spider-Verse</a>
+    <a href="#">Mutant</a>
+    <a href="#">Legacy</a>
+  </nav>
+  <button class="jarvis" type="button">⌕ Ask J.A.R.V.I.S. <kbd>Ctrl K</kbd></button>
+</header>
+
+<section class="hero">
+  <div>
+    <p class="mono">Marvel Multiverse Archive // 4 realities</p>
+    <h1>Every reality.<br><em>One archive.</em></h1>
+    <p class="lede">Every Marvel film and series, from Blade to Doomsday, arranged on the timelines they belong to. Choose a reality to enter.</p>
+  </div>
+  <div class="portals">
+    <a class="portal p-mcu" href="#sacred"><span class="earth">EARTH-616</span><h3>Sacred<br>Timeline</h3><span class="mono">MCU · 2008 →</span></a>
+    <a class="portal p-spider" href="#strands"><span class="earth">EARTH-∞</span><h3>Spider-<br>Verse</h3><span class="mono">Every Spider-Man</span></a>
+    <a class="portal p-mutant" href="#"><span class="earth">EARTH-10005</span><h3>Mutant<br>Realities</h3><span class="mono">X-Men · 2000 →</span></a>
+    <a class="portal p-legacy" href="#"><span class="earth">VARIANTS</span><h3>Legacy<br>Files</h3><span class="mono">Blade · 1998 →</span></a>
+  </div>
+</section>
+
+<section id="sacred">
+  <div class="section-head">
+    <div>
+      <p class="mono">Reality 01 — Marvel Cinematic Universe</p>
+      <h2>The Sacred <span>Timeline</span></h2>
+    </div>
+    <div class="controls">
+      <div class="phases" id="phases"></div>
+      <div class="order-toggle" role="group" aria-label="Sort order">
+        <button type="button" data-order="release" aria-pressed="true">Release</button>
+        <button type="button" data-order="chrono" aria-pressed="false">Chronological</button>
+      </div>
+    </div>
+  </div>
+  <div class="track-wrap"><div class="track" id="track"></div></div>
+</section>
+
+<section class="split">
+  <article class="dossier" id="dossier"></article>
+  <aside class="gauntlet">
+    <p class="mono">Watch tracker</p>
+    <h3>Collect<br>the stones</h3>
+    <div class="total"><b id="watchedCount">0</b><span class="mono">/ <span id="totalCount">0</span> watched</span></div>
+    <div class="stones" id="stones"></div>
+  </aside>
+</section>
+
+<section class="strands" id="strands">
+  <div class="section-head" style="padding-left:0;padding-right:0">
+    <div>
+      <p class="mono">Reality 02 — Spider-Verse preview</p>
+      <h2>Three Peters. <span style="color:var(--spider-red)">One night.</span></h2>
+    </div>
+  </div>
+  <div class="strand-box">
+    <svg viewBox="0 0 1000 300" role="img" aria-label="Three Spider-Man film series converging at No Way Home">
+      <path class="strand" d="M20 50 C 300 50, 420 60, 640 150" stroke="#E23B3B" stroke-width="3" fill="none"/>
+      <path class="strand" d="M20 150 C 300 150, 420 150, 640 150" stroke="#3D8BFF" stroke-width="3" fill="none"/>
+      <path class="strand" d="M20 250 C 300 250, 420 240, 640 150" stroke="#F2EEE6" stroke-width="3" fill="none"/>
+      <path class="strand" d="M640 150 C 760 150, 820 70, 980 60" stroke="#E23B3B" stroke-width="2" fill="none" opacity=".5"/>
+      <path class="strand" d="M640 150 C 760 150, 820 150, 980 150" stroke="#3D8BFF" stroke-width="2" fill="none" opacity=".5"/>
+      <path class="strand" d="M640 150 C 760 150, 820 230, 980 240" stroke="#F2EEE6" stroke-width="2" fill="none" opacity=".5"/>
+      <circle cx="640" cy="150" r="14" fill="#07070A" stroke="#FFB547" stroke-width="3"/>
+      <circle cx="640" cy="150" r="5" fill="#FFB547"/>
+      <text class="lbl" x="20" y="36" fill="#E23B3B">RAIMI</text><text x="100" y="36">2002 – 2007</text>
+      <text class="lbl" x="20" y="136" fill="#3D8BFF">WEBB</text><text x="90" y="136">2012 – 2014</text>
+      <text class="lbl" x="20" y="236" fill="#F2EEE6">HOLLAND</text><text x="125" y="236">2016 →</text>
+      <text x="584" y="196">NO WAY HOME · 2021</text>
+    </svg>
+  </div>
+</section>
+
+<nav class="switcher" aria-label="Mockup versions">
+  <a class="on" href="v1-nexus.html">V1 Nexus</a><a href="v2-tva.html">V2 TVA</a><a href="v3-shield.html">V3 S.H.I.E.L.D.</a>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="shared/data.js"></script>
+<script>
+gsap.registerPlugin(Flip);
+const WATCH_KEY = "nexus-v1-watched";
+const watched = readWatched(WATCH_KEY);
+const track = document.getElementById("track");
+let activePhase = null;
+
+function cardTemplate(t) {
+  const s = PHASE_STONES[t.phase];
+  const badge = t.upcoming ? '<span class="badge soon">Upcoming</span>' : t.nexus ? '<span class="badge nexus">Nexus</span>' : `<span class="badge">${t.type}</span>`;
+  return `<article class="card${t.nexus ? " is-nexus" : ""}" data-id="${t.id}" data-phase="${t.phase}" style="--stone:${s.color}">
+    <button class="watch" type="button" aria-pressed="${watched.has(t.id)}" aria-label="Mark ${t.title} as watched">✓</button>
+    <div class="poster" data-poster><img alt="" data-wiki="${t.wiki}"><div class="fallback">${t.title}</div></div>
+    <h4>${t.title}</h4>
+    <div class="meta"><span class="mono">Phase ${t.phase}</span>${badge}</div>
+    <div class="node"><i></i><span>${t.year}</span></div>
+  </article>`;
+}
+
+function renderTrack() {
+  track.innerHTML = [...MCU_SAMPLE].sort((a, b) => a.release - b.release).map(cardTemplate).join("");
+  hydratePosters(track);
+}
+
+function setOrder(order) {
+  const cards = [...track.children];
+  const state = Flip.getState(cards);
+  cards.sort((a, b) => {
+    const ta = MCU_SAMPLE.find((t) => t.id === a.dataset.id), tb = MCU_SAMPLE.find((t) => t.id === b.dataset.id);
+    return ta[order] - tb[order];
+  }).forEach((c) => track.appendChild(c));
+  cards.forEach((c) => {
+    const t = MCU_SAMPLE.find((x) => x.id === c.dataset.id);
+    c.querySelector(".node span").textContent = order === "chrono" ? t.setIn : t.year;
+  });
+  Flip.from(state, { duration: prefersReducedMotion ? 0 : 0.9, ease: "power3.inOut", stagger: 0.025 });
+}
+
+function renderPhases() {
+  document.getElementById("phases").innerHTML = Object.entries(PHASE_STONES).map(([n, s]) =>
+    `<button class="phase-chip" type="button" data-phase="${n}" aria-pressed="false" style="--c:${s.color}" title="${s.stone} Stone"><i></i>P${n}</button>`
+  ).join("");
+}
+
+function renderDossier(id) {
+  const t = MCU_SAMPLE.find((x) => x.id === id);
+  const s = PHASE_STONES[t.phase];
+  const i = MCU_SAMPLE.indexOf(t);
+  const prev = MCU_SAMPLE[i - 1], next = MCU_SAMPLE[i + 1];
+  const el = document.getElementById("dossier");
+  el.style.setProperty("--stone", s.color);
+  el.innerHTML = `
+    <div class="poster" data-poster style="--stone:${s.color}"><img alt="${t.title} poster" data-wiki="${t.wiki}"><div class="fallback">${t.title}</div></div>
+    <div>
+      <p class="mono">File MCU-${String(t.release).padStart(4, "0")} · Phase ${t.phase} · <span style="color:${s.color}">${s.stone} Stone</span></p>
+      <h3>${t.title}</h3>
+      <dl class="facts">
+        <div><dt>Released</dt><dd>${t.year}</dd></div>
+        <div><dt>Set in</dt><dd>${t.setIn}</dd></div>
+        <div><dt>Format</dt><dd>${t.type}</dd></div>
+        <div><dt>Runtime</dt><dd>${t.runtime}</dd></div>
+        <div style="grid-column: span 2"><dt>Director</dt><dd>${t.director}</dd></div>
+      </dl>
+      <div class="nav-links">
+        ${prev ? `<a href="#" data-go="${prev.id}">← Watch before: ${prev.title}</a>` : ""}
+        ${next ? `<a href="#" data-go="${next.id}">Watch after: ${next.title} →</a>` : ""}
+      </div>
+    </div>`;
+  hydratePosters(el);
+  if (!prefersReducedMotion) gsap.from(el.children, { y: 16, opacity: 0, duration: 0.5, stagger: 0.08, ease: "power2.out" });
+}
+
+function renderStones() {
+  const box = document.getElementById("stones");
+  box.innerHTML = Object.entries(PHASE_STONES).map(([n, s]) => {
+    const inPhase = MCU_SAMPLE.filter((t) => t.phase == n);
+    const done = inPhase.filter((t) => watched.has(t.id)).length;
+    const p = inPhase.length ? done / inPhase.length : 0;
+    return `<div class="stone${p === 1 ? " full" : ""}" style="--c:${s.color}"><div class="gem" style="--p:${p}"></div><span>${s.stone}<br>${done}/${inPhase.length}</span></div>`;
+  }).join("");
+  document.getElementById("watchedCount").textContent = watched.size;
+  document.getElementById("totalCount").textContent = MCU_SAMPLE.length;
+}
+
+/* events */
+document.querySelector(".order-toggle").addEventListener("click", (e) => {
+  const btn = e.target.closest("button"); if (!btn || btn.getAttribute("aria-pressed") === "true") return;
+  document.querySelectorAll(".order-toggle button").forEach((b) => b.setAttribute("aria-pressed", b === btn));
+  setOrder(btn.dataset.order);
+});
+document.getElementById("phases").addEventListener("click", (e) => {
+  const chip = e.target.closest(".phase-chip"); if (!chip) return;
+  activePhase = activePhase === chip.dataset.phase ? null : chip.dataset.phase;
+  document.querySelectorAll(".phase-chip").forEach((c) => c.setAttribute("aria-pressed", c.dataset.phase === activePhase));
+  track.querySelectorAll(".card").forEach((c) => c.classList.toggle("dim", !!activePhase && c.dataset.phase !== activePhase));
+});
+track.addEventListener("click", (e) => {
+  const watchBtn = e.target.closest(".watch");
+  const card = e.target.closest(".card"); if (!card) return;
+  if (watchBtn) {
+    const id = card.dataset.id;
+    watched.has(id) ? watched.delete(id) : watched.add(id);
+    watchBtn.setAttribute("aria-pressed", watched.has(id));
+    saveWatched(WATCH_KEY, watched); renderStones();
+    return;
+  }
+  renderDossier(card.dataset.id);
+  document.getElementById("dossier").scrollIntoView({ behavior: "smooth", block: "center" });
+});
+document.getElementById("dossier").addEventListener("click", (e) => {
+  const a = e.target.closest("[data-go]"); if (!a) return;
+  e.preventDefault(); renderDossier(a.dataset.go);
+});
+
+/* init */
+renderPhases(); renderTrack(); renderDossier("endgame"); renderStones();
+
+if (!prefersReducedMotion) {
+  gsap.from(".hero h1, .hero .lede, .hero .mono", { y: 40, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out" });
+  gsap.from(".portal", { y: 80, opacity: 0, duration: 1, stagger: 0.08, ease: "power3.out", delay: 0.2 });
+  // draw the Spider-Verse strands when they scroll into view
+  const strands = document.querySelectorAll(".strand");
+  strands.forEach((p) => { const len = p.getTotalLength(); p.style.strokeDasharray = len; p.style.strokeDashoffset = len; });
+  new IntersectionObserver((entries, obs) => {
+    if (!entries[0].isIntersecting) return;
+    gsap.to(strands, { strokeDashoffset: 0, duration: 1.6, ease: "power2.inOut", stagger: 0.12 });
+    obs.disconnect();
+  }, { threshold: 0.3 }).observe(document.querySelector(".strand-box"));
+}
+</script>
+</body>
+</html>

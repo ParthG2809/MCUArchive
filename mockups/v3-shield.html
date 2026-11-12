@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Archive Terminal — Mockup V3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Chakra+Petch:wght@500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep: #060A11;
+  --panel: #0C1420;
+  --panel-2: #122033;
+  --grid: rgba(127, 212, 255, 0.06);
+  --edge: rgba(127, 212, 255, 0.18);
+  --holo: #7FD4FF;
+  --holo-dim: #3E7A99;
+  --white: #E6EDF5;
+  --muted: #7D8DA1;
+  --signal: #E23B3B;
+  --warn: #F2B33D;
+  --f-hud: "Chakra Petch", sans-serif;
+  --f-body: "Barlow", system-ui, sans-serif;
+  --f-type: "Courier Prime", ui-monospace, monospace;
+  --side: 264px;
+  --gutter: clamp(16px, 3vw, 40px);
+}
+* { box-sizing: border-box; margin: 0; }
+body {
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 40px 40px,
+    radial-gradient(ellipse at 70% 0%, #0f2338, var(--deep) 60%);
+  background-color: var(--deep);
+  color: var(--white);
+  font-family: var(--f-body);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+.hud { font-family: var(--f-hud); text-transform: uppercase; letter-spacing: .12em; font-size: 12px; color: var(--holo); }
+.type { font-family: var(--f-type); }
+/* corner brackets for panels */
+.bracket { position: relative; }
+.bracket::before, .bracket::after { content: ""; position: absolute; width: 14px; height: 14px; border: 2px solid var(--holo); pointer-events: none; }
+.bracket::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.bracket::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+
+/* ---------- sidebar ---------- */
+.side {
+  position: fixed; inset: 0 auto 0 0; width: var(--side); z-index: 40;
+  background: rgba(8, 13, 21, .92); border-right: 1px solid var(--edge);
+  display: flex; flex-direction: column; padding: 22px 18px; gap: 26px; overflow-y: auto;
+}
+.emblem { display: flex; gap: 12px; align-items: center; }
+.emblem svg { width: 44px; height: 44px; flex: none; }
+.emblem b { font-family: var(--f-hud); font-weight: 700; font-size: 17px; letter-spacing: .14em; display: block; }
+.emblem small { font-family: var(--f-type); font-size: 11px; color: var(--muted); }
+.levels { display: grid; gap: 6px; }
+.level {
+  display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 10px; padding: 10px; text-decoration: none; color: var(--white);
+  border: 1px solid transparent; background: transparent; font: inherit; text-align: left; cursor: pointer;
+}
+.level .lv { font: 700 13px var(--f-hud); color: var(--deep); background: var(--holo-dim); text-align: center; padding: 4px 0; clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); }
+.level span b { display: block; font-family: var(--f-hud); font-weight: 600; letter-spacing: .08em; font-size: 14px; text-transform: uppercase; }
+.level span small { color: var(--muted); font-size: 12px; }
+.level.on { border-color: var(--edge); background: linear-gradient(90deg, rgba(127,212,255,.12), transparent); }
+.level.on .lv { background: var(--holo); }
+.level.locked { opacity: .55; }
+.agent { margin-top: auto; border-top: 1px solid var(--edge); padding-top: 18px; display: grid; gap: 9px; }
+.bar-row { display: grid; grid-template-columns: 60px 1fr 34px; gap: 8px; align-items: center; font: 600 11px var(--f-hud); letter-spacing: .08em; color: var(--muted); }
+.bar { height: 6px; background: rgba(255,255,255,.07); position: relative; overflow: hidden; }
+.bar i { position: absolute; inset: 0 auto 0 0; width: calc(var(--p) * 100%); background: var(--c); box-shadow: 0 0 8px var(--c); transition: width .6s; }
+
+/* ---------- main ---------- */
+main { margin-left: var(--side); padding: 22px var(--gutter) 110px; }
+.boot { font-family: var(--f-type); color: var(--holo); font-size: 14px; min-height: 1.5em; }
+.boot .cursor { display: inline-block; width: 9px; height: 16px; background: var(--holo); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; align-items: center; margin: 26px 0 36px; }
+.hero h1 { font-family: var(--f-hud); font-weight: 700; text-transform: uppercase; font-size: clamp(40px, 5.4vw, 84px); line-height: .95; letter-spacing: .01em; margin: 14px 0 18px; }
+.hero h1 .redact { position: relative; display: inline-block; color: var(--signal); }
+.hero h1 .redact .bar { position: absolute; inset: .1em -.08em .06em; background: var(--white); transform-origin: right center; }
+.hero p { color: var(--muted); max-width: 48ch; font-size: 17px; }
+.radar { aspect-ratio: 1; max-width: 380px; width: 100%; justify-self: center; position: relative; }
+.radar svg { width: 100%; height: 100%; overflow: visible; }
+.radar text { font-family: var(--f-hud); font-size: 11px; letter-spacing: .12em; fill: var(--white); }
+
+/* ---------- ops area ---------- */
+.ops { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.panel { background: rgba(12, 20, 32, .85); border: 1px solid var(--edge); }
+.panel-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--edge); }
+.panel-head h2 { font-family: var(--f-hud); font-weight: 700; font-size: 20px; letter-spacing: .12em; text-transform: uppercase; }
+.seg { display: flex; border: 1px solid var(--edge); }
+.seg button { font: 600 11px var(--f-hud); letter-spacing: .1em; text-transform: uppercase; background: transparent; border: 0; color: var(--muted); padding: 7px 11px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--holo); color: var(--deep); }
+.chips { display: flex; gap: 4px; padding: 10px 16px; border-bottom: 1px solid var(--edge); flex-wrap: wrap; }
+.chips button { --c: #fff; font: 600 11px var(--f-hud); letter-spacing: .08em; background: transparent; color: var(--muted); border: 1px solid var(--edge); padding: 5px 9px; cursor: pointer; display: flex; gap: 6px; align-items: center; }
+.chips button i { width: 7px; height: 7px; background: var(--c); }
+.chips button[aria-pressed="true"] { color: var(--white); border-color: var(--c); box-shadow: inset 0 0 0 1px var(--c); }
+
+.log { list-style: none; padding: 8px 0; margin: 0; position: relative; }
+.log::before { content: ""; position: absolute; left: 92px; top: 0; bottom: 0; width: 1px; background: var(--edge); }
+.entry {
+  --stone: #fff; display: grid; grid-template-columns: 70px 44px 54px 1fr; gap: 0 14px; align-items: center;
+  padding: 10px 16px; cursor: pointer; position: relative; transition: background .2s, opacity .3s;
+}
+.entry:hover, .entry.sel { background: rgba(127,212,255,.07); }
+.entry.sel { box-shadow: inset 3px 0 0 var(--holo); }
+.entry.dim { opacity: .2; }
+.entry time { font: 700 13px var(--f-type); color: var(--muted); text-align: right; }
+.entry .pip { justify-self: center; width: 11px; height: 11px; transform: rotate(45deg); background: var(--deep); border: 2px solid var(--stone); z-index: 1; }
+.entry.nexus .pip { background: var(--warn); border-color: var(--warn); box-shadow: 0 0 12px var(--warn); }
+.thumb { position: relative; width: 54px; aspect-ratio: 2 / 3; overflow: hidden; background: var(--panel-2); border: 1px solid var(--edge); }
+.thumb img, .big-poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .5s; filter: saturate(.85); }
+.has-poster img { opacity: 1; }
+[data-poster].has-poster .fallback { display: none; }
+.thumb .fallback { position: absolute; inset: 0; display: grid; place-items: center; font: 700 9px var(--f-hud); color: var(--muted); text-align: center; padding: 2px; }
+.entry h3 { font-family: var(--f-hud); font-weight: 600; font-size: 16px; letter-spacing: .03em; line-height: 1.2; }
+.entry .sub { display: flex; gap: 10px; align-items: center; margin-top: 4px; font: 400 12px var(--f-type); color: var(--muted); }
+.redline { display: inline-block; height: 11px; width: 110px; background: var(--white); opacity: .85; position: relative; overflow: hidden; vertical-align: middle; }
+.redline span { position: absolute; inset: 0; background: var(--panel); color: var(--holo); font: 400 11px/11px var(--f-type); white-space: nowrap; transform: translateX(-101%); transition: transform .35s; }
+.entry:hover .redline span { transform: none; }
+.check { margin-left: auto; font: 700 10px var(--f-hud); letter-spacing: .08em; padding: 3px 7px; border: 1px solid var(--edge); background: transparent; color: var(--muted); cursor: pointer; }
+.check[aria-pressed="true"] { border-color: var(--stone); color: var(--deep); background: var(--stone); }
+
+/* dossier */
+.dossier { position: sticky; top: 20px; }
+.dos-body { padding: 18px; display: grid; grid-template-columns: 150px 1fr; gap: 18px; }
+.big-poster { position: relative; aspect-ratio: 2 / 3; background: var(--panel-2); border: 1px solid var(--edge); overflow: hidden; }
+.big-poster .fallback { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 10px; font: 700 18px var(--f-hud); }
+.stamp { display: inline-block; font: 700 12px var(--f-hud); letter-spacing: .2em; color: var(--signal); border: 2px solid var(--signal); padding: 3px 9px; transform: rotate(-6deg); margin-bottom: 10px; }
+.dossier h3 { font-family: var(--f-hud); font-weight: 700; font-size: 30px; line-height: 1; text-transform: uppercase; margin-bottom: 14px; }
+.kv { display: grid; grid-template-columns: 110px 1fr; font-size: 14px; border-top: 1px dashed var(--edge); }
+.kv dt, .kv dd { padding: 7px 0; border-bottom: 1px dashed var(--edge); }
+.kv dt { font: 600 11px var(--f-hud); letter-spacing: .1em; color: var(--muted); text-transform: uppercase; padding-top: 9px; }
+.kv dd { font-family: var(--f-type); }
+.dos-tabs { display: flex; border-bottom: 1px solid var(--edge); }
+.dos-tabs button { flex: 1; font: 600 11px var(--f-hud); letter-spacing: .12em; text-transform: uppercase; padding: 10px; background: transparent; border: 0; border-right: 1px solid var(--edge); color: var(--muted); cursor: pointer; }
+.dos-tabs button[aria-selected="true"] { color: var(--holo); background: rgba(127,212,255,.08); box-shadow: inset 0 -2px 0 var(--holo); }
+.dos-foot { display: flex; gap: 8px; padding: 0 18px 18px; flex-wrap: wrap; }
+.dos-foot a { font: 600 11px var(--f-hud); letter-spacing: .08em; text-transform: uppercase; color: var(--holo); text-decoration: none; border: 1px solid var(--edge); padding: 8px 10px; }
+.dos-foot a:hover { background: var(--holo); color: var(--deep); }
+
+.switcher { position: fixed; bottom: 16px; left: calc(50% + var(--side) / 2); transform: translateX(-50%); z-index: 200; display: flex; gap: 4px; background: rgba(0,0,0,.85); border: 1px solid var(--edge); padding: 4px; font: 600 12px var(--f-hud); letter-spacing: .06em; }
+.switcher a { color: var(--muted); text-decoration: none; padding: 7px 14px; white-space: nowrap; }
+.switcher a.on { background: var(--holo); color: var(--deep); }
+
+@media (max-width: 1100px) { .ops { grid-template-columns: 1fr; } .dossier { position: static; } }
+@media (max-width: 860px) {
+  .side { position: static; width: auto; border-right: 0; border-bottom: 1px solid var(--edge); }
+  .levels { grid-template-columns: repeat(2, 1fr); }
+  .agent { display: none; }
+  main { margin-left: 0; }
+  .hero { grid-template-columns: 1fr; }
+  .switcher { left: 50%; }
+  .dos-body { grid-template-columns: 1fr; }
+  .big-poster { max-width: 180px; }
+  .entry { grid-template-columns: 54px 30px 44px 1fr; gap: 0 8px; }
+  .log::before { left: 85px; }
+  .redline { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<aside class="side">
+  <div class="emblem">
+    <svg viewBox="0 0 44 44" aria-hidden="true"><polygon points="22,2 40,12 40,32 22,42 4,32 4,12" fill="none" stroke="#7FD4FF" stroke-width="2"/><polygon points="22,11 31,16 31,28 22,33 13,28 13,16" fill="#7FD4FF" opacity=".25"/><circle cx="22" cy="22" r="4" fill="#7FD4FF"/></svg>
+    <div><b>ARCHIVE//TERM</b><small>Marvel Media Division</small></div>
+  </div>
+  <div>
+    <p class="hud" style="margin-bottom:8px;color:var(--muted)">Clearance</p>
+    <nav class="levels">
+      <a class="level on" href="#"><span class="lv">L-7</span><span><b>Sacred</b><small>MCU · 2008 →</small></span></a>
+      <a class="level" href="#"><span class="lv">L-5</span><span><b>Spider</b><small>Every Spider-Man</small></span></a>
+      <a class="level" href="#"><span class="lv">L-5</span><span><b>Mutant</b><small>X-Men · 2000 →</small></span></a>
+      <a class="level locked" href="#"><span class="lv">L-3</span><span><b>Legacy</b><small>Blade · 1998 →</small></span></a>
+    </nav>
+  </div>
+  <div class="agent">
+    <p class="hud" style="color:var(--muted)">Agent progress · <span id="agentCount">0</span></p>
+    <div id="bars"></div>
+  </div>
+</aside>
+
+<main>
+  <p class="boot" id="boot"><span id="bootText"></span><span class="cursor"></span></p>
+
+  <section class="hero">
+    <div>
+      <p class="hud">Briefing // Multiverse records</p>
+      <h1>Every Marvel reality. <span class="redact">Declassified.<i class="bar" aria-hidden="true"></i></span></h1>
+      <p>Operational files for every Marvel film and series, from the 1998 Blade mission to the Avengers' next deployment. Hover a redacted line in the log to read it.</p>
+    </div>
+    <div class="radar">
+      <svg viewBox="-200 -200 400 400" role="img" aria-label="Radar showing four Marvel realities">
+        <defs>
+          <radialGradient id="sweep" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="scale(180)">
+            <stop offset="0" stop-color="#7FD4FF" stop-opacity=".0"/><stop offset="1" stop-color="#7FD4FF" stop-opacity=".35"/>
+          </radialGradient>
+        </defs>
+        <g fill="none" stroke="rgba(127,212,255,.25)">
+          <circle r="180"/><circle r="130"/><circle r="80"/><circle r="30"/>
+          <line x1="-190" x2="190"/><line y1="-190" y2="190"/>
+        </g>
+        <path id="sweepArm" d="M0 0 L180 0 A180 180 0 0 0 127 -127 Z" fill="url(#sweep)"/>
+        <g>
+          <circle cx="0" cy="0" r="7" fill="#F2B33D"/><text x="12" y="4">SACRED</text>
+          <circle cx="-95" cy="-70" r="5" fill="#E23B3B"/><text x="-150" y="-84">SPIDER</text>
+          <circle cx="110" cy="60" r="5" fill="#7FD4FF"/><text x="90" y="86">MUTANT</text>
+          <circle cx="-60" cy="140" r="5" fill="#7D8DA1"/><text x="-110" y="164">LEGACY</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="ops">
+    <div class="panel bracket">
+      <div class="panel-head">
+        <h2>Operations log</h2>
+        <div class="seg" role="group" aria-label="Sort order">
+          <button type="button" data-order="release" aria-pressed="true">Release</button>
+          <button type="button" data-order="chrono" aria-pressed="false">Chronological</button>
+        </div>
+      </div>
+      <div class="chips" id="chips"></div>
+      <ol class="log" id="log"></ol>
+    </div>
+    <article class="panel bracket dossier" id="dossier"></article>
+  </section>
+</main>
+
+<nav class="switcher" aria-label="Mockup versions">
+  <a href="v1-nexus.html">V1 Nexus</a><a href="v2-tva.html">V2 TVA</a><a class="on" href="v3-shield.html">V3 S.H.I.E.L.D.</a>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="shared/data.js"></script>
+<script>
+gsap.registerPlugin(Flip);
+const WATCH_KEY = "nexus-v3-watched";
+const watched = readWatched(WATCH_KEY);
+const log = document.getElementById("log");
+let order = "release", activePhase = null, selected = "nwh", activeTab = "summary";
+const fileId = (t) => "OP-" + String(t.release).padStart(3, "0");
+
+function entryTemplate(t) {
+  const s = PHASE_STONES[t.phase];
+  return `<li class="entry${t.nexus ? " nexus" : ""}${t.id === selected ? " sel" : ""}" data-id="${t.id}" data-phase="${t.phase}" style="--stone:${s.color}">
+    <time>${order === "chrono" ? t.setIn : t.year}</time>
+    <span class="pip"></span>
+    <div class="thumb" data-poster><img alt="" data-wiki="${t.wiki}"><span class="fallback">${fileId(t)}</span></div>
+    <div>
+      <h3>${t.title}</h3>
+      <div class="sub"><span>${fileId(t)} · P${t.phase}</span><span class="redline"><span>DIR. ${t.director}</span></span>
+        <button class="check" type="button" aria-pressed="${watched.has(t.id)}">${watched.has(t.id) ? "Reviewed" : "Review"}</button></div>
+    </div>
+  </li>`;
+}
+
+function renderLog() {
+  log.innerHTML = [...MCU_SAMPLE].sort((a, b) => a[order] - b[order]).map(entryTemplate).join("");
+  log.querySelectorAll(".entry").forEach((e) => e.classList.toggle("dim", !!activePhase && e.dataset.phase !== activePhase));
+  hydratePosters(log);
+}
+
+function renderChips() {
+  document.getElementById("chips").innerHTML = Object.entries(PHASE_STONES).map(([n, s]) =>
+    `<button type="button" data-phase="${n}" aria-pressed="false" style="--c:${s.color}" title="${s.stone} Stone"><i></i>Phase ${n}</button>`).join("");
+}
+
+function renderDossier() {
+  const t = MCU_SAMPLE.find((x) => x.id === selected);
+  const s = PHASE_STONES[t.phase];
+  const i = MCU_SAMPLE.indexOf(t), prev = MCU_SAMPLE[i - 1], next = MCU_SAMPLE[i + 1];
+  const tabs = {
+    summary: `<dt>Released</dt><dd>${t.year}</dd><dt>Set in</dt><dd>${t.setIn}</dd><dt>Format</dt><dd>${t.type} · ${t.runtime}</dd><dt>Phase</dt><dd style="color:${s.color}">${t.phase} · ${s.stone} Stone</dd>`,
+    personnel: `<dt>Director</dt><dd>${t.director}</dd><dt>Studio</dt><dd>Marvel Studios</dd>`,
+    intel: `<dt>Status</dt><dd>${t.upcoming ? "Pending deployment" : "Mission complete"}</dd><dt>Nexus</dt><dd>${t.nexus ? "Yes. Crosses realities" : "No"}</dd>`,
+  };
+  const el = document.getElementById("dossier");
+  el.innerHTML = `
+    <div class="panel-head"><h2>File ${fileId(t)}</h2><span class="hud" style="color:var(--warn)">Level 7</span></div>
+    <div class="dos-tabs" role="tablist">
+      ${Object.keys(tabs).map((k) => `<button role="tab" type="button" data-tab="${k}" aria-selected="${k === activeTab}">${k}</button>`).join("")}
+    </div>
+    <div class="dos-body">
+      <div class="big-poster" data-poster><img alt="${t.title} poster" data-wiki="${t.wiki}"><div class="fallback">${t.title}</div></div>
+      <div>
+        <span class="stamp">${t.upcoming ? "Pending" : "Classified"}</span>
+        <h3>${t.title}</h3>
+        <dl class="kv">${tabs[activeTab]}</dl>
+      </div>
+    </div>
+    <div class="dos-foot">
+      ${prev ? `<a href="#" data-go="${prev.id}">◂ ${fileId(prev)}</a>` : ""}
+      ${next ? `<a href="#" data-go="${next.id}">${fileId(next)} ▸</a>` : ""}
+    </div>`;
+  hydratePosters(el);
+}
+
+function renderBars() {
+  document.getElementById("bars").innerHTML = Object.entries(PHASE_STONES).map(([n, s]) => {
+    const inPhase = MCU_SAMPLE.filter((t) => t.phase == n);
+    const done = inPhase.filter((t) => watched.has(t.id)).length;
+    return `<div class="bar-row"><span>Phase ${n}</span><span class="bar"><i style="--c:${s.color};--p:${done / inPhase.length}"></i></span><span>${done}/${inPhase.length}</span></div>`;
+  }).join("");
+  document.getElementById("agentCount").textContent = `${watched.size}/${MCU_SAMPLE.length}`;
+}
+
+document.querySelector(".seg").addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b || b.dataset.order === order) return;
+  document.querySelectorAll(".seg button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+  const state = Flip.getState(".entry");
+  order = b.dataset.order;
+  const entries = [...log.children];
+  entries.sort((a, c) => MCU_SAMPLE.find((t) => t.id === a.dataset.id)[order] - MCU_SAMPLE.find((t) => t.id === c.dataset.id)[order]).forEach((x) => log.appendChild(x));
+  entries.forEach((x) => { const t = MCU_SAMPLE.find((m) => m.id === x.dataset.id); x.querySelector("time").textContent = order === "chrono" ? t.setIn : t.year; });
+  Flip.from(state, { duration: prefersReducedMotion ? 0 : 0.7, ease: "power2.inOut", stagger: 0.02 });
+});
+document.getElementById("chips").addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  activePhase = activePhase === b.dataset.phase ? null : b.dataset.phase;
+  document.querySelectorAll("#chips button").forEach((x) => x.setAttribute("aria-pressed", x.dataset.phase === activePhase));
+  log.querySelectorAll(".entry").forEach((x) => x.classList.toggle("dim", !!activePhase && x.dataset.phase !== activePhase));
+});
+log.addEventListener("click", (e) => {
+  const entry = e.target.closest(".entry"); if (!entry) return;
+  const chk = e.target.closest(".check");
+  if (chk) {
+    const id = entry.dataset.id;
+    watched.has(id) ? watched.delete(id) : watched.add(id);
+    chk.setAttribute("aria-pressed", watched.has(id)); chk.textContent = watched.has(id) ? "Reviewed" : "Review";
+    saveWatched(WATCH_KEY, watched); renderBars(); return;
+  }
+  selected = entry.dataset.id;
+  log.querySelectorAll(".entry").forEach((x) => x.classList.toggle("sel", x === entry));
+  renderDossier();
+});
+document.getElementById("dossier").addEventListener("click", (e) => {
+  const tab = e.target.closest("[data-tab]");
+  if (tab) { activeTab = tab.dataset.tab; renderDossier(); return; }
+  const go = e.target.closest("[data-go]");
+  if (go) { e.preventDefault(); selected = go.dataset.go; renderLog(); renderDossier(); }
+});
+
+renderChips(); renderLog(); renderDossier(); renderBars();
+
+/* boot line typing + radar sweep */
+const bootMsg = "> IDENTITY VERIFIED. ACCESS GRANTED: WELCOME BACK, AGENT.";
+const bootEl = document.getElementById("bootText");
+if (prefersReducedMotion) { bootEl.textContent = bootMsg; document.querySelector(".redact .bar").style.transform = "scaleX(0)"; }
+else {
+  const counter = { n: 0 };
+  gsap.to(counter, { n: bootMsg.length, duration: 1.8, ease: "none", onUpdate: () => (bootEl.textContent = bootMsg.slice(0, Math.round(counter.n))) });
+  // the redaction bar is pulled away once the boot line finishes
+  gsap.to(".redact .bar", { scaleX: 0, duration: 0.7, ease: "power3.inOut", delay: 2 });
+  gsap.to("#sweepArm", { rotation: 360, svgOrigin: "0 0", duration: 5, repeat: -1, ease: "none" });
+  gsap.from(".entry", { x: -20, opacity: 0, duration: 0.4, stagger: 0.04, delay: 0.4 });
+}
+</script>
+</body>
+</html>

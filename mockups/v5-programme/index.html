@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup V5: The Programme (Lobby)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="programme.css">
+</head>
+<body>
+<header class="mast" data-mast></header>
+
+<main id="main">
+  <section class="opening">
+    <div class="wrap">
+      <div>
+        <p class="kicker"><b>Next opening</b> · <span id="open-date"></span></p>
+        <h1 id="open-title"></h1>
+        <p class="lede" id="open-lede"></p>
+        <p class="clock" id="clock"></p>
+        <div class="cta">
+          <a class="primary" href="#">What to watch before Doomsday</a>
+          <a href="mcu.html">Browse the Sacred Timeline</a>
+        </div>
+      </div>
+      <figure class="plate">
+        <div class="frame" id="open-poster"></div>
+        <figcaption><b id="open-crew"></b><span>Phase Six</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Four programmes</h2>
+      <p>Every Marvel film and series, filed on the timeline it belongs to.</p>
+    </div>
+    <ul class="programmes" id="programmes"></ul>
+  </div>
+
+  <section class="tally"><div class="wrap"><p id="tally"></p></div></section>
+</main>
+
+<footer class="foot"><div class="wrap"><span>Mockup V5 · The Marvel Archive is an unofficial fan project. Posters © Marvel / Disney and their studios.</span><span>Excelsior.</span></div></footer>
+
+<script src="../../js/data/mcu.js"></script>
+<script src="../../js/data/spider.js"></script>
+<script src="../../js/data/mutant.js"></script>
+<script src="../../js/data/legacy.js"></script>
+<script src="../../js/posters.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="programme.js"></script>
+<script>
+masthead("lobby");
+
+/* Opening night: the next unreleased film, from the data. */
+const next = allTitles().filter((t) => !released(t) && t.format === "Film").sort((a, b) => a.released.localeCompare(b.released))[0];
+const [head, tail] = next.title.split(": ");
+document.getElementById("open-title").innerHTML = tail ? `${esc(head)}:<em>${esc(tail)}</em>` : esc(next.title);
+document.getElementById("open-date").textContent = dateText(next.released);
+document.getElementById("open-lede").textContent = next.summary.replace(/\[\[|\]\]/g, "");
+document.getElementById("open-poster").innerHTML = poster(next);
+document.getElementById("open-crew").textContent = next.crew || "";
+
+function tick() {
+  const ms = new Date(next.released + "T00:00:00") - new Date();
+  const d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60;
+  document.getElementById("clock").innerHTML = `<b>${d}</b> days, <b>${h}</b> hours, <b>${m}</b> minutes <span>until the lights go down.</span>`;
+}
+tick(); setInterval(tick, 30000);
+
+/* The four programmes, with live counts and a fan of posters. */
+const blurbs = {
+  mcu: "The connected universe, from Iron Man to the Multiverse Saga. Filed in release or story order.",
+  spider: "Every screen Spider-Man: Raimi, Webb, Miles Morales, Sony's villains and the cartoons.",
+  mutant: "Twenty years of Fox's X-Men, their spin-offs, and the mutants on TV.",
+  legacy: "Blade, the Netflix Defenders, ABC's agents and every other Marvel adaptation.",
+};
+const tones = { mcu: "var(--red)", spider: "var(--spider)", mutant: "var(--mutant)", legacy: "var(--legacy)" };
+const roman = ["I", "II", "III", "IV"];
+document.getElementById("programmes").innerHTML = Object.values(R).map((r, i) => {
+  const sorted = [...r.titles].sort((a, b) => a.released.localeCompare(b.released));
+  const picks = sorted.filter((t) => POSTERS[t.wiki]).filter((_, j, arr) => j % Math.ceil(arr.length / 5) === 0).slice(0, 5);
+  return `<li><a class="programme" href="${r.key === "mcu" ? "mcu.html" : "#"}" style="--tone: ${tones[r.key]}">
+    <span class="num">${roman[i]}.</span>
+    <div><h3>${esc(r.name)}</h3><div class="facts">${r.titles.length} titles · ${sorted[0].released.slice(0, 4)}–${sorted.at(-1).released.slice(0, 4)}</div></div>
+    <p>${blurbs[r.key]}</p>
+    <div class="strip" aria-hidden="true">${picks.map((t, j) => `<span class="thumb" style="--i:${j}">${poster(t)}</span>`).join("")}</div>
+  </a></li>`;
+}).join("");
+
+const all = allTitles();
+const first = all.map((t) => +t.released.slice(0, 4)).sort((a, b) => a - b)[0];
+document.getElementById("tally").innerHTML = `${all.length} titles. ${new Date().getFullYear() - first} years. Four timelines. <em>One couch.</em>`;
+
+if (!reduceMotion) {
+  gsap.from(".opening h1, .opening .lede, .clock, .cta", { y: 24, opacity: 0, duration: 0.8, stagger: 0.08, ease: "power3.out" });
+  gsap.from(".plate", { opacity: 0, y: 40, duration: 1, delay: 0.2, ease: "power3.out" });
+}
+</script>
+</body>
+</html>

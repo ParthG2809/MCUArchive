@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Sacred Timeline: Every MCU Film &amp; Series in Order | The Marvel Archive</title>
+<meta name="description" content="Every Marvel Cinematic Universe film and series, Phase One to Phase Six, in release order or story order. Track what you've watched.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bungee&family=Libre+Franklin:ital,wght@0,400;0,600;0,800;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/archive.css">
+<link rel="stylesheet" href="css/timeline.css">
+<link rel="stylesheet" href="css/theme-programme.css">
+<script src="js/theme.js"></script>
+</head>
+<body data-reality="mcu">
+
+<main class="wrap" id="main">
+  <section class="head">
+    <div>
+      <span class="caption">Records floor · Reality #1 · Earth-616</span>
+      <h1 class="misprint">The Sacred <span>Timeline</span></h1>
+      <p>The Marvel Cinematic Universe, filed by phase. Flip to story order to see where each film and series really sits in time. Spoilers are blacked out until you open a file.</p>
+    </div>
+    <nav class="index-card" aria-label="Jump to phase">
+      <h2 id="indexTitle">INDEX</h2>
+      <ol id="sectionIndex"></ol>
+    </nav>
+  </section>
+
+  <div class="controls">
+    <div role="group" aria-label="Sort order" class="tabs" id="views"></div>
+    <span class="hint" id="hint"></span>
+  </div>
+  <div class="filters">
+    <div class="chips" role="group" aria-label="Show" id="chips"></div>
+    <label class="check"><input type="checkbox" id="hideWatched"> Hide watched</label>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+
+  <section class="chart" id="chart"></section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="js/data/mcu.js"></script>
+<script src="js/data/spider.js"></script>
+<script src="js/data/mutant.js"></script>
+<script src="js/data/legacy.js"></script>
+<script src="js/posters.js"></script>
+<script src="js/core.js"></script>
+<script src="js/pages/timeline.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Spider-Verse: Every Spider-Man Film &amp; Series | The Marvel Archive</title>
+<meta name="description" content="Every Spider-Man on screen: the Raimi and Webb films, the MCU's Tom Holland, the Spider-Verse animated films, Sony's Venom films, and every Spider-Man TV series since 1967.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bungee&family=Libre+Franklin:ital,wght@0,400;0,600;0,800;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/archive.css">
+<link rel="stylesheet" href="css/timeline.css">
+<link rel="stylesheet" href="css/theme-programme.css">
+<script src="js/theme.js"></script>
+</head>
+<body data-reality="spider">
+
+<main class="wrap" id="main">
+  <section class="head">
+    <div>
+      <span class="caption">Records floor · Reality #2 · Multiple Earths</span>
+      <h1 class="misprint">The Spider-<span>Verse</span></h1>
+      <p>Every Spider-Man on screen since 1967: three live-action Peters, Miles Morales, Sony's Venom films, and decades of cartoons. Tom Holland's films live on the Sacred Timeline, and are filed here too.</p>
+    </div>
+    <nav class="index-card" aria-label="Jump to series">
+      <h2 id="indexTitle">INDEX</h2>
+      <ol id="sectionIndex"></ol>
+    </nav>
+  </section>
+
+  <figure class="feature feature-web">
+    <figcaption>
+      <span class="caption">The night the webs crossed</span>
+      <p>Three film series, three Peter Parkers, and one spell gone wrong. In <a href="title.html?id=no-way-home">No Way Home</a> their timelines meet.</p>
+    </figcaption>
+    <svg viewBox="0 0 1000 300" role="img" aria-label="Diagram: the Raimi, Webb and Holland Spider-Man film series converge at No Way Home in 2021, then separate again.">
+      <g fill="none" stroke-linecap="round">
+        <path class="strand" d="M20 50 C 300 50, 430 60, 640 150" stroke="var(--red)" stroke-width="7"/>
+        <path class="strand" d="M20 150 C 300 150, 430 150, 640 150" stroke="var(--blue)" stroke-width="7"/>
+        <path class="strand" d="M20 250 C 300 250, 430 240, 640 150" stroke="var(--stone-4)" stroke-width="7"/>
+        <path class="strand" d="M640 150 C 760 150, 830 70, 980 60" stroke="var(--red)" stroke-width="4" stroke-dasharray="2 10"/>
+        <path class="strand" d="M640 150 C 760 150, 830 150, 980 150" stroke="var(--blue)" stroke-width="4" stroke-dasharray="2 10"/>
+        <path class="strand" d="M640 150 C 760 150, 830 230, 980 240" stroke="var(--stone-4)" stroke-width="4"/>
+      </g>
+      <circle cx="640" cy="150" r="22" fill="var(--yellow)" stroke="var(--ink)" stroke-width="4"/>
+      <text class="lbl" x="20" y="32" fill="var(--red)">RAIMI</text><text class="yr" x="20" y="80">2002–2007</text>
+      <text class="lbl" x="20" y="132" fill="var(--blue)">WEBB</text><text class="yr" x="20" y="180">2012–2014</text>
+      <text class="lbl" x="20" y="232" fill="var(--stone-4)">HOLLAND</text><text class="yr" x="20" y="280">2016–</text>
+      <text class="yr" x="560" y="200">NO WAY HOME · 2021</text>
+    </svg>
+  </figure>
+
+  <div class="controls">
+    <div role="group" aria-label="Sort order" class="tabs" id="views"></div>
+    <span class="hint" id="hint"></span>
+  </div>
+  <div class="filters">
+    <div class="chips" role="group" aria-label="Show" id="chips"></div>
+    <label class="check"><input type="checkbox" id="hideWatched"> Hide watched</label>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+
+  <section class="chart" id="chart"></section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="js/data/mcu.js"></script>
+<script src="js/data/spider.js"></script>
+<script src="js/data/mutant.js"></script>
+<script src="js/data/legacy.js"></script>
+<script src="js/posters.js"></script>
+<script src="js/core.js"></script>
+<script src="js/pages/timeline.js"></script>
+<script src="js/pages/features.js"></script>
+</body>
+</html>

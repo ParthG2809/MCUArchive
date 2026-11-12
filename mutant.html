@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mutant Realities: Every X-Men Film &amp; Series | The Marvel Archive</title>
+<meta name="description" content="Every X-Men film and series: Fox's X-Men saga, Wolverine, Deadpool, Legion, The Gifted and the X-Men cartoons, with the Days of Future Past timeline split explained.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bungee&family=Libre+Franklin:ital,wght@0,400;0,600;0,800;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/archive.css">
+<link rel="stylesheet" href="css/timeline.css">
+<link rel="stylesheet" href="css/theme-programme.css">
+<script src="js/theme.js"></script>
+</head>
+<body data-reality="mutant">
+
+<main class="wrap" id="main">
+  <section class="head">
+    <div>
+      <span class="caption">Records floor · Reality #3 · Earth-10005</span>
+      <h1 class="misprint">Mutant <span>Realities</span></h1>
+      <p>Twenty years of Fox's X-Men films, from Bryan Singer's X-Men to Deadpool's leap into the MCU, plus the live-action shows and every X-Men cartoon.</p>
+    </div>
+    <nav class="index-card" aria-label="Jump to series">
+      <h2 id="indexTitle">INDEX</h2>
+      <ol id="sectionIndex"></ol>
+    </nav>
+  </section>
+
+  <figure class="feature feature-split">
+    <figcaption>
+      <span class="caption">Two timelines. One very bad future.</span>
+      <p>In <a href="title.html?id=days-of-future-past">Days of Future Past</a>, Wolverine is sent back to 1973 and changes history. The original timeline is overwritten, so the later films run on a new one.</p>
+    </figcaption>
+    <svg viewBox="0 0 1000 300" role="img" aria-label="Diagram: one timeline runs from First Class in 1962 to 1973, where Days of Future Past splits it. The original timeline (X-Men, X2, The Last Stand, The Wolverine) ends in a dark future and is overwritten; the new timeline continues with Apocalypse in 1983 and Dark Phoenix in 1992.">
+      <g fill="none" stroke-linecap="round">
+        <path class="strand" d="M20 150 H 300" stroke="var(--blue)" stroke-width="7"/>
+        <path class="strand" d="M300 150 C 380 150, 400 70, 480 70 H 900" stroke="var(--ink)" stroke-width="6" stroke-dasharray="14 10"/>
+        <path class="strand" d="M300 150 C 380 150, 400 230, 480 230 H 980" stroke="var(--yellow)" stroke-width="7"/>
+      </g>
+      <circle cx="20" cy="150" r="10" fill="var(--blue)" stroke="var(--ink)" stroke-width="3"/>
+      <circle cx="300" cy="150" r="22" fill="var(--yellow)" stroke="var(--ink)" stroke-width="4"/>
+      <g fill="var(--sheet)" stroke="var(--ink)" stroke-width="3">
+        <circle cx="560" cy="70" r="9"/><circle cx="660" cy="70" r="9"/><circle cx="760" cy="70" r="9"/><circle cx="860" cy="70" r="9"/>
+        <circle cx="600" cy="230" r="9"/><circle cx="780" cy="230" r="9"/>
+      </g>
+      <text class="yr" x="20" y="125">FIRST CLASS · 1962</text>
+      <text class="lbl" x="240" y="205" fill="var(--ink)">1973</text>
+      <text class="yr" x="480" y="40">ORIGINAL TIMELINE · OVERWRITTEN</text>
+      <text class="yr" x="530" y="102">X-MEN</text><text class="yr" x="645" y="102">X2</text><text class="yr" x="715" y="102">LAST STAND</text><text class="yr" x="815" y="102">WOLVERINE</text>
+      <text class="yr" x="480" y="285">NEW TIMELINE</text>
+      <text class="yr" x="550" y="262">APOCALYPSE · 1983</text><text class="yr" x="720" y="262">DARK PHOENIX · 1992</text>
+    </svg>
+  </figure>
+
+  <div class="controls">
+    <div role="group" aria-label="Sort order" class="tabs" id="views"></div>
+    <span class="hint" id="hint"></span>
+  </div>
+  <div class="filters">
+    <div class="chips" role="group" aria-label="Show" id="chips"></div>
+    <label class="check"><input type="checkbox" id="hideWatched"> Hide watched</label>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+
+  <section class="chart" id="chart"></section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="js/data/mcu.js"></script>
+<script src="js/data/spider.js"></script>
+<script src="js/data/mutant.js"></script>
+<script src="js/data/legacy.js"></script>
+<script src="js/posters.js"></script>
+<script src="js/core.js"></script>
+<script src="js/pages/timeline.js"></script>
+<script src="js/pages/features.js"></script>
+</body>
+</html>

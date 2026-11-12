@@ -1,0 +1,31 @@
+# Render Blueprint: one web service (Django serves the pages and the account API) plus a Postgres database.
+# Python version comes from .python-version in the repository root.
+# On first setup Render asks for the two admin values marked `sync: false`; they are never stored in the repository.
+services:
+  - type: web
+    name: marvel-archive
+    runtime: python
+    plan: free
+    buildCommand: >-
+      pip install -r backend/requirements.txt &&
+      cd backend &&
+      python manage.py collectstatic --no-input &&
+      python manage.py build_site &&
+      python manage.py migrate --no-input &&
+      python manage.py ensure_admin
+    startCommand: cd backend && gunicorn marvel_archive.wsgi:application
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: marvel-archive-db
+          property: connectionString
+      - key: DJANGO_ADMIN_USERNAME
+        sync: false
+      - key: DJANGO_ADMIN_PASSWORD
+        sync: false
+
+databases:
+  - name: marvel-archive-db
+    plan: free

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case File | The Marvel Archive</title>
+<meta name="description" content="A case file from The Marvel Archive: release date, story year, connections and watch order.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bungee&family=Libre+Franklin:ital,wght@0,400;0,600;0,800;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/archive.css">
+<link rel="stylesheet" href="css/dossier.css">
+<link rel="stylesheet" href="css/theme-programme.css">
+<script src="js/theme.js"></script>
+</head>
+<body>
+
+<main class="desk" id="main">
+  <div class="wrap" id="room">
+    <p class="crumbs"><a href="index.html">Archive</a> / <a id="crumbReality" href="mcu.html">Sacred Timeline</a> / <span id="crumb">File</span></p>
+
+    <article class="folder" id="folder" data-tab="FILE">
+      <div class="leaf-left">
+        <figure class="photo">
+          <span class="paperclip" aria-hidden="true"></span>
+          <div id="posterSlot"></div>
+          <figcaption>Exhibit A</figcaption>
+        </figure>
+        <div class="stamps" id="stamps"></div>
+        <button class="stamp-pad" type="button" id="stampPad" aria-pressed="false">Stamp as watched</button>
+      </div>
+      <span class="stamp big-stamp" aria-hidden="true">Watched</span>
+
+      <div class="leaf-right">
+        <div class="sheet">
+          <div class="sheet-tabs" role="tablist" aria-label="File sections">
+            <button role="tab" type="button" id="tab-file" data-tab="file" aria-selected="true" aria-controls="panel">File</button>
+            <button role="tab" type="button" id="tab-links" data-tab="links" aria-selected="false" aria-controls="panel">Connections</button>
+            <button role="tab" type="button" id="tab-order" data-tab="order" aria-selected="false" aria-controls="panel">Watch order</button>
+          </div>
+          <div class="sheet-head"><span id="fileNo">AGENCY FILE</span><span id="earth"></span></div>
+          <h1 id="title"></h1>
+          <div id="panel" role="tabpanel" aria-labelledby="tab-file"></div>
+        </div>
+      </div>
+    </article>
+
+    <nav class="pager" id="pager" aria-label="Neighbouring files"></nav>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="js/data/mcu.js"></script>
+<script src="js/data/spider.js"></script>
+<script src="js/data/mutant.js"></script>
+<script src="js/data/legacy.js"></script>
+<script src="js/posters.js"></script>
+<script src="js/core.js"></script>
+<script src="js/pages/dossier.js"></script>
+</body>
+</html>

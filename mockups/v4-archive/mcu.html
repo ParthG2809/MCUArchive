@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Sacred Timeline: The Marvel Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bungee&family=Libre+Franklin:ital,wght@0,400;0,600;0,800;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/archive.css">
+<style>
+/* ---------- page head ---------- */
+.head { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 70px); padding-top: 48px; align-items: start; }
+.head h1 { font: 400 clamp(52px, 7.4vw, 110px)/0.88 var(--f-head); margin: 20px 0 20px; }
+.head h1 span { display: block; color: var(--red); }
+.head p { max-width: 50ch; font-size: 18px; }
+
+/* index card = phase jump list */
+.index-card {
+  background: var(--sheet); border: var(--rule); box-shadow: var(--hard); transform: rotate(1deg);
+  background-image: linear-gradient(transparent 0 46px, var(--red) 46px 48px, transparent 48px), repeating-linear-gradient(transparent 0 33px, rgba(31,95,174,.25) 33px 34px);
+  background-position: 0 0, 0 14px;
+}
+.index-card h2 { font: 400 15px var(--f-sign); letter-spacing: .06em; padding: 14px 18px 0; height: 48px; }
+.index-card ol { list-style: none; padding: 0 0 10px; margin: 0; }
+.index-card button {
+  width: 100%; display: grid; grid-template-columns: 16px 1fr auto; gap: 12px; align-items: center; text-align: left;
+  background: none; border: 0; padding: 0 18px; height: 34px; font: 400 15px var(--f-type); color: var(--ink); cursor: pointer;
+}
+.index-card button:hover { background: rgba(245,197,24,.35); }
+.index-card button i { width: 14px; height: 18px; background: var(--c); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+.index-card button b { font-weight: 400; font-family: var(--f-sign); font-size: 13px; }
+
+/* ---------- divider-tab toggle ---------- */
+.controls { position: sticky; top: 0; z-index: 30; margin-top: 64px; background: var(--paper); border-bottom: var(--rule); display: flex; align-items: flex-end; gap: 6px; padding-top: 12px; }
+.controls .tab {
+  font: 400 15px var(--f-sign); letter-spacing: .04em; padding: 12px 20px 10px; border: var(--rule); border-bottom: 0; cursor: pointer;
+  background: var(--paper-3); color: var(--ink); clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 100%, 0 100%); padding-inline: 28px;
+}
+.controls .tab[aria-pressed="true"] { background: var(--manila); padding-top: 16px; }
+.controls .hint { margin-left: auto; font: 400 13px var(--f-type); padding-bottom: 10px; }
+
+/* ---------- the chart (TVA-style graph paper) ---------- */
+.chart {
+  position: relative; padding: 40px 0 60px;
+  background:
+    linear-gradient(rgba(31,95,174,.09) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, rgba(31,95,174,.09) 1px, transparent 1px) 0 0 / 24px 24px;
+}
+.chart::before { /* the Sacred Timeline itself */
+  content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 5px; transform: translateX(-50%);
+  background: var(--red); box-shadow: 2px 0 0 var(--ink);
+}
+.row { position: relative; display: grid; grid-template-columns: 1fr 110px 1fr; align-items: center; margin-bottom: 26px; }
+.row .record { grid-column: 1; grid-row: 1; justify-self: end; }
+.row.right .record { grid-column: 3; justify-self: start; }
+.node { grid-column: 2; grid-row: 1; justify-self: center; z-index: 2; display: grid; place-items: center; width: 82px; height: 82px; border-radius: 50%;
+  background: var(--sheet); border: var(--rule); box-shadow: inset 0 0 0 6px var(--stone); font: 400 17px var(--f-sign); text-align: center; line-height: 1; padding: 0 6px; }
+.node.text { font-size: 12px; }
+.row.nexus .node { border-radius: 0; background: var(--yellow); box-shadow: none; width: 96px; height: 96px;
+  clip-path: polygon(50% 0, 61% 18%, 82% 9%, 80% 31%, 100% 38%, 85% 53%, 98% 72%, 76% 74%, 72% 96%, 54% 83%, 36% 100%, 30% 79%, 8% 84%, 15% 63%, 0 48%, 18% 37%, 10% 16%, 32% 18%); border: 0; }
+/* connector from node to card */
+.row::after { content: ""; position: absolute; top: 50%; height: 3px; background: var(--ink); left: calc(50% - 60px); width: 60px; z-index: 1; }
+.row.right::after { left: 50%; }
+
+.divider { display: flex; align-items: stretch; margin: 60px 0 34px; position: relative; z-index: 2; scroll-margin-top: 80px; }
+.divider .tabmark { background: var(--stone); color: var(--sheet); border: var(--rule); padding: 10px 22px; font: 400 clamp(26px, 3.4vw, 42px)/1 var(--f-head); box-shadow: var(--hard-sm); text-shadow: 2px 2px 0 var(--ink); }
+.divider .meta { align-self: flex-end; margin-left: 14px; font: 400 15px var(--f-type); background: var(--paper); padding: 2px 6px; }
+
+/* record card */
+.record {
+  position: relative; width: min(100%, 470px); display: grid; grid-template-columns: 112px 1fr; gap: 16px;
+  background: var(--sheet); border: var(--rule); box-shadow: var(--hard); padding: 14px; border-top: 10px solid var(--stone);
+  transition: transform .2s, box-shadow .2s;
+}
+.record:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
+.record .poster { border: 2px solid var(--ink); }
+.clip { position: absolute; top: 4px; left: 30px; width: 18px; height: 46px; border: 3px solid #8C8C8C; border-radius: 10px; z-index: 3; }
+.record .kind { font: 400 12px var(--f-type); letter-spacing: .06em; text-transform: uppercase; color: #5C5245; }
+.record h3 { font: 400 24px/1.02 var(--f-head); margin: 4px 0 8px; }
+.record p { font-size: 14.5px; line-height: 1.45; }
+.redact { background: var(--ink); color: transparent; border-radius: 1px; -webkit-box-decoration-break: clone; box-decoration-break: clone; user-select: none; }
+.record .acts { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px; }
+.record .acts a { font: 800 13px var(--f-body); text-transform: uppercase; text-decoration: none; border-bottom: 3px solid var(--red); }
+.watch-btn { font: 400 12px var(--f-type); letter-spacing: .08em; text-transform: uppercase; background: none; border: 2px dashed #8A7E6C; padding: 4px 8px; cursor: pointer; color: #5C5245; }
+.watched-stamp { position: absolute; left: 6px; top: 40%; mix-blend-mode: normal; background: rgba(251,247,236,.88); font-size: 22px; padding: 4px 12px; transform: rotate(-14deg) scale(.6); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.3,1.6,.5,1), opacity .2s; }
+.record.is-watched .watched-stamp { opacity: .9; transform: rotate(-14deg) scale(1); }
+.record.is-watched .watch-btn { border-style: solid; border-color: var(--red); color: var(--red); }
+.record .burst { width: 86px; height: 86px; font-size: 12px; top: -34px; right: -24px; }
+.record.upcoming { border-style: dashed; border-top-style: solid; }
+
+@media (max-width: 860px) {
+  .head { grid-template-columns: 1fr; }
+  .chart::before { left: 34px; }
+  .row, .row.right { grid-template-columns: 68px 1fr; }
+  .row .record, .row.right .record { grid-column: 2; justify-self: stretch; width: auto; }
+  .node { grid-column: 1; width: 60px; height: 60px; font-size: 13px; }
+  .node.text { font-size: 10px; }
+  .row.nexus .node { width: 66px; height: 66px; }
+  .row::after, .row.right::after { display: none; }
+  .record { grid-template-columns: 84px 1fr; gap: 12px; }
+  .record .burst { right: -6px; }
+  .watched-stamp { font-size: 15px; top: 120px; left: 2px; }
+  .controls .hint { display: none; }
+  .controls .tab { padding-inline: 18px; font-size: 13px; }
+}
+</style>
+</head>
+<body data-page="mcu">
+
+<main class="wrap">
+  <section class="head">
+    <div>
+      <span class="caption">Records floor · Reality #1 · Earth-616</span>
+      <h1 class="misprint">The Sacred <span>Timeline</span></h1>
+      <p>The Marvel Cinematic Universe, filed by phase. Flip to story order to see where each film really sits in time. Spoilers in each file are blacked out until you open it.</p>
+    </div>
+    <nav class="index-card" aria-label="Jump to phase">
+      <h2>INDEX · PHASES</h2>
+      <ol id="phaseIndex"></ol>
+    </nav>
+  </section>
+
+  <div class="controls" role="group" aria-label="Order">
+    <button class="tab" type="button" data-order="release" aria-pressed="true">Release order</button>
+    <button class="tab" type="button" data-order="chrono" aria-pressed="false">Story order</button>
+    <span class="hint" id="hint">Filed as audiences saw them</span>
+  </div>
+
+  <section class="chart" id="chart" aria-live="polite"></section>
+</main>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="../shared/data.js"></script>
+<script src="js/archive.js"></script>
+<script>
+gsap.registerPlugin(Flip);
+renderChrome("mcu");
+
+const chart = document.getElementById("chart");
+let order = "release";
+
+const redacted = (text) => text.replace(/\[\[(.+?)\]\]/g, '<span class="redact" title="Spoiler: open the file to read">$1</span>');
+
+function recordRow(t, i) {
+  const d = DOSSIER[t.id];
+  const nodeLabel = order === "release" ? t.year : t.setIn;
+  const burst = t.upcoming ? '<span class="burst">Dec 18!</span>' : t.nexus ? '<span class="burst" style="--bg:var(--cyan)">Nexus event!</span>' : "";
+  return `<div class="row${i % 2 ? " right" : ""}${t.nexus ? " nexus" : ""}" data-flip-id="${t.id}" style="--stone:${stoneVar(t.phase)}">
+    <span class="node${String(nodeLabel).length > 5 ? " text" : ""}">${nodeLabel}</span>
+    <article class="record${watched.has(t.id) ? " is-watched" : ""}${t.upcoming ? " upcoming" : ""}" data-id="${t.id}">
+      ${burst}
+      <span class="clip" aria-hidden="true"></span>
+      <div class="poster" data-poster><img alt="${t.title} poster" data-wiki="${t.wiki}"><div class="fallback">${t.title}</div></div>
+      <div>
+        <span class="kind">File ${fileNo(t)} · ${t.type} · ${t.runtime}</span>
+        <h3>${t.title}</h3>
+        <p>${redacted(d.summary)}</p>
+        <div class="acts">
+          <a href="title.html?id=${t.id}">Open file →</a>
+          <button class="watch-btn" type="button" aria-pressed="${watched.has(t.id)}">${watched.has(t.id) ? "Watched" : "Mark watched"}</button>
+        </div>
+      </div>
+      <span class="stamp watched-stamp" aria-hidden="true">Watched</span>
+    </article>
+  </div>`;
+}
+
+function divider(phase, count) {
+  const s = PHASE_STONES[phase];
+  return `<div class="divider" id="phase-${phase}" data-flip-id="divider-${phase}" style="--stone:${stoneVar(phase)}">
+    <span class="tabmark">Phase ${PHASE_WORDS[phase]}</span><span class="meta">${s.stone} Stone · ${count} file${count > 1 ? "s" : ""}</span></div>`;
+}
+
+function render() {
+  const list = [...MCU_SAMPLE].sort((a, b) => a[order] - b[order]);
+  let html = "", lastPhase = 0;
+  list.forEach((t, i) => {
+    if (order === "release" && t.phase !== lastPhase) {
+      html += divider(t.phase, list.filter((x) => x.phase === t.phase).length);
+      lastPhase = t.phase;
+    }
+    html += recordRow(t, i);
+  });
+  chart.innerHTML = html;
+  hydratePosters(chart);
+}
+
+function renderIndex() {
+  document.getElementById("phaseIndex").innerHTML = Object.entries(PHASE_STONES).map(([n, s]) => {
+    const count = MCU_SAMPLE.filter((t) => t.phase == n).length;
+    return `<li><button type="button" data-phase="${n}" style="--c:${stoneVar(n)}"><i></i><span>Phase ${PHASE_WORDS[n]} · ${s.stone}</span><b>${count}</b></button></li>`;
+  }).join("");
+}
+
+/* order toggle with a FLIP re-file animation */
+document.querySelector(".controls").addEventListener("click", (e) => {
+  const tab = e.target.closest(".tab");
+  if (!tab || tab.dataset.order === order) return;
+  setOrder(tab.dataset.order);
+});
+function setOrder(next) {
+  document.querySelectorAll(".controls .tab").forEach((b) => b.setAttribute("aria-pressed", b.dataset.order === next));
+  document.getElementById("hint").textContent = next === "release" ? "Filed as audiences saw them" : "Filed by when the story happens";
+  const state = Flip.getState(".row, .divider");
+  order = next;
+  render();
+  Flip.from(state, {
+    targets: ".row, .divider", duration: prefersReducedMotion ? 0 : 0.85, ease: "power3.inOut", stagger: 0.02,
+    onEnter: (els) => gsap.fromTo(els, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5 }),
+    onLeave: (els) => gsap.to(els, { opacity: 0, duration: 0.25 }),
+  });
+}
+
+/* phase index jumps */
+document.getElementById("phaseIndex").addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (order !== "release") setOrder("release");
+  document.getElementById("phase-" + b.dataset.phase)?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
+});
+
+/* watched stamps */
+chart.addEventListener("click", (e) => {
+  const btn = e.target.closest(".watch-btn"); if (!btn) return;
+  const card = btn.closest(".record");
+  const on = toggleWatched(card.dataset.id);
+  card.classList.toggle("is-watched", on);
+  btn.setAttribute("aria-pressed", on);
+  btn.textContent = on ? "Watched" : "Mark watched";
+});
+
+renderIndex();
+render();
+if (!prefersReducedMotion) gsap.from(".row", { opacity: 0, y: 40, duration: 0.6, stagger: 0.06, ease: "power2.out", clearProps: "opacity,transform" });
+</script>
+</body>
+</html>

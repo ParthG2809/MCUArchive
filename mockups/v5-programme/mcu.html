@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup V5: The Programme (Sacred Timeline)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="programme.css">
+</head>
+<body>
+<header class="mast" data-mast></header>
+
+<main id="main">
+  <header class="listing-head">
+    <div class="wrap">
+      <p class="kicker">Programme I · Earth-616</p>
+      <h1>The Sacred <em>Timeline</em></h1>
+      <p class="lede">Every film, series and special of the Marvel Cinematic Universe. Select a title for its notes; punch the ticket once you've seen it.</p>
+      <div class="controls">
+        <div class="order" role="group" aria-label="Order">
+          <button type="button" data-order="release" aria-pressed="true">Release order</button>
+          <button type="button" data-order="chrono" aria-pressed="false">Story order</button>
+        </div>
+        <span class="count" id="count"></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap" id="listing"></div>
+</main>
+
+<div class="peek" id="peek" aria-hidden="true"></div>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="scrim" data-close></div>
+  <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="d-title" tabindex="-1">
+    <button type="button" class="close" data-close>Close</button>
+    <div id="d-body"></div>
+  </section>
+</div>
+
+<footer class="foot"><div class="wrap"><span>Mockup V5 · The Marvel Archive is an unofficial fan project. Posters © Marvel / Disney and their studios.</span><span>Excelsior.</span></div></footer>
+
+<script src="../../js/data/mcu.js"></script>
+<script src="../../js/data/spider.js"></script>
+<script src="../../js/data/mutant.js"></script>
+<script src="../../js/data/legacy.js"></script>
+<script src="../../js/posters.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="programme.js"></script>
+<script>
+masthead("mcu");
+
+const mcu = R.mcu;
+const byId = Object.fromEntries(mcu.titles.map((t) => [t.id, t]));
+let order = "release";
+
+function row(t, showDot) {
+  const up = !released(t);
+  const meta = [t.format === "Film" ? "Film" : t.format, t.length].filter(Boolean).join(" · ");
+  return `<li class="row${seen.has(t.id) ? " seen" : ""}" data-id="${t.id}" style="--c: var(--stone-${t.phase})">
+    <span class="yr">${t.released.slice(0, 4)}</span>
+    <button type="button" class="open" data-open="${t.id}">${showDot ? '<span class="dot" aria-hidden="true"></span>' : ""}${esc(t.title)}<small>${esc(meta)}</small></button>
+    <span class="tag${up ? " soon" : ""}">${up ? dateText(t.released) : esc(t.setIn || "")}</span>
+    <button type="button" class="punch" data-punch="${t.id}" aria-pressed="${seen.has(t.id)}" aria-label="Seen ${esc(t.title)}"${up ? " disabled" : ""}></button>
+  </li>`;
+}
+
+function chapterBar(n) {
+  const list = mcu.titles.filter((t) => t.phase == n && released(t));
+  return list.length ? (list.filter((t) => seen.has(t.id)).length / list.length) * 100 : 0;
+}
+
+function render() {
+  const el = document.getElementById("listing");
+  if (order === "release") {
+    el.innerHTML = Object.entries(mcu.phases).map(([n, p]) => {
+      const list = mcu.titles.filter((t) => t.phase == n).sort((a, b) => a.released.localeCompare(b.released));
+      return `<section class="chapter" style="--c: var(--stone-${n})">
+        <div class="chapter-label">
+          <div class="n">${n}</div>
+          <h2>Phase ${p.word}</h2>
+          <p>${p.stone} Stone · ${p.span}</p>
+          <div class="bar"><span style="width:${chapterBar(n)}%"></span></div>
+        </div>
+        <ol class="rows">${list.map((t) => row(t, false)).join("")}</ol>
+      </section>`;
+    }).join("");
+  } else {
+    el.innerHTML = `<section class="chapter" style="--c: var(--red)">
+      <div class="chapter-label"><div class="n">∞</div><h2>In story order</h2><p>Coloured dots mark each title's phase.</p></div>
+      <ol class="rows">${mcu.chrono.map((id) => row(byId[id], true)).join("")}</ol>
+    </section>`;
+  }
+  const done = mcu.titles.filter((t) => released(t) && seen.has(t.id)).length;
+  document.getElementById("count").textContent = `${mcu.titles.length} titles · ${done} seen`;
+  if (!reduceMotion) gsap.from("#listing .row", { opacity: 0, y: 10, duration: 0.4, stagger: 0.012, ease: "power2.out" });
+}
+
+document.querySelectorAll("[data-order]").forEach((b) => b.addEventListener("click", () => {
+  order = b.dataset.order;
+  document.querySelectorAll("[data-order]").forEach((x) => x.setAttribute("aria-pressed", x === b));
+  render();
+}));
+
+/* Punch a ticket. */
+document.addEventListener("click", (e) => {
+  const p = e.target.closest("[data-punch]");
+  if (!p) return;
+  const id = p.dataset.punch;
+  seen.has(id) ? seen.delete(id) : seen.add(id);
+  render(); masthead("mcu");
+});
+
+/* Hover a title to see its poster. */
+const peek = document.getElementById("peek");
+document.addEventListener("mousemove", (e) => {
+  const btn = e.target.closest("[data-open]");
+  if (!btn) { peek.classList.remove("on"); return; }
+  const t = byId[btn.dataset.open];
+  if (peek.dataset.id !== t.id) { peek.dataset.id = t.id; peek.innerHTML = poster(t); }
+  peek.style.left = Math.min(e.clientX + 28, innerWidth - 200) + "px";
+  peek.style.top = Math.min(Math.max(e.clientY - 135, 16), innerHeight - 290) + "px";
+  peek.classList.add("on");
+});
+
+/* Detail drawer (replaces the case-file page in this concept). */
+const drawer = document.getElementById("drawer");
+let lastFocus = null;
+function openDrawer(t) {
+  lastFocus = document.activeElement;
+  const p = mcu.phases[t.phase];
+  document.getElementById("d-body").innerHTML = `
+    <div class="top">
+      <div class="poster">${poster(t)}</div>
+      <div><p class="kicker" style="color: var(--stone-${t.phase})">Phase ${p.word} · ${p.stone} Stone</p><h2 id="d-title">${esc(t.title)}</h2></div>
+    </div>
+    <dl>
+      <dt>Released</dt><dd>${dateText(t.released)}</dd>
+      ${t.length ? `<dt>Length</dt><dd>${esc(t.length)}</dd>` : ""}
+      ${t.crew ? `<dt>Credit</dt><dd>${esc(t.crew.replace(/^Directed by /, "Dir. "))}</dd>` : ""}
+      ${t.setIn ? `<dt>Set in</dt><dd>${esc(t.setIn)}</dd>` : ""}
+    </dl>
+    <p class="summary">${redactable(t.summary)}</p>
+    ${t.note ? `<p class="note">${esc(t.note)}</p>` : ""}
+    ${released(t) ? `<button type="button" class="mark" data-punch="${t.id}" aria-pressed="${seen.has(t.id)}">${seen.has(t.id) ? "Seen it ✓" : "Mark as seen"}</button>` : ""}`;
+  drawer.classList.add("open");
+  drawer.setAttribute("aria-hidden", "false");
+  drawer.querySelector(".sheet").focus();
+  if (!reduceMotion) gsap.from(".drawer .sheet", { x: 60, opacity: 0, duration: 0.35, ease: "power3.out" });
+}
+function closeDrawer() {
+  drawer.classList.remove("open");
+  drawer.setAttribute("aria-hidden", "true");
+  lastFocus?.focus();
+}
+document.addEventListener("click", (e) => {
+  const o = e.target.closest("[data-open]");
+  if (o) openDrawer(byId[o.dataset.open]);
+  if (e.target.closest("[data-close]")) closeDrawer();
+  const m = e.target.closest(".drawer [data-punch]");
+  if (m) openDrawer(byId[m.dataset.punch]);
+});
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && drawer.classList.contains("open")) closeDrawer(); });
+
+render();
+</script>
+</body>
+</html>

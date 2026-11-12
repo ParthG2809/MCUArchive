@@ -1,0 +1,72 @@
+/* My Gauntlet page */
+
+.t-head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 64px); padding-top: 48px; align-items: end; }
+.t-head h1 { font: 400 clamp(52px, 7.4vw, 110px)/0.88 var(--f-head); margin: 20px 0; }
+.t-head h1 span { color: var(--red); }
+.t-head p { max-width: 50ch; font-size: 18px; }
+
+.score { background: var(--ink); color: var(--paper); border: var(--rule); box-shadow: 6px 6px 0 var(--red); padding: 22px 24px; display: grid; gap: 6px; transform: rotate(1deg); }
+.score b { font: 400 clamp(64px, 8vw, 104px)/0.9 var(--f-sign); color: var(--yellow); }
+.score span { font: 400 16px var(--f-type); }
+.score .score-pct { font: 400 22px var(--f-sign); color: var(--paper-2); }
+
+/* the six stones, set in a dark "glove" band */
+.glove { margin-top: 64px; background: var(--ink); color: var(--paper); border: var(--rule); box-shadow: var(--hard); padding: 28px clamp(16px, 3vw, 36px) 32px;
+  background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 12px, transparent 12px 24px); }
+.glove h2 { font: 400 clamp(30px, 3.6vw, 46px)/1 var(--f-head); color: var(--yellow); }
+.glove-sub { font: 400 15px var(--f-type); margin-top: 8px; color: var(--paper-2); }
+.stones { list-style: none; padding: 0; margin: 28px 0 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; }
+.stone { display: grid; justify-items: center; gap: 6px; text-align: center; position: relative; }
+.gem {
+  width: min(100%, 92px); aspect-ratio: 3 / 4; position: relative; overflow: hidden; background: #3A342C;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+.gem::after { /* fills from the bottom with progress */
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--p) * 100%);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--c) 55%, #fff), var(--c) 55%);
+  transition: height .8s cubic-bezier(.2,.8,.2,1);
+}
+.stone.full .gem { filter: drop-shadow(0 0 14px var(--c)); }
+.stone b { font: 400 18px var(--f-sign); color: var(--c); }
+.stone span { font: 400 13px var(--f-type); color: var(--paper-2); }
+.stone .claimed { position: absolute; top: 30%; font: 400 13px var(--f-type); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); background: var(--yellow); border: 2px solid var(--ink); padding: 2px 8px; transform: rotate(-10deg); }
+
+.t-title { font: 400 clamp(30px, 3.6vw, 46px)/1 var(--f-head); margin: 72px 0 8px; padding-bottom: 10px; border-bottom: var(--rule); }
+.t-sub { font: 400 15px var(--f-type); margin-bottom: 22px; }
+
+/* progress bars, styled like comic panels */
+.bars { display: grid; gap: 14px; margin-top: 22px; }
+.bar-row { display: grid; grid-template-columns: 220px 1fr 70px; gap: 16px; align-items: center; text-decoration: none; padding: 8px 0; }
+.bar-name { font: 400 20px/1.1 var(--f-head); }
+.bar-row:hover .bar-name { text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 3px; }
+.bar-track { height: 26px; border: var(--rule); background: var(--sheet); box-shadow: var(--hard-sm); position: relative; overflow: hidden; }
+.bar-track i { position: absolute; inset: 0 auto 0 0; background: var(--c); background-image: radial-gradient(circle, rgba(0,0,0,.18) 1px, transparent 1.5px); background-size: 6px 6px; transition: width .6s; }
+.bar-count { font: 400 18px var(--f-sign); text-align: right; }
+
+/* up next */
+.next { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.next-card { position: relative; background: var(--sheet); border: var(--rule); box-shadow: var(--hard); padding: 14px; display: grid; gap: 8px; align-content: start; }
+.next-card .poster { border: 2px solid var(--ink); }
+.next-card h3 { font: 400 20px/1.05 var(--f-head); }
+.next-card h3 a { text-decoration: none; }
+.next-card h3 a:hover { text-decoration: underline; }
+.next-meta { font: 400 13px var(--f-type); }
+.next-reality { position: absolute; top: -14px; left: 12px; z-index: 2; background: var(--yellow); border: 2px solid var(--ink); font: 400 12px var(--f-sign); padding: 3px 8px; }
+.next-card .btn { justify-self: start; font-size: 12px; padding: 8px 12px; }
+.next-card.done { align-content: center; justify-items: start; min-height: 200px; }
+.next-card.done b { font: 400 22px var(--f-head); }
+
+.danger .btn { background: var(--sheet); }
+.danger .btn:hover { background: var(--red); color: var(--sheet); }
+
+@media (max-width: 900px) {
+  .t-head { grid-template-columns: 1fr; }
+  .stones { grid-template-columns: repeat(3, 1fr); }
+  .next { grid-template-columns: repeat(2, 1fr); }
+  .bar-row { grid-template-columns: 1fr 64px; }
+  .bar-name { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+  .next { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .next-card h3 { font-size: 16px; }
+}
