@@ -1,8 +1,11 @@
 /* Site theme: "deck" (Command Deck, the default), "archive" (printed comic) or "programme" (dark cinema programme).
    Loaded synchronously in <head> so the saved theme is applied before the page is drawn (no flash).
-   First visit: Command Deck, until the visitor picks a theme. A saved choice is always kept. */
+   Everyone starts on Command Deck until they pick a theme; that choice is then kept.
+   The storage key is versioned: choices saved before Deck became the default (owner decision 2026-11-19)
+   used the old key, which is ignored and cleared, so every returning visitor sees Deck once. */
 (function () {
-  const KEY = "marvel-archive:theme";
+  const KEY = "marvel-archive:theme-v2";
+  try { localStorage.removeItem("marvel-archive:theme"); } catch { /* storage unavailable */ }
   const THEMES = ["deck", "archive", "programme"];
   const DEFAULT_THEME = "deck";
   // Each theme's extra fonts are only downloaded once that theme is actually used.

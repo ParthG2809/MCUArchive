@@ -47,7 +47,8 @@ render.yaml         Render Blueprint (web service + Postgres); admin created by 
   (1 Space blue, 2 Mind yellow, 3 Reality red, 4 Power purple, 5 Time green, 6 Soul orange).
 - Avoid generic "AI" patterns: no mono eyebrow labels everywhere, no rounded card grids, no blur glows.
 - Must work at phone width, keep keyboard focus visible, and respect `prefers-reduced-motion`.
-- Three themes share one set of markup, chosen in the masthead switch (saved per browser):
+- Three themes share one set of markup, chosen in the masthead switch (saved per browser in `marvel-archive:theme-v2`;
+  the old `marvel-archive:theme` key is ignored and cleared so every visitor started on Deck once, owner decision 2026-11-19):
   "Command Deck" (DEFAULT, owner decision 2026-11-19: graphite + dot grid, chamfered panels, slashed edges, split-weight condensed
   titles, one "power colour" taken from the data), "The Archive" (comic) and "The Programme" (dark cinema programme).
   Design reference for Deck: `mockups/v6-deck/system.html`.

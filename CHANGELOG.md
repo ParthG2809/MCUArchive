@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-19: Deck for returning visitors
+- `js/theme.js`: theme choice now saved under `marvel-archive:theme-v2`; the old key is ignored and removed, so visitors who had
+  picked Archive or Programme before also start on Command Deck. Choices made from now on are remembered. Watch lists unaffected.
+
 ## 2026-11-19: Step 9 (synopses and typography)
 - All 161 `summary` fields rewritten as original premise-only synopses (2–4 sentences, no endings or twists, no `[[ ]]` markup).
   Before Doomsday notes in `js/pages/doomsday.js` rewritten without spoilers.
