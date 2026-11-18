@@ -55,9 +55,7 @@
 .field { display: grid; grid-template-columns: 96px 1fr; border-bottom: 1px solid #CDBF9F; padding: 8px 0; font: 400 15px var(--f-type); }
 .field span { color: #7A6E5C; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding-top: 2px; }
 .summary-label { margin: 26px 0 8px; font: 400 12px var(--f-type); letter-spacing: .1em; text-transform: uppercase; color: #7A6E5C; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.summary { font: 400 18px/1.7 var(--f-type); }
-.redact { background: var(--ink); color: transparent; cursor: pointer; border: 0; font: inherit; padding: 0 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background .3s, color .3s; }
-.redact.open { background: rgba(245,197,24,.55); color: var(--ink); cursor: text; }
+.summary { font: 400 17px/1.75 var(--f-type); max-width: 64ch; }
 .note {
   position: relative; margin: 26px 0 0 auto; width: fit-content; max-width: 34ch; font: 400 17px/1.35 var(--f-type);
   color: var(--red); transform: rotate(-2deg); padding-left: 34px;

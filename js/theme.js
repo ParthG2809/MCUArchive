@@ -1,11 +1,15 @@
-/* Site theme: "archive" (the printed-comic design) or "programme" (the dark cinema-programme design).
+/* Site theme: "deck" (Command Deck, the default), "archive" (printed comic) or "programme" (dark cinema programme).
    Loaded synchronously in <head> so the saved theme is applied before the page is drawn (no flash).
-   First visit: follows the device's light/dark setting until the visitor picks a theme. */
+   First visit: Command Deck, until the visitor picks a theme. A saved choice is always kept. */
 (function () {
   const KEY = "marvel-archive:theme";
-  const THEMES = ["archive", "programme"];
-  const PROGRAMME_FONTS = "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Public+Sans:wght@400;500;600;700&display=swap";
-  const darkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+  const THEMES = ["deck", "archive", "programme"];
+  const DEFAULT_THEME = "deck";
+  // Each theme's extra fonts are only downloaded once that theme is actually used.
+  const THEME_FONTS = {
+    deck: "https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Big+Shoulders+Display:wght@300;500;800;900&display=swap",
+    programme: "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Public+Sans:wght@400;500;600;700&display=swap",
+  };
 
   function savedTheme() {
     try {
@@ -14,19 +18,18 @@
     } catch { return null; }
   }
 
-  // The Programme fonts are only downloaded once that theme is actually used.
-  function loadProgrammeFonts() {
-    if (document.getElementById("programme-fonts")) return;
+  function loadThemeFonts(theme) {
+    if (!THEME_FONTS[theme] || document.getElementById(`${theme}-fonts`)) return;
     const link = document.createElement("link");
-    link.id = "programme-fonts";
+    link.id = `${theme}-fonts`;
     link.rel = "stylesheet";
-    link.href = PROGRAMME_FONTS;
+    link.href = THEME_FONTS[theme];
     document.head.appendChild(link);
   }
 
   function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
-    if (theme === "programme") loadProgrammeFonts();
+    loadThemeFonts(theme);
     document.dispatchEvent(new CustomEvent("themechange", { detail: theme }));
   }
 
@@ -39,8 +42,5 @@
     },
   };
 
-  applyTheme(savedTheme() || (darkScheme.matches ? "programme" : "archive"));
-  darkScheme.addEventListener?.("change", (e) => {
-    if (!savedTheme()) applyTheme(e.matches ? "programme" : "archive");
-  });
+  applyTheme(savedTheme() || DEFAULT_THEME);
 })();

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design System · Mockup V6 Command Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Big+Shoulders+Display:wght@300;500;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="deck.css">
+<style>
+  .sys-head { padding-block: var(--s8) var(--s7); border-bottom: 1px solid var(--line); }
+  .sys-head h1 { font-size: var(--t-h1); margin: var(--s4) 0 var(--s5); }
+  .sys-head p { max-width: 62ch; color: var(--text-2); font-size: 18px; }
+  .sys-head .bar { margin-top: var(--s5); }
+
+  .block { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: var(--s7); padding-block: var(--s8); border-bottom: 1px solid var(--line); }
+  .block-label .n { font: 900 64px/.8 var(--f-display); color: var(--signal); }
+  .block-label h2 { font: 800 28px/1 var(--f-display); text-transform: uppercase; letter-spacing: .04em; margin-top: var(--s3); }
+  .block-label p { margin-top: var(--s3); font-size: 14px; color: var(--text-3); }
+  .sub { margin: var(--s6) 0 var(--s4); }
+  .sub:first-child { margin-top: 0; }
+  .note { font-size: 14px; color: var(--text-3); max-width: 62ch; margin-top: var(--s3); }
+
+  .principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--s5); list-style: none; }
+  .principles li { padding: var(--s5); background: var(--deck); border-top: 3px solid var(--power); }
+  .principles b { display: block; font: 800 22px/1.05 var(--f-display); text-transform: uppercase; letter-spacing: .03em; margin-bottom: var(--s2); }
+  .principles span { font-size: 15px; color: var(--text-2); }
+
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: var(--s3); }
+  .sw { background: var(--deck); }
+  .sw i { display: block; height: 72px; background: var(--c); box-shadow: inset 0 0 0 1px var(--line); }
+  .sw b { display: block; padding: 10px 12px 2px; font: 700 13px/1.2 var(--f-body); }
+  .sw code { display: block; padding: 0 12px 12px; font: 500 12px/1.3 var(--f-body); color: var(--text-3); }
+
+  .type-row { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: var(--s5); align-items: baseline; padding-block: var(--s4); border-bottom: 1px solid var(--line); }
+  .type-row:last-child { border-bottom: 0; }
+  .type-row .label { line-height: 1.4; }
+
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4); }
+  .shape-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--s5); }
+  .shape-demo > div { background: var(--deck); padding: var(--s5); }
+  .shape-demo .chamfer-box { height: 96px; background: var(--deck-3); clip-path: polygon(var(--cut-lg) 0, 100% 0, 100% calc(100% - var(--cut-lg)), calc(100% - var(--cut-lg)) 100%, 0 100%, 0 var(--cut-lg)); }
+  .shape-demo .slash-box { height: 96px; background: var(--deck-3); clip-path: polygon(0 0, 100% 0, 100% 62%, 0 100%); }
+  .shape-demo .grid-box { height: 96px; background: radial-gradient(circle, rgba(243,241,238,.2) 1px, transparent 1.4px) 0 0 / 14px 14px, var(--deck-2); }
+  .shape-demo p { margin-top: var(--s3); font-size: 14px; color: var(--text-2); }
+
+  .rail-demo { display: grid; grid-template-columns: 260px 56px; gap: 0; background: var(--deck); width: fit-content; max-width: 100%; }
+  .rail-demo .stack { display: grid; gap: 2px; }
+
+  .power-demo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s6); align-items: center; background: var(--deck); padding: var(--s6); transition: --power .3s; }
+  .power-demo h3 { font-size: clamp(40px, 5vw, 72px); margin: var(--s3) 0 var(--s4); }
+  .power-picker { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s5); }
+  .power-picker button { width: 40px; height: 40px; background: var(--c); clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
+  .power-picker button[aria-pressed="true"] { outline: 2px solid var(--text); outline-offset: 2px; clip-path: none; }
+
+  @media (max-width: 860px) {
+    .block { grid-template-columns: 1fr; gap: var(--s5); padding-block: var(--s7); }
+    .type-row { grid-template-columns: 1fr; gap: var(--s2); }
+    .power-demo { grid-template-columns: 1fr; padding: var(--s5); }
+  }
+</style>
+</head>
+<body>
+<header class="mast" data-mast></header>
+
+<main id="main">
+  <section class="sys-head wrap">
+    <p class="label">Mockup V6 · Design system</p>
+    <h1 class="split stack"><span>Command</span> <b>Deck</b></h1>
+    <p>A briefing screen in a hero tower. Graphite and a fine dot grid, panels with cut corners, sections that end on a slash, tall split-weight titles, and one power colour that floods whatever is active. The power colour always comes from the data: a title's Infinity Stone phase, or its reality.</p>
+    <span class="bar"></span>
+  </section>
+
+  <section class="block wrap">
+    <div class="block-label"><div class="n">01</div><h2>Principles</h2></div>
+    <ul class="principles">
+      <li><b>One power colour</b><span>Each screen has one accent, set from the content. Everything active borrows it: rail item, tab, button, bar.</span></li>
+      <li><b>Cut, never round</b><span>Corners are chamfered and section edges are slashed. No rounded cards, no pills.</span></li>
+      <li><b>Heavy meets thin</b><span>Titles pair a 900 weight with a 300 weight in tall condensed type, so even long Marvel titles stay on screen.</span></li>
+      <li><b>Posters carry the colour</b><span>Inactive posters are greyscale; the selected one comes back in full colour.</span></li>
+      <li><b>No glow</b><span>Depth comes from contrast, slashes and the dot grid. No blurred glows or glass.</span></li>
+    </ul>
+  </section>
+
+  <section class="block wrap">
+    <div class="block-label"><div class="n">02</div><h2>Colour</h2><p>Text colours are checked against <code>--void</code> for at least 4.5:1 contrast.</p></div>
+    <div>
+      <h3 class="label sub">Surfaces &amp; text</h3>
+      <div class="swatches" id="swSurface"></div>
+      <h3 class="label sub">Signal &amp; Infinity Stones (phase power colours)</h3>
+      <div class="swatches" id="swStones"></div>
+      <h3 class="label sub">Realities</h3>
+      <div class="swatches" id="swReal"></div>
+    </div>
+  </section>
+
+  <section class="block wrap">
+    <div class="block-label"><div class="n">03</div><h2>Type</h2><p>Big Shoulders Display (300–900) for display and numbers. Barlow for text and labels.</p></div>
+    <div>
+      <div class="type-row"><span class="label">Hero · 176</span><p class="split" style="font-size: var(--t-hero)"><span>Infinity</span> <b>War</b></p></div>
+      <div class="type-row"><span class="label">H1 · 120</span><p class="split" style="font-size: var(--t-h1)"><b>Iron</b> <span>Man</span></p></div>
+      <div class="type-row"><span class="label">H2 · 64</span><p class="split" style="font-size: var(--t-h2)"><b>Choose your reality</b></p></div>
+      <div class="type-row"><span class="label">H3 · 32</span><p style="font: 800 var(--t-h3)/1.05 var(--f-display); text-transform: uppercase; letter-spacing: .03em">Guardians of the Galaxy Vol. 3</p></div>
+      <div class="type-row"><span class="label">Stat · 88</span><div class="stat"><b>161</b></div></div>
+      <div class="type-row"><span class="label">Body · 16 / 1.6</span><p style="max-width: 60ch; color: var(--text-2)">Steve Rogers becomes a super-soldier to fight HYDRA in the Second World War. Body copy is Barlow at 16px, set in the secondary text colour so titles stay loudest.</p></div>
+      <div class="type-row"><span class="label">Label · 12 tracked</span><p class="label">Phase One · Space Stone · File 0005</p></div>
+    </div>
+  </section>
+
+  <section class="block wrap">
+    <div class="block-label"><div class="n">04</div><h2>Shape</h2></div>
+    <div class="shape-demo">
+      <div><div class="chamfer-box"></div><p><b>Chamfer.</b> <code>--cut</code> 14px on buttons, 28px on large panels.</p></div>
+      <div><div class="slash-box"></div><p><b>Slash.</b> Sections end on a 5vw diagonal; the next section's art can overlap it.</p></div>
+      <div><div class="grid-box"></div><p><b>Dot grid.</b> The page surface: 1px dots every 22px at 7% opacity.</p></div>
+    </div>
+  </section>
+
+  <section class="block wrap">
+    <div class="block-label"><div class="n">05</div><h2>Components</h2></div>
+    <div>
+      <h3 class="label sub">Buttons</h3>
+      <div class="row">
+        <a class="btn primary" href="#">Open case file <span class="arrow">›</span></a>
+        <a class="btn" href="#">Story order</a>
+        <button class="btn" type="button" aria-pressed="true">Watched ✓</button>
+        <a class="link-more" href="#">See all files ››</a>
+        <button class="icon-btn" type="button" aria-label="Previous">↑</button>
+        <button class="icon-btn" type="button" aria-label="Next">↓</button>
+      </div>
+
+      <h3 class="label sub">Tags &amp; pennants</h3>
+      <div class="row">
+        <span class="tag"><i></i>Film</span><span class="tag"><i></i>Series</span><span class="tag hot">Upcoming</span>
+        <span class="pennant" style="--power: var(--stone-1)">1</span>
+        <span class="pennant" style="--power: var(--stone-4)">4</span>
+        <span class="pennant line" style="--power: var(--stone-6)">6</span>
+      </div>
+
+      <h3 class="label sub">Stats, countdown, progress</h3>
+      <div class="row" style="gap: var(--s7); align-items: flex-start">
+        <div class="stat"><b>65</b><span>MCU files, Phase One to Six</span></div>
+        <div class="countdown" aria-label="Countdown example"><div><b>29</b><span class="label">Days</span></div><div><b>04</b><span class="label">Hrs</span></div><div><b>51</b><span class="label">Min</span></div></div>
+      </div>
+      <div class="meter" style="--n: 15; max-width: 420px; margin-top: var(--s5)" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+      <h3 class="label sub">Thumbnail rail + vertical tabs</h3>
+      <div class="rail-demo">
+        <div class="stack" id="railDemo"></div>
+        <div class="vtabs">
+          <button class="vtab" type="button" style="--c: var(--stone-1)" aria-pressed="true">Phase One</button>
+          <button class="vtab" type="button" style="--c: var(--stone-2)" aria-pressed="false">Phase Two</button>
+          <button class="vtab" type="button" style="--c: var(--stone-3)" aria-pressed="false">Phase Three</button>
+        </div>
+      </div>
+      <p class="note">The active rail item comes back to full colour and floods with the power colour; inactive items stay greyscale. A small diamond marks titles already watched.</p>
+    </div>
+  </section>
+
+  <section class="block wrap">
+    <div class="block-label"><div class="n">06</div><h2>Power colour</h2><p>Pick a stone: the whole card re-themes from one variable.</p></div>
+    <div class="power-demo" id="powerDemo">
+      <div>
+        <p class="label" id="powerLabel">Phase Three · Reality Stone</p>
+        <h3 class="split stack" id="powerTitle"><span>Avengers</span> <b>Endgame</b></h3>
+        <span class="bar"></span>
+        <div class="power-picker" role="group" aria-label="Power colour" id="picker"></div>
+      </div>
+      <div class="row" style="justify-content: flex-start">
+        <a class="btn primary" href="#">Mark watched</a>
+        <span class="tag"><i></i>Film</span>
+        <span class="pennant">3</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap"><span>Mockup V6 · Command Deck. Proposal only; the live site is unchanged.</span><span>Excelsior.</span></div></footer>
+
+<script src="../../js/data/mcu.js"></script>
+<script src="../../js/data/spider.js"></script>
+<script src="../../js/data/mutant.js"></script>
+<script src="../../js/data/legacy.js"></script>
+<script src="../../js/posters.js"></script>
+<script src="deck.js"></script>
+<script>
+masthead("system");
+
+const swatch = (name, c, note = "") => `<div class="sw" style="--c: var(${c})"><i></i><b>${name}</b><code>${c}${note ? " · " + note : ""}</code></div>`;
+document.getElementById("swSurface").innerHTML = [
+  ["Void", "--void", "page"], ["Deck", "--deck", "panel"], ["Deck 2", "--deck-2"], ["Deck 3", "--deck-3"],
+  ["Text", "--text"], ["Text 2", "--text-2"], ["Text 3", "--text-3"],
+].map((s) => swatch(...s)).join("");
+document.getElementById("swStones").innerHTML = [["Signal", "--signal", "brand"], ...Object.entries(R.mcu.phases).map(([n, p]) => [`${p.stone}`, `--stone-${n}`, `Phase ${p.word}`])]
+  .map((s) => swatch(...s)).join("");
+document.getElementById("swReal").innerHTML = [["MCU", "--r-mcu"], ["Spider-Verse", "--r-spider"], ["Mutant", "--r-mutant"], ["Legacy", "--r-legacy"]].map((s) => swatch(...s)).join("");
+
+const demo = ["iron-man", "incredible-hulk", "thor"].map((id) => R.mcu.titles.find((t) => t.id === id));
+document.getElementById("railDemo").innerHTML = demo.map((t, i) =>
+  `<button class="rail-item" type="button" style="--c: var(--stone-1)" aria-current="${i === 0}">${poster(t)}<span class="y">${t.released.slice(0, 4)}</span><span class="t">${esc(t.title)}</span>${seen.has(t.id) ? '<i class="seen" aria-label="watched"></i>' : ""}</button>`).join("");
+
+const picker = document.getElementById("picker");
+const powerDemo = document.getElementById("powerDemo");
+picker.innerHTML = Object.entries(R.mcu.phases).map(([n, p]) =>
+  `<button type="button" style="--c: var(--stone-${n})" aria-pressed="${n === "3"}" aria-label="${p.stone} Stone" data-n="${n}"></button>`).join("");
+powerDemo.style.setProperty("--power", "var(--stone-3)");
+picker.addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  const p = R.mcu.phases[b.dataset.n];
+  powerDemo.style.setProperty("--power", `var(--stone-${b.dataset.n})`);
+  powerDemo.querySelector(".pennant").textContent = b.dataset.n;
+  document.getElementById("powerLabel").textContent = `Phase ${p.word} · ${p.stone} Stone`;
+  // show a real film from the picked phase (its last released one), so the sample stays accurate
+  const film = R.mcu.titles.filter((t) => String(t.phase) === b.dataset.n && t.format === "Film" && released(t)).pop()
+    || R.mcu.titles.find((t) => String(t.phase) === b.dataset.n);
+  document.getElementById("powerTitle").innerHTML = splitTitle(film.title);
+  picker.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+});
+</script>
+</body>
+</html>

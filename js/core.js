@@ -76,18 +76,6 @@ function escapeHTML(value) {
   return String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-/* Spoilers are written as [[text]] in the data.
-   "bar"    -> static black bar (timeline cards)
-   "button" -> click/keyboard-to-reveal (case files) */
-function renderSpoilers(text, mode = "bar") {
-  const safe = escapeHTML(text);
-  return safe.replace(/\[\[(.+?)\]\]/g, (_, hidden) =>
-    mode === "button"
-      ? `<span class="redact" role="button" tabindex="0" aria-label="Hidden spoiler. Select to reveal">${hidden}</span>`
-      : `<span class="redact" aria-label="spoiler hidden">${hidden}</span>`
-  );
-}
-
 /* ---------- posters ---------- */
 function posterHTML(t, { decorative = true } = {}) {
   const alt = decorative ? "" : `${escapeHTML(t.title)} poster`;
@@ -319,6 +307,7 @@ function renderChrome(activeKey) {
 
 /* ---------- theme switch (js/theme.js applies the theme; this is the masthead control) ---------- */
 const THEMES = [
+  { key: "deck",      label: "Deck",      title: "Command Deck: hero-tower theme (default)" },
   { key: "archive",   label: "Archive",   title: "The Archive: printed-comic theme" },
   { key: "programme", label: "Programme", title: "The Programme: dark cinema theme" },
 ];

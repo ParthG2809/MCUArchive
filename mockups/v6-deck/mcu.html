@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sacred Timeline · Mockup V6 Command Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Big+Shoulders+Display:wght@300;500;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="deck.css">
+<style>
+  /* The deck: [thumbnail rail] [stage] [phase tabs] */
+  .deck {
+    display: grid; grid-template-columns: 280px minmax(0, 1fr) 56px;
+    height: calc(100vh - 69px); min-height: 640px; max-height: 920px;
+    border-bottom: 1px solid var(--line); background: var(--void);
+  }
+  .deck > * { min-width: 0; }
+  .rail { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; border-right: 1px solid var(--line); background: var(--deck); min-height: 0; }
+  .rail-head { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 16px 14px; border-bottom: 1px solid var(--line); }
+  .rail-head b { font: 800 18px/1 var(--f-display); text-transform: uppercase; letter-spacing: .04em; color: var(--power); }
+  .rail-list { overflow-y: auto; display: grid; align-content: start; gap: 2px; scrollbar-width: thin; scrollbar-color: var(--deck-3) transparent; }
+  .rail-foot { display: flex; align-items: center; gap: 2px; border-top: 1px solid var(--line); }
+  .rail-foot .label { flex: 1; padding-left: 16px; }
+
+  .stage { position: relative; overflow: hidden; display: grid; grid-template-rows: auto minmax(0, 1fr); }
+  .stage-art { position: absolute; inset: 0 0 0 38%; }
+  .stage-art img, .stage-art .fallback { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+  .stage-art::after { /* fade the poster into the deck, and tint it with the power colour */
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, var(--void) 0%, rgba(10,10,14,.75) 30%, rgba(10,10,14,.15) 70%, rgba(10,10,14,.55) 100%),
+      linear-gradient(0deg, var(--void) 0%, transparent 35%),
+      linear-gradient(135deg, color-mix(in srgb, var(--power) 30%, transparent), transparent 55%);
+  }
+  .stage-art .ghost-word { position: absolute; left: -30%; bottom: 6%; z-index: 1; }
+
+  .stage-top { position: relative; z-index: 2; display: flex; align-items: center; gap: 28px; padding: 0 clamp(20px, 4vw, 56px); border-bottom: 1px solid var(--line); }
+  .order { display: flex; gap: 26px; }
+  .order button { position: relative; padding: 20px 0 18px; font: 600 12px/1 var(--f-body); letter-spacing: .16em; text-transform: uppercase; color: var(--text-3); }
+  .order button[aria-pressed="true"] { color: var(--text); }
+  .order button[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--power); }
+  .frame-no { margin-left: auto; font: 800 18px/1 var(--f-display); letter-spacing: .08em; color: var(--text-2); font-variant-numeric: tabular-nums; }
+  .frame-no span { color: var(--text-3); font-weight: 500; }
+
+  .stage-body { position: relative; z-index: 2; align-self: center; max-width: 620px; padding: var(--s6) clamp(20px, 4vw, 56px); }
+  .stage-body h1 { font-size: clamp(54px, 7vw, 116px); margin: var(--s4) 0 var(--s5); overflow-wrap: anywhere; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--s5); }
+  .summary { margin-top: var(--s5); font-size: 17px; color: var(--text-2); max-width: 54ch; }
+  .crew { margin-top: var(--s3); font-size: 14px; color: var(--text-3); }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s5); margin-top: var(--s6); }
+
+  .phase-rail { display: flex; flex-direction: column; background: var(--deck); }
+  .phase-rail .vtabs { flex: 1; }
+
+  /* entering animation for the stage */
+  .stage-body.enter > * { animation: rise .5s var(--ease) both; }
+  .stage-body.enter > *:nth-child(2) { animation-delay: .04s; } .stage-body.enter > *:nth-child(3) { animation-delay: .08s; }
+  .stage-body.enter > *:nth-child(4) { animation-delay: .12s; } .stage-body.enter > *:nth-child(5) { animation-delay: .16s; }
+  .stage-art.enter img { animation: drift .7s var(--ease) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+  @keyframes drift { from { opacity: 0; transform: translateX(40px) scale(1.04); } }
+
+  .below { padding-block: var(--s8); }
+  .below p { color: var(--text-2); max-width: 70ch; }
+  .keys { display: flex; flex-wrap: wrap; gap: var(--s5); margin-top: var(--s4); }
+  .keys kbd { display: inline-grid; place-items: center; min-width: 28px; height: 28px; padding: 0 6px; margin-right: 6px; font: 700 12px var(--f-body); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-2); }
+
+  /* phone & tablet: phase tabs on top, stage, then a horizontal rail */
+  @media (max-width: 900px) {
+    .deck { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; height: auto; max-height: none; min-height: 0; }
+    .phase-rail { order: 1; }
+    .phase-rail .vtabs { flex-direction: row; overflow-x: auto; scrollbar-width: none; border-left: 0; border-bottom: 1px solid var(--line); }
+    .phase-rail .vtab { writing-mode: horizontal-tb; transform: none; min-height: 44px; width: auto; flex: none; padding: 0 16px; border-top: 0; border-right: 1px solid var(--line); }
+    .stage { order: 2; min-height: 560px; }
+    .stage-art { inset: 0; opacity: .55; }
+    .stage-art::after { background: linear-gradient(0deg, var(--void) 8%, rgba(10,10,14,.6) 55%, rgba(10,10,14,.3)), linear-gradient(135deg, color-mix(in srgb, var(--power) 30%, transparent), transparent 60%); }
+    .stage-body { align-self: end; }
+    .rail { order: 3; grid-template-rows: auto auto auto; border-right: 0; }
+    .rail-list { display: flex; overflow-x: auto; overflow-y: hidden; gap: 2px; }
+    .rail-list .rail-item { flex: 0 0 168px; height: 96px; }
+    .rail-foot { display: none; }
+  }
+  @media (max-width: 480px) {
+    .stage-top { gap: 16px; }
+    .order { gap: 18px; }
+    .actions .btn { flex: 1; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<header class="mast" data-mast></header>
+
+<main id="main">
+  <section class="deck" id="deck" aria-label="Sacred Timeline">
+    <aside class="rail" aria-label="Titles in this phase">
+      <div class="rail-head"><b id="railTitle"></b><span class="label" id="railCount"></span></div>
+      <div class="rail-list" id="railList"></div>
+      <div class="rail-foot">
+        <span class="label">Scroll</span>
+        <button class="icon-btn" type="button" id="prev" aria-label="Previous title">↑</button>
+        <button class="icon-btn" type="button" id="next" aria-label="Next title">↓</button>
+      </div>
+    </aside>
+
+    <article class="stage" aria-live="polite">
+      <div class="stage-top">
+        <div class="order" role="group" aria-label="Order">
+          <button type="button" data-order="release" aria-pressed="true">Release order</button>
+          <button type="button" data-order="story" aria-pressed="false">Story order</button>
+        </div>
+        <p class="frame-no" id="frameNo"></p>
+      </div>
+      <div class="stage-art" id="stageArt" aria-hidden="true"></div>
+      <div class="stage-body" id="stageBody"></div>
+    </article>
+
+    <nav class="phase-rail" aria-label="Phases"><div class="vtabs" id="phaseTabs"></div></nav>
+  </section>
+
+  <section class="wrap below">
+    <h2 class="split" style="font-size: var(--t-h2)"><b>How</b> <span>the deck works</span></h2>
+    <span class="bar" style="margin: var(--s4) 0"></span>
+    <p>Pick a phase on the right; its titles fill the rail on the left in that phase's Infinity Stone colour. The selected title takes over the stage with its poster, details and a watched toggle. Story order flattens the rail into one long run through MCU history.</p>
+    <div class="keys"><span><kbd>↑</kbd><kbd>↓</kbd>previous / next title</span><span><kbd>←</kbd><kbd>→</kbd>previous / next phase</span></div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap"><span>Mockup V6 · Command Deck. Proposal only; the live site is unchanged. Posters © their studios.</span><span>Excelsior.</span></div></footer>
+
+<script src="../../js/data/mcu.js"></script>
+<script src="../../js/data/spider.js"></script>
+<script src="../../js/data/mutant.js"></script>
+<script src="../../js/data/legacy.js"></script>
+<script src="../../js/posters.js"></script>
+<script src="deck.js"></script>
+<script>
+masthead("mcu");
+
+const mcu = R.mcu;
+const byRelease = [...mcu.titles].sort((a, b) => a.released.localeCompare(b.released));
+const byStory = (mcu.chrono || []).map((id) => mcu.titles.find((t) => t.id === id)).filter(Boolean);
+const state = { order: "release", phase: "1", index: 0 };
+
+const deck = document.getElementById("deck");
+const list = () => state.order === "story" ? byStory : byRelease.filter((t) => String(t.phase) === state.phase);
+const current = () => list()[state.index];
+
+function renderTabs() {
+  document.getElementById("phaseTabs").innerHTML = Object.entries(mcu.phases).map(([n, p]) =>
+    `<button class="vtab" type="button" data-phase="${n}" style="--c: var(--stone-${n})" aria-pressed="${state.order === "release" && n === state.phase}">Phase ${esc(p.word)}</button>`).join("");
+  // On phones the tabs scroll sideways: keep the active one in view (without scrolling the page).
+  const tabs = document.getElementById("phaseTabs");
+  const active = tabs.querySelector('[aria-pressed="true"]');
+  if (active && tabs.scrollWidth > tabs.clientWidth) tabs.scrollLeft = active.offsetLeft - 16;
+}
+
+function renderRail() {
+  const items = list();
+  document.getElementById("railTitle").textContent = state.order === "story" ? "Story order" : `Phase ${mcu.phases[state.phase].word}`;
+  document.getElementById("railCount").textContent = `${items.length} files`;
+  document.getElementById("railList").innerHTML = items.map((t, i) =>
+    `<button class="rail-item" type="button" data-i="${i}" style="--c: var(--stone-${t.phase})" aria-current="${i === state.index}">
+      ${poster(t)}<span class="y">${state.order === "story" ? esc(t.setIn || "—") : t.released.slice(0, 4)}</span><span class="t">${esc(t.title)}</span>
+      ${seen.has(t.id) ? '<i class="seen"></i><span class="sr-only">, watched</span>' : ""}
+    </button>`).join("");
+}
+
+function renderStage() {
+  const t = current();
+  const p = mcu.phases[t.phase];
+  deck.style.setProperty("--power", `var(--stone-${t.phase})`);
+  const items = list();
+  document.getElementById("frameNo").innerHTML = `${pad(state.index + 1)} <span>/ ${pad(items.length)}</span>`;
+  const art = document.getElementById("stageArt");
+  art.innerHTML = `${poster(t)}<span class="ghost-word">${esc(t.title.split(/:\s*|\s/).pop())}</span>`;
+  const up = !released(t);
+  document.getElementById("stageBody").innerHTML = `
+    <p class="label">Phase ${esc(p.word)} · ${esc(p.stone)} Stone${t.setIn ? ` · Set in ${esc(t.setIn)}` : ""}</p>
+    <h1 class="split stack">${splitTitle(t.title)}</h1>
+    <span class="bar"></span>
+    <div class="meta">
+      <span class="tag"><i></i>${esc(t.format)}</span>
+      <span class="tag">${t.released.slice(0, 4)}</span>
+      ${t.length ? `<span class="tag">${esc(t.length)}</span>` : ""}
+      ${up ? `<span class="tag hot">Upcoming · ${dateText(t.released)}</span>` : ""}
+    </div>
+    <div><p class="summary">${redactable(t.summary)}</p>${t.crew ? `<p class="crew">${esc(t.crew)}</p>` : ""}</div>
+    <div class="actions">
+      ${up ? "" : `<button class="btn${seen.has(t.id) ? "" : " primary"}" type="button" id="markBtn" aria-pressed="${seen.has(t.id)}">${seen.has(t.id) ? "Watched ✓" : "Mark watched"}</button>`}
+      <a class="link-more" href="#">Open case file ››</a>
+    </div>`;
+  if (!reduceMotion) {
+    for (const el of [document.getElementById("stageBody"), art]) { el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); }
+  }
+  document.getElementById("prev").disabled = state.index === 0;
+  document.getElementById("next").disabled = state.index === items.length - 1;
+}
+
+function select(i, focusRail = false) {
+  state.index = Math.max(0, Math.min(list().length - 1, i));
+  document.querySelectorAll("#railList .rail-item").forEach((b) => b.setAttribute("aria-current", +b.dataset.i === state.index));
+  const active = document.querySelector(`#railList [data-i="${state.index}"]`);
+  active?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: reduceMotion ? "auto" : "smooth" });
+  if (focusRail) active?.focus();
+  renderStage();
+}
+
+function render() { renderTabs(); renderRail(); renderStage(); }
+
+document.getElementById("railList").addEventListener("click", (e) => {
+  const b = e.target.closest(".rail-item"); if (b) select(+b.dataset.i);
+});
+document.getElementById("prev").addEventListener("click", () => select(state.index - 1));
+document.getElementById("next").addEventListener("click", () => select(state.index + 1));
+document.getElementById("phaseTabs").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-phase]"); if (!b) return;
+  state.order = "release"; state.phase = b.dataset.phase; state.index = 0;
+  document.querySelectorAll(".order button").forEach((x) => x.setAttribute("aria-pressed", x.dataset.order === "release"));
+  render();
+});
+document.querySelector(".order").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-order]"); if (!b || b.dataset.order === state.order) return;
+  const keep = current();
+  state.order = b.dataset.order;
+  if (state.order === "release") state.phase = String(keep.phase);
+  state.index = Math.max(0, list().indexOf(keep));
+  document.querySelectorAll(".order button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+  render();
+});
+document.getElementById("stageBody").addEventListener("click", (e) => {
+  if (!e.target.closest("#markBtn")) return;
+  const t = current();
+  seen.has(t.id) ? seen.delete(t.id) : seen.add(t.id);
+  renderRail(); renderStage(); masthead("mcu");
+});
+document.addEventListener("keydown", (e) => {
+  if (e.target.closest("input, textarea") || e.altKey || e.ctrlKey || e.metaKey) return;
+  if (e.key === "ArrowDown") { e.preventDefault(); select(state.index + 1, true); }
+  if (e.key === "ArrowUp") { e.preventDefault(); select(state.index - 1, true); }
+  if (state.order === "release" && (e.key === "ArrowRight" || e.key === "ArrowLeft")) {
+    const keys = Object.keys(mcu.phases);
+    const n = keys[(keys.indexOf(state.phase) + (e.key === "ArrowRight" ? 1 : keys.length - 1)) % keys.length];
+    state.phase = n; state.index = 0; render();
+  }
+});
+
+render();
+</script>
+</body>
+</html>

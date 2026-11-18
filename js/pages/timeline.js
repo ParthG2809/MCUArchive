@@ -69,7 +69,7 @@ function rowHTML(entry, i) {
         <span class="kind">${escapeHTML(meta)}</span>
         <h3><a class="title-link" href="title.html?id=${t.id}">${escapeHTML(t.title)}</a></h3>
         <div class="tags">${tagsHTML(entry)}</div>
-        <p>${renderSpoilers(t.summary)}</p>
+        <p>${escapeHTML(t.summary)}</p>
         <div class="acts">
           <a href="title.html?id=${t.id}" aria-hidden="true" tabindex="-1">Open file →</a>
           ${upcoming ? "" : `<button class="watch-btn" type="button" aria-pressed="${isWatched}" title="${isWatched ? "Watched" : "Mark watched"}">${isWatched ? "Watched" : "Mark watched"}</button>`}

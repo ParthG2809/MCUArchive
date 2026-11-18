@@ -1,12 +1,12 @@
 # Project status: The Marvel Archive
 
-_Last updated: 2026-11-12 (step 7: live on Render)_
+_Last updated: 2026-11-19 (step 9: synopses and typography)_
 
 **Live site:** https://marvel-archive.onrender.com (Render free plan, Blueprint `marvel-archive`, deploys automatically from `main`).
 
 ## Objective
 A frontend-only, multi-page fan site cataloguing every Marvel film and series on four timelines (MCU, Spider-Verse,
-Mutant/X-Men, Legacy), with release/story order, spoiler-safe case files and a personal watch tracker. To be deployed on Vercel.
+Mutant/X-Men, Legacy), with release/story order, case files with spoiler-free synopses and a personal watch tracker. Deployed on Render.
 
 ## Architecture
 Static HTML pages + shared `css/archive.css` design system + `js/core.js` + one data file per reality in `js/data/`.
@@ -84,6 +84,26 @@ Total: 161 titles (158 released as of 2026-11-12).
 - Not checked on the live site: signing up / saving a watch list and the admin login (no test accounts are created on the production site;
   the owner should try both once).
 
+## Design proposal (2026-11-18): mockup V6 "Command Deck"
+- `mockups/v6-deck/`: `system.html` (design system: principles, colour, type, shape, components, power-colour demo),
+  `index.html` (lobby) and `mcu.html` (timeline as a thumbnail rail + stage + vertical phase tabs). Reads the real data; mockup only.
+- Inspired by four owner-supplied references (cast-selector rail, slashed landing sections, condensed villain type). Left out on purpose:
+  gambling content and a DC character in one reference, and blur glows / rounded glass (project design rules).
+- Fonts: Big Shoulders Display + Barlow (Google Fonts). Checked at 1440px and 375px; no horizontal scroll; screenshots in `mockups/v6-deck/screens/`.
+- Decided 2026-11-19: V6 is now the main theme (see step 8 below).
+
+## Step 8 (2026-11-19): Command Deck is the main theme (local only; not committed or deployed)
+- Owner decisions: Deck is the default for every first-time visitor; Archive and Programme stay in the switch; timelines get the
+  full rail + stage layout. Visitors who already picked a theme keep it.
+- New `css/theme-deck.css` (all pages) and `js/pages/timeline-deck.js` (deck timeline for MCU, Spider-Verse, Mutant, Legacy).
+  `js/theme.js` now has three themes, Deck as default, fonts per theme. Lobby has a Deck-only stats band (computed from data).
+- Verified at 1440px and 375px in the Deck theme: lobby, all four timelines (Sacred Timeline and Spider-Verse clicked through),
+  case file, My Gauntlet, Doomsday, account (on the Django server) and 404. No horizontal scroll on phones.
+  Switching themes swaps deck and list views and keeps the watched list in sync. Archive and Programme unchanged. Backend tests: 16 pass.
+- Not yet checked: Mutant and Legacy decks clicked through by hand (same code as Spider-Verse), keyboard-only use of the deck
+  beyond ↑/↓, live motion with the browser visible (animations were fast-forwarded in testing).
+- The followed-device default (dark → Programme) was replaced by the Deck default.
+
 ## Known limitations / decisions
 - Story order exists only for the MCU. Other realities offer "by series/lane" and release order.
 - Story-order positions for Phase 4–6 follow common viewing guides; many later titles say "Post-Blip" instead of a year.
@@ -115,3 +135,11 @@ Total: 161 titles (158 released as of 2026-11-12).
    Decide free vs paid plan first. After the first deploy, check the site, sign-up and /admin/ on the onrender.com address.
    Optional later: password reset by email, saving the theme to the account.
 3. Optional: J.A.R.V.I.S. search (Ctrl+K), character threads, more legacy titles from the list above.
+
+## Verified (2026-11-19, step 9: synopses and typography)
+- `scripts/check_data.py`: 161 titles, 0 structure or cross-reality problems; `js/posters.js` unchanged. Backend tests: 16 pass.
+- All 161 synopses are premise-only (no endings), no `[[ ]]` markup and no `.redact` elements left on any page.
+- Static preview (port 5610): lobby, MCU timeline (Deck stage and list view) and case file checked in Deck, Archive and Programme at 1440px and 375px.
+  No horizontal scroll, no console errors (only the expected `/api/me` 404 on the static server). Screenshots in `mockups/screens-typography/`.
+- Synopses for titles released after the archive's research cut-off (Spider-Man: Brand New Day, VisionQuest, X-Men '97 season 2, Spider-Noir)
+  and unreleased titles describe only the announced premise and cast.

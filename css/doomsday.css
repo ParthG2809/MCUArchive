@@ -48,9 +48,7 @@
 .dossier h3 a { text-decoration: none; }
 .dossier h3 a:hover { text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 3px; }
 .dossier-meta { margin-top: 4px; font: 600 13px var(--f-body); color: var(--ink-2); }
-.dossier-why { margin-top: 8px; font: 400 15px/1.45 var(--f-type); max-width: 70ch; }
-.dossier-why .redact { background: var(--ink); color: transparent; cursor: pointer; padding: 0 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-.dossier-why .redact.open { background: rgba(245,197,24,.55); color: var(--ink); cursor: text; }
+.dossier-why { margin-top: 8px; font: 400 16px/1.55 var(--f-type); max-width: 68ch; }
 .dossier-mark { font-size: 12px; padding: 8px 12px; white-space: nowrap; }
 .dossier-mark[aria-pressed="true"] { background: var(--doom); color: var(--paper); }
 

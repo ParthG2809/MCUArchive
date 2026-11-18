@@ -3,7 +3,7 @@
    The 15 entries come from Marvel's "Countdown to Avengers: Doomsday" collection on Disney+ (published August 2026).
    Published copies of that list agree on the titles but not on the order, so they are shown in release order.
    "Loki" is one entry on Marvel's list and covers both seasons, so it maps to two archive ids.
-   Each `why` note is our own; keep it to facts about the film and confirmed Doomsday cast. [[...]] marks a spoiler. */
+   Each `why` note is our own; keep it to facts about the film and confirmed Doomsday cast. */
 
 renderChrome("doomsday");
 
@@ -12,17 +12,17 @@ const BRIEFING = [
   { ids: ["x2"], why: "Continues the same Fox X-Men story with the same core cast." },
   { ids: ["first-avenger"], why: "Steve Rogers becomes Captain America. Start here for the shield and everyone who has carried it since." },
   { ids: ["avengers"], why: "The team assembles for the first time, with Thor and Loki on opposite sides." },
-  { ids: ["infinity-war"], why: "The first Avengers film from Anthony and Joe Russo, who also direct Doomsday. [[Thanos wins.]]" },
-  { ids: ["endgame"], why: "Closes the Infinity Saga [[and passes Captain America's shield to Sam Wilson]]." },
-  { ids: ["loki-s1", "loki-s2"], title: "Loki (Seasons 1–2)", why: "The multiverse explained: the TVA, branching timelines and [[He Who Remains]]. Tom Hiddleston is confirmed for Doomsday." },
-  { ids: ["shang-chi"], why: "Introduces Shang-Chi (Simu Liu, confirmed for Doomsday), and [[ends with the Ten Rings sending out a mysterious signal]]." },
-  { ids: ["no-way-home"], why: "The multiverse cracks open, and [[the whole world forgets Peter Parker]]." },
-  { ids: ["multiverse-of-madness"], why: "Travels the multiverse and [[names the threat of an incursion in its mid-credits scene]]." },
-  { ids: ["wakanda-forever"], why: "[[Shuri becomes the new Black Panther]] and Namor arrives. Letitia Wright and Tenoch Huerta Mejía are both confirmed for Doomsday." },
+  { ids: ["infinity-war"], why: "Thanos hunts the Infinity Stones in the first Avengers film from Anthony and Joe Russo, who also direct Doomsday." },
+  { ids: ["endgame"], why: "Closes the Infinity Saga, the story that began with Iron Man in 2008." },
+  { ids: ["loki-s1", "loki-s2"], title: "Loki (Seasons 1–2)", why: "The multiverse explained: the TVA, branching timelines and the variants of Kang. Tom Hiddleston is confirmed for Doomsday." },
+  { ids: ["shang-chi"], why: "Introduces Shang-Chi (Simu Liu, confirmed for Doomsday), and the Ten Rings." },
+  { ids: ["no-way-home"], why: "The multiverse cracks open, bringing visitors from other Spider-Man films." },
+  { ids: ["multiverse-of-madness"], why: "Doctor Strange travels the multiverse and meets other versions of himself." },
+  { ids: ["wakanda-forever"], why: "Wakanda after T'Challa, and the arrival of Namor. Letitia Wright and Tenoch Huerta Mejía are both confirmed for Doomsday." },
   { ids: ["deadpool-wolverine"], why: "The Fox mutant universe crashes into the MCU, and Channing Tatum's Gambit, confirmed for Doomsday, finally reaches the screen." },
   { ids: ["brave-new-world"], why: "Sam Wilson's first film as Captain America, with Joaquin Torres as the new Falcon." },
-  { ids: ["thunderbolts"], why: "Yelena, Bucky, Red Guardian, Ghost, John Walker and Bob form an unlikely team, [[later announced as the New Avengers]]." },
-  { ids: ["first-steps"], why: "The Fantastic Four of Earth-828, all four confirmed for Doomsday. [[A credits scene brings Doctor Doom into the story.]]" },
+  { ids: ["thunderbolts"], why: "Yelena, Bucky, Red Guardian, Ghost, John Walker and Bob form an unlikely team." },
+  { ids: ["first-steps"], why: "The Fantastic Four of Earth-828, all four confirmed for Doomsday." },
 ]
   .map((entry) => ({ ...entry, titles: entry.ids.map(titleById).filter(Boolean) }))
   .filter((entry) => {
@@ -95,7 +95,7 @@ function renderList() {
       <div class="dossier-body">
         <h3><a href="title.html?id=${first.id}">${escapeHTML(title)}</a></h3>
         <p class="dossier-meta">${metaLine(entry)}</p>
-        <p class="dossier-why">${renderSpoilers(entry.why, "button")}</p>
+        <p class="dossier-why">${escapeHTML(entry.why)}</p>
       </div>
       <button class="btn dossier-mark" type="button" data-mark="${entry.ids.join(" ")}" aria-pressed="${done}">
         ${done ? "Watched ✓" : "Stamp watched"}<span class="sr-only">: ${escapeHTML(title)}</span>
@@ -111,17 +111,8 @@ function renderAll() {
   renderList();
 }
 
-function revealSpoiler(spoiler) {
-  spoiler.classList.add("open");
-  spoiler.removeAttribute("role");
-  spoiler.removeAttribute("tabindex");
-  spoiler.removeAttribute("aria-label");
-}
-
 const list = document.getElementById("dossiers");
 list.addEventListener("click", (e) => {
-  const spoiler = e.target.closest(".redact:not(.open)");
-  if (spoiler) { revealSpoiler(spoiler); return; }
   const button = e.target.closest("[data-mark]");
   if (!button) return;
   const ids = button.dataset.mark.split(" ");
@@ -130,10 +121,6 @@ list.addEventListener("click", (e) => {
   saveWatched();
   renderAll();
   list.querySelector(`[data-mark="${ids.join(" ")}"]`)?.focus();
-});
-list.addEventListener("keydown", (e) => {
-  const spoiler = e.target.closest(".redact:not(.open)");
-  if (spoiler && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); revealSpoiler(spoiler); }
 });
 
 renderAll();

@@ -59,6 +59,18 @@ if (recentSeries) {
   ticket.hidden = false;
 }
 
+/* ---------- archive in numbers (shown by the Command Deck theme only), computed from the data ---------- */
+const releasedFilmMinutes = REALITIES.mcu.titles
+  .filter((t) => t.format === "Film" && isReleased(t, now) && /min/.test(t.length || ""))
+  .reduce((sum, t) => sum + parseInt(t.length, 10), 0);
+const firstYear = Math.min(...ALL_TITLES.map((t) => +releaseYear(t)));
+document.getElementById("deckStats").innerHTML = [
+  [ALL_TITLES.length, "films & series on file"],
+  [Object.keys(REALITIES).length, "realities, each with its own continuity"],
+  [Math.round(releasedFilmMinutes / 60), "hours of MCU films released so far"],
+  [now.getFullYear() - firstYear, `years of Marvel on screen, since ${firstYear}`],
+].map(([n, label]) => `<div class="deck-stat"><b>${n}</b><span>${escapeHTML(label)}</span></div>`).join("");
+
 /* ---------- doors ---------- */
 document.querySelectorAll("[data-count]").forEach((el) => (el.textContent = entriesOf(REALITIES[el.dataset.count]).length));
 hydratePosters();

@@ -78,7 +78,7 @@ a { color: inherit; }
   flex: none; display: grid; place-items: center; width: 64px; height: 72px; text-decoration: none;
   border: var(--rule); background: var(--sheet); box-shadow: var(--hard-sm); line-height: 1;
 }
-.cornerbox small { font: 400 10px var(--f-type); }
+.cornerbox small { font: 400 11px var(--f-type); }
 .cornerbox b { font: 400 30px var(--f-sign); color: var(--red); }
 .logo { text-decoration: none; font: 400 clamp(28px, 4vw, 46px)/0.9 var(--f-head); color: var(--red); letter-spacing: -.01em; text-transform: uppercase; }
 .logo span { display: block; font: 400 12px var(--f-type); color: var(--ink); letter-spacing: .12em; margin-top: 6px; text-shadow: none; }
@@ -188,7 +188,7 @@ a { color: inherit; }
   .mast-tools { order: -1; gap: 10px; } /* sits beside the 616 box; the logo wraps to its own line */
   .cornerbox b { font-size: 21px; }
   .logo { font-size: 25px; min-width: 0; }
-  .logo span { font-size: 10px; letter-spacing: .06em; }
+  .logo span { font-size: 11px; letter-spacing: .06em; }
   .misprint { text-shadow: 2px 1px 0 var(--cyan), -1px -1px 0 rgba(216,38,30,.85); }
 }
 @media (max-width: 900px) {

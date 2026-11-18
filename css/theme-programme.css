@@ -96,8 +96,6 @@
     background: linear-gradient(160deg, color-mix(in srgb, var(--stone, var(--red)) 30%, var(--house-3)), var(--house-2) 75%);
   }
 
-  & .redact { background: var(--bone-3); color: transparent; }
-  & .redact.open { background: transparent; color: var(--red-soft); }
 
   & .chip {
     font: 600 13px var(--f-body); text-transform: none; letter-spacing: 0;
@@ -191,7 +189,7 @@
   & .section-title { margin: clamp(64px, 8vw, 104px) 0 0; padding-bottom: 20px; border-bottom: 1px solid var(--line-strong); gap: 14px; }
   & .section-title h2 { font: 700 clamp(34px, 4.6vw, 60px)/1 var(--f-head); letter-spacing: -.02em; }
   & .section-title .num { font: italic 500 clamp(34px, 4.6vw, 60px)/1 var(--f-head); color: var(--red); }
-  & .section-title p { font: 400 15px var(--f-body); color: var(--bone-2); }
+  & .section-title p { font: 400 16px/1.55 var(--f-body); color: var(--bone-2); }
 
   /* reality doors -> a numbered programme listing: label, title, blurb, poster */
   & .doors { display: block; }
@@ -296,7 +294,7 @@
   & .record .kind::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--stone); margin-right: 8px; vertical-align: 1px; }
   & .record h3 { font: 700 clamp(21px, 2.1vw, 28px)/1.15 var(--f-head); letter-spacing: -.01em; margin: 4px 0 6px; }
   & .record h3 .title-link:hover { text-decoration: none; color: var(--red-soft); }
-  & .record p { font-size: 15px; color: var(--bone-2); max-width: 72ch; }
+  & .record p { font-size: 15.5px; line-height: 1.6; color: var(--bone-2); max-width: 68ch; }
   & .record.is-watched h3 { color: var(--bone-3); }
   & .record .acts { position: absolute; top: 18px; right: 4px; margin: 0; }
 
@@ -384,7 +382,7 @@
   & .field span { color: var(--bone-3); font-size: 13px; letter-spacing: 0; text-transform: none; }
   & .summary-label { font: 500 13px var(--f-body); letter-spacing: 0; text-transform: none; color: var(--bone-3); }
   & .summary-label a { color: var(--bone-2); }
-  & .summary { font: 400 21px/1.5 var(--f-head); }
+  & .summary { font: 400 19px/1.6 var(--f-head); max-width: 62ch; }
   & .note {
     margin: 22px 0 0; width: auto; max-width: 60ch; transform: none; padding-left: 16px; border-left: 3px solid var(--red);
     font: italic 400 16px/1.5 var(--f-body); color: var(--bone-2);
@@ -472,7 +470,7 @@
   & .field-row input { font: 400 17px var(--f-body); color: var(--bone); background: var(--house); border: 1px solid var(--line-strong); }
   & .field-row input:focus-visible { border-color: var(--bone); }
   & .field-row input[aria-invalid="true"] { border-color: var(--red-soft); background: var(--house); }
-  & .field-hint { font: 400 13px/1.45 var(--f-body); color: var(--bone-3); }
+  & .field-hint { font: 400 14px/1.5 var(--f-body); color: var(--bone-3); }
   & .field-error, & .form-error { color: var(--red-soft); font-weight: 600; }
   & .card-note { font: 400 14px/1.5 var(--f-body); color: var(--bone-3); }
   & .card-note a { color: var(--bone-2); }
@@ -519,7 +517,7 @@
   & .dossier h3 { font: 700 clamp(21px, 2.1vw, 28px)/1.1 var(--f-head); letter-spacing: -.01em; }
   & .dossier h3 a:hover { text-decoration: none; color: var(--red-soft); }
   & .dossier-meta { font: 500 13px var(--f-body); color: var(--bone-3); }
-  & .dossier-why { font: 400 15px/1.55 var(--f-body); color: var(--bone-2); }
+  & .dossier-why { font: 400 16px/1.6 var(--f-body); color: var(--bone-2); }
   & .dossier-mark { font-size: 13px; padding: 9px 14px; }
   & .dossier-mark[aria-pressed="true"] { background: transparent; color: var(--doom-light); border-color: var(--doom-light); }
   & .dossier.done { background: none; }

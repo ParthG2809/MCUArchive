@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-11-19: Step 9 (synopses and typography)
+- All 161 `summary` fields rewritten as original premise-only synopses (2–4 sentences, no endings or twists, no `[[ ]]` markup).
+  Before Doomsday notes in `js/pages/doomsday.js` rewritten without spoilers.
+- Redaction removed: `renderSpoilers` deleted from `js/core.js`; summaries rendered with `escapeHTML`; reveal handlers removed from
+  `dossier.js`, `doomsday.js`, `timeline-deck.js`; `.redact` CSS removed; case-file label is now "Synopsis"; MCU intro no longer mentions blacked-out spoilers.
+- Typography: Deck labels 12px with .12em tracking (was 11px/.16–.18em), `--text-3` lightened to #8F8D99 for 4.5:1 contrast on raised panels,
+  body copy 15–18px at 1.55–1.7 line height, display titles .86–.95. Archive and Programme card/summary sizes and line heights adjusted.
+- Deck stage body scrolls inside the fixed-height deck on desktop if a synopsis runs long.
+- Archive timeline cards at phone width: poster floats so text uses the full card width; fixes long titles pushing cards past the screen edge.
+- Screenshots in `mockups/screens-typography/`.
+
+## 2026-11-19: Step 8 (Command Deck becomes the main theme)
+- New `css/theme-deck.css` and `js/pages/timeline-deck.js`; linked on every page / every timeline page.
+- `js/theme.js`: themes deck / archive / programme, Deck default for new visitors; theme fonts load per theme.
+- `js/core.js`: switch gains "Deck" (first). `index.html` + `js/pages/lobby.js`: Deck-only stats band.
+- Screenshots in `mockups/screens-deck-theme/`.
+
+## 2026-11-18: Mockup V6 "Command Deck"
+- New design proposal in `mockups/v6-deck/` (deck.css, deck.js, system.html, index.html, mcu.html, screens/). Live site unchanged.
+
 ## 2026-11-12: Step 7 (live)
 - Deployed to Render: https://marvel-archive.onrender.com.
 - `.gitignore`: ignores `.secrets/` (local generated credentials).

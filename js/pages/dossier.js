@@ -78,8 +78,8 @@ function renderFile(t) {
         ${field("Length", t.length)}
         ${field("Credits", t.crew, true)}
       </div>
-      <p class="summary-label"><span>Summary</span>${t.summary.includes("[[") ? "<span>Spoilers redacted. Click a bar to declassify.</span>" : ""}</p>
-      <p class="summary">${renderSpoilers(t.summary, "button")}</p>
+      <p class="summary-label"><span>Synopsis</span></p>
+      <p class="summary">${escapeHTML(t.summary)}</p>
       ${t.note ? `<p class="note">Agent's note: ${escapeHTML(t.note)}</p>` : ""}
       ${alsoIn.length ? `<p class="summary-label"><span>Also filed in: ${alsoIn.map((r) => `<a href="${r.page}">${escapeHTML(r.name)}</a>`).join(", ")}</span></p>` : ""}`,
     links: () => connections.length ? `
@@ -110,20 +110,6 @@ function renderFile(t) {
   document.querySelector(".sheet-tabs").addEventListener("click", (e) => {
     const tab = e.target.closest("[role=tab]");
     if (tab) showTab(tab.dataset.tab);
-  });
-  const reveal = (spoiler) => {
-    spoiler.classList.add("open");
-    spoiler.removeAttribute("role");
-    spoiler.removeAttribute("tabindex");
-    spoiler.removeAttribute("aria-label");
-  };
-  panel.addEventListener("click", (e) => {
-    const spoiler = e.target.closest(".redact:not(.open)");
-    if (spoiler) reveal(spoiler);
-  });
-  panel.addEventListener("keydown", (e) => {
-    const spoiler = e.target.closest(".redact:not(.open)");
-    if (spoiler && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); reveal(spoiler); }
   });
   showTab("file");
 

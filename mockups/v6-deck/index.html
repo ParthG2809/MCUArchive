@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lobby · Mockup V6 Command Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Big+Shoulders+Display:wght@300;500;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="deck.css">
+<style>
+  /* hero: next film, slashed bottom edge, poster breaking out of it */
+  .hero { position: relative; background: var(--deck); overflow: visible; }
+  .hero-bg { position: absolute; inset: 0; overflow: hidden; clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--slash)), 0 100%); background: linear-gradient(115deg, var(--deck) 45%, color-mix(in srgb, var(--power) 22%, var(--deck))); }
+  .hero-bg .ghost-word { position: absolute; right: -2vw; bottom: 4vw; }
+  .hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: var(--s7); align-items: center; padding-block: var(--s8) calc(var(--slash) + var(--s7)); }
+  .hero h1 { font-size: var(--t-hero); margin: var(--s4) 0 var(--s5); }
+  .hero .lede { max-width: 46ch; color: var(--text-2); font-size: 18px; margin-top: var(--s5); }
+  .hero .countdown { margin-top: var(--s6); }
+  .hero .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s5); margin-top: var(--s6); }
+  .hero-art { position: relative; justify-self: center; width: min(100%, 400px); margin-bottom: calc(-1 * var(--s9)); z-index: 2; }
+  .hero-art .frame { aspect-ratio: 2 / 3; background: var(--deck-3); clip-path: polygon(var(--cut-lg) 0, 100% 0, 100% calc(100% - var(--cut-lg)), calc(100% - var(--cut-lg)) 100%, 0 100%, 0 var(--cut-lg)); }
+  .hero-art .frame img, .hero-art .frame .fallback { width: 100%; height: 100%; object-fit: cover; }
+  .hero-art .pennant { position: absolute; top: -8px; right: 28px; z-index: 1; }
+  .hero-art figcaption { display: flex; justify-content: space-between; gap: 12px; margin-top: var(--s3); }
+
+  /* stats band */
+  .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s5); padding-block: var(--s9) var(--s8); }
+  .stats .stat { padding-left: var(--s4); border-left: 1px solid var(--line-2); }
+
+  /* realities: four slanted panels that lock together */
+  .realities { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; height: 520px; }
+  .door {
+    --power: var(--c); --tilt: 44px;
+    position: relative; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; text-decoration: none;
+    margin-left: calc(-1 * var(--tilt) / 2); margin-right: calc(-1 * var(--tilt) / 2);
+    clip-path: polygon(var(--tilt) 0, 100% 0, calc(100% - var(--tilt)) 100%, 0 100%);
+    padding: var(--s6) calc(var(--tilt) + var(--s4)) var(--s6) calc(var(--tilt) + var(--s3));
+    background: var(--deck-2);
+  }
+  .door:first-child { margin-left: 0; clip-path: polygon(0 0, 100% 0, calc(100% - var(--tilt)) 100%, 0 100%); padding-left: var(--s5); }
+  .door:last-child { margin-right: 0; clip-path: polygon(var(--tilt) 0, 100% 0, 100% 100%, 0 100%); }
+  .door img, .door .fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(.35); transition: filter .4s var(--ease), transform .6s var(--ease); }
+  .door::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,10,14,.95) 18%, rgba(10,10,14,.2) 70%); transition: background .4s var(--ease); }
+  .door > *:not(img):not(.fallback):not(.pennant) { position: relative; z-index: 1; }
+  .door .pennant { position: absolute; top: 0; left: calc(var(--tilt) + var(--s4)); z-index: 1; }
+  .door:first-child .pennant { left: var(--s5); }
+  .door h3 { font-size: clamp(32px, 3.2vw, 48px); margin: var(--s2) 0 var(--s3); }
+  .door p { font-size: 14px; color: var(--text-2); max-width: 26ch; }
+  .door .go { margin-top: var(--s4); font: 700 12px/1 var(--f-body); letter-spacing: .16em; text-transform: uppercase; color: var(--power); }
+  .door:hover img, .door:focus-visible img { filter: none; transform: scale(1.04); }
+  .door:hover::after, .door:focus-visible::after { background: linear-gradient(0deg, color-mix(in srgb, var(--c) 85%, #000) 10%, rgba(10,10,14,.15) 70%); }
+  .door:hover .go, .door:focus-visible .go, .door:hover .label, .door:focus-visible .label { color: var(--text); }
+
+  /* Doomsday briefing strip, slashed top */
+  .briefing { --power: var(--stone-5); margin-top: var(--s9); background: linear-gradient(100deg, var(--deck-2), color-mix(in srgb, var(--power) 14%, var(--deck-2))); }
+  .briefing .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s7); align-items: center; padding-block: var(--s6) var(--s8); }
+  .briefing h2 { font-size: var(--t-h2); margin: var(--s3) 0 var(--s4); }
+  .briefing p { color: var(--text-2); max-width: 48ch; }
+  .briefing .meter-wrap .label { max-width: none; display: flex; justify-content: space-between; margin-bottom: var(--s3); }
+
+  @media (max-width: 960px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-bottom: calc(var(--slash) + var(--s6)); }
+    .hero-art { width: min(72%, 300px); margin-bottom: calc(-1 * var(--s8)); }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--s6); }
+    .realities { grid-template-columns: 1fr 1fr; height: auto; gap: 4px; }
+    .door, .door:first-child, .door:last-child { --tilt: 0px; margin: 0; clip-path: none; min-height: 280px; padding: 96px var(--s5) var(--s5); }
+    .door .pennant, .door:first-child .pennant { left: var(--s5); }
+    .briefing .wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .realities { grid-template-columns: 1fr; }
+    .door, .door:first-child, .door:last-child { min-height: 230px; }
+    .countdown div { min-width: 0; flex: 1; }
+    .countdown b { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+<header class="mast" data-mast></header>
+
+<main id="main">
+  <section class="hero" id="hero">
+    <div class="hero-bg" aria-hidden="true"><span class="ghost-word" id="ghost"></span></div>
+    <div class="wrap">
+      <div>
+        <p class="label" id="kicker"></p>
+        <h1 class="split stack" id="heroTitle"></h1>
+        <span class="bar"></span>
+        <p class="lede" id="heroLede"></p>
+        <div class="countdown" id="countdown" aria-label="Time until release"></div>
+        <div class="actions">
+          <a class="btn primary" id="heroCta" href="#">Open the case file <span class="arrow">›</span></a>
+          <a class="link-more" href="mcu.html">Enter the Sacred Timeline ››</a>
+        </div>
+      </div>
+      <figure class="hero-art">
+        <span class="pennant" id="heroPhase"></span>
+        <div class="frame" id="heroPoster"></div>
+        <figcaption><span class="label" id="heroDate"></span><span class="label">Exhibit A</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="wrap stats" id="stats" aria-label="The archive in numbers"></section>
+
+  <section class="wrap" aria-labelledby="realities-title">
+    <div class="section-head">
+      <h2 class="split" id="realities-title"><b>Choose</b> <span>your reality</span></h2>
+      <p>Four timelines, each with its own continuity. Hover a door to bring it to life.</p>
+    </div>
+    <div class="realities" id="realities"></div>
+  </section>
+
+  <section class="briefing slash-top" aria-labelledby="brief-title">
+    <div class="wrap">
+      <div>
+        <p class="label">Priority briefing</p>
+        <h2 class="split" id="brief-title"><span>Before</span> <b>Doomsday</b></h2>
+        <p>Marvel's own fifteen-title shortlist before Avengers: Doomsday, from the first X-Men to the Fantastic Four.</p>
+      </div>
+      <div class="meter-wrap">
+        <p class="label"><span>Briefing progress</span><span id="briefCount"></span></p>
+        <div class="meter" id="briefMeter" style="--n: 15" aria-hidden="true"></div>
+        <a class="btn primary" href="#" style="margin-top: var(--s5)">Continue the briefing <span class="arrow">›</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap"><span>Mockup V6 · Command Deck. Proposal only; the live site is unchanged. Posters © their studios.</span><span>Excelsior.</span></div></footer>
+
+<script src="../../js/data/mcu.js"></script>
+<script src="../../js/data/spider.js"></script>
+<script src="../../js/data/mutant.js"></script>
+<script src="../../js/data/legacy.js"></script>
+<script src="../../js/posters.js"></script>
+<script src="deck.js"></script>
+<script>
+masthead("lobby");
+
+/* ---------- hero: the next film in cinemas ---------- */
+const films = allTitles().filter((t) => t.format === "Film").sort((a, b) => a.released.localeCompare(b.released));
+const next = films.find((t) => !released(t)) || films[films.length - 1];
+const hero = document.getElementById("hero");
+if (next.phase) hero.style.setProperty("--power", `var(--stone-${next.phase})`);
+const phase = R.mcu.phases[next.phase];
+document.getElementById("kicker").textContent = `${released(next) ? "Last" : "Next"} on the big screen${phase ? ` · Phase ${phase.word} · ${phase.stone} Stone` : ""}`;
+document.getElementById("heroTitle").innerHTML = splitTitle(next.title);
+document.getElementById("ghost").textContent = next.title.split(/:\s*|\s/).pop();
+document.getElementById("heroLede").innerHTML = redactable(next.summary);
+document.getElementById("heroPoster").innerHTML = poster(next, `${next.title} poster`);
+document.getElementById("heroPhase").textContent = next.phase || "";
+document.getElementById("heroPhase").hidden = !next.phase;
+document.getElementById("heroDate").textContent = `In cinemas ${dateText(next.released)}`;
+
+const cd = document.getElementById("countdown");
+function tick() {
+  let left = Math.max(0, new Date(next.released + "T00:00:00") - Date.now());
+  const parts = [["Days", 86400000], ["Hrs", 3600000], ["Min", 60000]].map(([label, ms]) => {
+    const v = Math.floor(left / ms); left -= v * ms; return `<div><b>${pad(v)}</b><span class="label">${label}</span></div>`;
+  });
+  cd.innerHTML = parts.join("");
+}
+if (released(next)) cd.hidden = true; else { tick(); setInterval(tick, 30000); }
+
+/* ---------- stats (computed from the data) ---------- */
+const all = allTitles();
+const mcuMinutes = R.mcu.titles.filter((t) => t.format === "Film" && released(t) && /min/.test(t.length || "")).reduce((s, t) => s + parseInt(t.length, 10), 0);
+const firstYear = Math.min(...all.map((t) => +t.released.slice(0, 4)));
+document.getElementById("stats").innerHTML = [
+  [all.length, "films & series on file"],
+  [Object.keys(R).length, "realities, each with its own continuity"],
+  [Math.round(mcuMinutes / 60), "hours of MCU films released so far"],
+  [new Date().getFullYear() - firstYear, `years of Marvel on screen, since ${firstYear}`],
+].map(([n, label]) => `<div class="stat"><b>${n}</b><span>${label}</span></div>`).join("");
+
+/* ---------- realities ---------- */
+const DOORS = [
+  ["mcu", "--r-mcu", "avengers-endgame", "Six phases, one snap, and every film and series in order."],
+  ["spider", "--r-spider", null, "Three Peters, Miles Morales and one spell gone wrong."],
+  ["mutant", "--r-mutant", null, "Two timelines and one very bad future."],
+  ["legacy", "--r-legacy", null, "Blade, the 2000s films, Netflix and more. Each says if it counts."],
+];
+const ART = { mcu: "Avengers:_Endgame", spider: "Spider-Man:_Into_the_Spider-Verse", mutant: "X-Men:_Days_of_Future_Past", legacy: "Blade_(1998_film)" };
+document.getElementById("realities").innerHTML = DOORS.map(([key, c, , blurb], i) => {
+  const r = R[key];
+  const count = r.titles.length + (r.refs || []).length;
+  const src = POSTERS[ART[key]];
+  return `<a class="door" href="${key === "mcu" ? "mcu.html" : "#"}" style="--c: var(${c})">
+    ${src ? `<img src="${esc(src)}" alt="" loading="lazy">` : `<div class="fallback"></div>`}
+    <span class="pennant">${i + 1}</span>
+    <span class="label">${esc(r.earth)} · ${count} files</span>
+    <h3 class="split stack">${splitTitle(r.name.replace(/^The /, ""))}</h3>
+    <p>${esc(blurb)}</p>
+    <span class="go">Enter ››</span>
+  </a>`;
+}).join("");
+
+/* ---------- Doomsday briefing (sample progress) ---------- */
+const briefDone = 6;
+document.getElementById("briefCount").textContent = `${briefDone} / 15 watched`;
+document.getElementById("briefMeter").innerHTML = Array.from({ length: 15 }, (_, i) => `<i class="${i < briefDone ? "on" : ""}"></i>`).join("");
+</script>
+</body>
+</html>

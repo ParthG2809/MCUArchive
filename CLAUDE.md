@@ -10,6 +10,7 @@ Marvel-only. No DC or other franchises.
 - Backend (accounts only): Django 5.2 LTS in `backend/`, with gunicorn, whitenoise, dj-database-url, psycopg
   (pinned in `backend/requirements.txt`, installed in `backend/.venv`). SQLite locally, Postgres on Render.
 - Fonts from Google Fonts: Alfa Slab One (headlines), Libre Franklin (body), Bungee (signage, years, numbers), Special Elite (typewriter text).
+  Deck theme: Big Shoulders Display + Barlow. Programme theme: Bodoni Moda + Public Sans. Theme fonts load only when that theme is used.
 - Hosting (owner decision 2026-11-12): the whole site on Render. Django serves the pages and `/api/` from one origin
   (`render.yaml`). Live at https://marvel-archive.onrender.com; every push to `main` redeploys. `vercel.json` / `.vercelignore` are left over from the earlier Vercel plan and unused.
 
@@ -26,12 +27,13 @@ title.html?id=...   Case file for any title (one data-driven template)
 account.html        Sign in / create account / merge this browser's list / sign out
 css/archive.css     Design system: tokens, masthead, shared components
 css/<page>.css      Page-specific styles
+css/theme-deck.css  "Command Deck" theme (default): everything scoped under [data-theme="deck"]
 css/theme-programme.css  "The Programme" theme: everything scoped under [data-theme="programme"]
 js/theme.js         Loaded in every <head>: applies the saved/device theme before first paint
 js/core.js          Shared: watch store, poster loader, masthead/footer, helpers
 js/data/<reality>.js  Title data, one file per reality, registered on window.ARCHIVE
-js/pages/<page>.js  Page behaviour
-mockups/            Design mockups (V1–V5) and screenshots. Reference only, not deployed
+js/pages/<page>.js  Page behaviour (timeline-deck.js builds the Deck theme's rail + stage timeline)
+mockups/            Design mockups (V1–V6, V6 is now the Deck theme) and screenshots. Reference only, not deployed
 backend/            Django project: marvel_archive/ (settings, urls), accounts/ (WatchedTitle model, JSON API, tests,
                     build_site command)
 render.yaml         Render Blueprint (web service + Postgres); admin created by `manage.py ensure_admin` from env vars
@@ -45,16 +47,23 @@ render.yaml         Render Blueprint (web service + Postgres); admin created by 
   (1 Space blue, 2 Mind yellow, 3 Reality red, 4 Power purple, 5 Time green, 6 Soul orange).
 - Avoid generic "AI" patterns: no mono eyebrow labels everywhere, no rounded card grids, no blur glows.
 - Must work at phone width, keep keyboard focus visible, and respect `prefers-reduced-motion`.
-- Two themes share one set of markup: "The Archive" (default comic look) and "The Programme" (dark cinema programme: Bodoni Moda + Public Sans,
-  hairlines, no hard shadows). Every page links `css/theme-programme.css` and `js/theme.js` in `<head>`; any new component needs
-  Programme styles in that file. Do not edit Archive styles to suit the Programme theme.
+- Three themes share one set of markup, chosen in the masthead switch (saved per browser):
+  "Command Deck" (DEFAULT, owner decision 2026-11-19: graphite + dot grid, chamfered panels, slashed edges, split-weight condensed
+  titles, one "power colour" taken from the data), "The Archive" (comic) and "The Programme" (dark cinema programme).
+  Design reference for Deck: `mockups/v6-deck/system.html`.
+- Every page links `css/theme-programme.css`, `css/theme-deck.css` and `js/theme.js` in `<head>`. Any new component needs
+  Deck and Programme styles. Do not edit Archive styles to suit another theme. Deck-only markup uses the `deck-only` class.
+- Timelines in the Deck theme use the rail + stage layout from `js/pages/timeline-deck.js` (the list view stays for the other themes).
+  Both views must stay in sync: redraw on `watchedchange` and `themechange`.
 
 ## Data rules
 - Each reality file declares `sections` (MCU uses `phases`, converted in core.js), `views` (order tabs),
   optional `refs` (titles from another reality shown on its timeline) and `defaultCanon`. Title ids must be unique across all files.
 - Every page loads all four data files, in the order mcu, spider, mutant, legacy.
 - Facts must be verifiable. If unsure of a value (runtime, story year, director), leave it out rather than guess.
-- Summaries are original, one or two sentences. Wrap spoilers in `[[double brackets]]`. They render redacted until clicked.
+- Summaries are original synopses in our own words, 2–4 sentences: the premise, main characters and stakes, never the ending or
+  twists (owner decision 2026-11-19: synopsis, not a full plot recap). No spoiler markup or redaction; unreleased titles describe only
+  the officially announced premise. Before Doomsday `why` notes follow the same no-spoiler rule.
 - Release status (upcoming vs released) is computed from the `released` date at runtime. Do not hard-code it.
 - Posters: each title's `wiki` field is an English Wikipedia article name (owner has permission to use posters).
   After adding or changing titles, run `python scripts/check_data.py`. It validates the data files and writes
