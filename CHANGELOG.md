@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-11-19: Step 10 (redesign, part 1: one theme, new type, cast for the MCU)
+- One design for the whole site: the Archive and Programme themes and the masthead theme switch are removed
+  (`css/theme-programme.css` deleted; `js/theme.js` now always sets `data-theme="deck"` and clears old theme keys).
+- Fonts: Montserrat (headings) + Inter (body) only, linked in every page; the six earlier font families are gone.
+  New type-scale tokens (`--fs-hero`, `--fs-h1`, `--fs-h2`, `--fs-h3`) and every heading re-set for the wider face; label tracking reduced.
+- Colour: red (`--signal`) is the single accent; phase colours only as small markers (`--mark`). Doomsday's green accent removed.
+- Glass (`backdrop-filter`, with solid fallback) on the sticky masthead, the timeline stage panel and the new cast panel.
+- New Cast & characters section on case files (`js/pages/dossier.js`, styles in `css/theme-deck.css`): character list + stage with
+  name, actor and bio over the title's poster; keyboard arrows/Home/End. Data in `js/data/cast-<reality>.js` (loaded on title.html only).
+  All four realities: 142 of 161 titles, 738 characters (MCU 64/374, Spider-Verse 25/104, Mutant 18/111, Legacy 35/149).
+  Titles left without a cast section: no announced cast (Secret Wars, Beyond the Spider-Verse, X-Men '97 season 2) or credits
+  not verified well enough (mostly older animated series).
+- Cast bios rewritten to 2–3 sentences each (owner: no one-liners); voice-only roles marked "(voice)" and shown as "Voiced by".
+- `scripts/check_data.py`: skips cast files when reading title data and validates cast ids/rows.
+- Fixes: phone masthead (logo no longer pushed right), lobby door text offset, case-file pager height at tablet/phone width.
+- Removed the Programme-only poster peek from `js/pages/timeline.js`. Screenshots in `mockups/screens-redesign/`.
+
 ## 2026-11-19: Deck for returning visitors
 - `js/theme.js`: theme choice now saved under `marvel-archive:theme-v2`; the old key is ignored and removed, so visitors who had
   picked Archive or Programme before also start on Command Deck. Choices made from now on are remembered. Watch lists unaffected.

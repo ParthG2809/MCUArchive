@@ -90,14 +90,6 @@ a { color: inherit; }
 .mast-nav a:hover { border-color: var(--ink); }
 .mast-nav a[aria-current="page"] { background: var(--ink); color: var(--paper); }
 .mast-nav .soon { font: 700 13px var(--f-body); text-transform: uppercase; letter-spacing: .03em; white-space: nowrap; padding: 8px 10px; border: 2px solid transparent; opacity: .4; cursor: default; }
-/* theme switch: two-way toggle at the end of the masthead */
-.theme-switch { flex: none; display: flex; border: 2px solid var(--ink); }
-.theme-switch button {
-  font: 700 11px var(--f-body); text-transform: uppercase; letter-spacing: .05em; cursor: pointer;
-  background: var(--sheet); color: var(--ink); border: 0; padding: 6px 9px;
-}
-.theme-switch button + button { border-left: 2px solid var(--ink); }
-.theme-switch button[aria-pressed="true"] { background: var(--ink); color: var(--yellow); }
 /* account link + theme switch sit together */
 .mast-tools { flex: none; display: flex; align-items: center; gap: 14px; }
 .account-link {

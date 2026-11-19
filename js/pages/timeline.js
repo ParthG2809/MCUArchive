@@ -192,33 +192,6 @@ chart.addEventListener("click", (e) => {
   if (on && state.hideWatched) refile();
 });
 
-/* ---------- Programme theme: floating poster preview while hovering a record (mouse/trackpad only) ---------- */
-const peek = document.createElement("div");
-peek.className = "peek";
-peek.setAttribute("aria-hidden", "true");
-document.body.append(peek);
-const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-
-chart.addEventListener("mousemove", (e) => {
-  const record = window.siteTheme?.get() === "programme" && finePointer.matches
-    && !e.target.closest(".watch-btn") && e.target.closest(".record");
-  const src = record && record.querySelector("img[data-wiki]")?.getAttribute("src");
-  if (!src) { peek.classList.remove("on"); return; }
-  if (peek.dataset.src !== src) {
-    peek.dataset.src = src;
-    const img = document.createElement("img");
-    img.alt = "";
-    img.src = src;
-    peek.replaceChildren(img);
-  }
-  const width = 180, height = 270, gap = 28;
-  const left = e.clientX + gap + width < innerWidth ? e.clientX + gap : e.clientX - gap - width;
-  peek.style.left = `${Math.max(8, left)}px`;
-  peek.style.top = `${Math.min(Math.max(e.clientY - height / 2, 16), innerHeight - height - 16)}px`;
-  peek.classList.add("on");
-});
-chart.addEventListener("mouseleave", () => peek.classList.remove("on"));
-
 /* ---------- start ---------- */
 renderControls();
 render();

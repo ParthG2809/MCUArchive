@@ -1,0 +1,160 @@
+/* Cast & characters for The Spider-Verse: title id -> [[character, actor, bio], ...].
+   Bios are original and describe each character's role without giving away the ending.
+   Only verifiable credits; unreleased titles list announced cast only. Shown on title.html (js/pages/dossier.js). */
+window.ARCHIVE_CAST = window.ARCHIVE_CAST || {};
+Object.assign(window.ARCHIVE_CAST, {
+  "spider-man-2002": [
+    ["Peter Parker / Spider-Man", "Tobey Maguire", "A shy, bookish high-school student raised by his aunt and uncle in Queens. A spider bite gives him powers, and a painful lesson teaches him how to use them. He hides his new life from everyone he loves."],
+    ["Mary Jane Watson", "Kirsten Dunst", "The girl next door Peter has loved since childhood. She dreams of becoming an actress and escaping her unhappy home. She has no idea how Peter feels."],
+    ["Norman Osborn / Green Goblin", "Willem Dafoe", "A brilliant, driven industrialist and Harry's father, who is fond of Peter. He tests an unstable performance formula on himself. It awakens a dangerous second personality."],
+    ["Harry Osborn", "James Franco", "Peter's best friend, the son of a rich and demanding father. He struggles to win his father's approval. He starts dating Mary Jane."],
+    ["May Parker", "Rosemary Harris", "Peter's kind, steady aunt, who has raised him since he was small. She is gentle and wise. She believes in Peter completely."],
+    ["Ben Parker", "Cliff Robertson", "Peter's uncle, a warm and patient man. He worries that Peter is changing. He gives him advice he will never forget."],
+    ["J. Jonah Jameson", "J. K. Simmons", "The loud, cigar-chomping editor of the Daily Bugle. He is determined to paint Spider-Man as a menace. He buys Peter's photos anyway."],
+  ],
+  "spider-man-2": [
+    ["Peter Parker / Spider-Man", "Tobey Maguire", "Two years in, Peter is failing at college, losing jobs and letting down the people he loves. His powers start to fail as his doubts grow. He wonders whether being Spider-Man is worth it."],
+    ["Mary Jane Watson", "Kirsten Dunst", "Now a working stage actress, MJ has moved on with her life while Peter keeps his distance. She is engaged to someone else. She still wants to know why Peter pulls away."],
+    ["Otto Octavius / Doctor Octopus", "Alfred Molina", "A warm, gifted scientist whom Peter admires, working on a fusion reactor. An accident fuses him to four mechanical arms. The arms begin to influence his mind."],
+    ["Harry Osborn", "James Franco", "Harry now runs his father's company and blames Spider-Man for his father's death. He is drinking and bitter. He is funding Octavius's work."],
+    ["May Parker", "Rosemary Harris", "Peter's aunt, who is struggling with money and grief. She loses her home. She still gives Peter the courage he needs."],
+    ["J. Jonah Jameson", "J. K. Simmons", "Still waging his newspaper war against Spider-Man. He is delighted when Spider-Man seems to disappear. He is never far from a headline."],
+  ],
+  "spider-man-3": [
+    ["Peter Parker / Spider-Man", "Tobey Maguire", "Life is finally going well for Peter, who is loved by the city and about to propose to MJ. An alien substance attaches itself to him and brings out his arrogance. He has to fight his own worst instincts."],
+    ["Mary Jane Watson", "Kirsten Dunst", "MJ's Broadway career hits a rough patch just as Peter becomes the toast of the city. She feels he is not listening to her. Their relationship starts to crack."],
+    ["Harry Osborn / New Goblin", "James Franco", "Peter's former best friend, who takes up his father's mantle. He wants revenge for his father's death. His feelings for MJ and Peter are tangled."],
+    ["Flint Marko / Sandman", "Thomas Haden Church", "An escaped convict desperate to help his sick daughter. An accident gives him the power to control sand. He is linked to Peter's past in a way Peter never knew."],
+    ["Eddie Brock / Venom", "Topher Grace", "An ambitious rival photographer at the Daily Bugle. He is competing with Peter for a staff job. He has a grudge that grows dangerous."],
+    ["Gwen Stacy", "Bryce Dallas Howard", "A classmate of Peter's who catches his eye. She is the daughter of a police captain. She becomes caught up in Peter's problems with MJ."],
+  ],
+  "amazing-spider-man": [
+    ["Peter Parker / Spider-Man", "Andrew Garfield", "A clever, awkward teenager still searching for answers about the parents who left him as a child. He is a talented photographer and a skateboarder. A spider bite at Oscorp changes his life."],
+    ["Gwen Stacy", "Emma Stone", "A smart, confident classmate and Oscorp intern who falls for Peter. She is the top student in their class. She learns his secret early on."],
+    ["Dr. Curt Connors / Lizard", "Rhys Ifans", "An Oscorp scientist and former partner of Peter's father. He lost his arm and is trying to regrow it using reptile DNA. He is under pressure to deliver results."],
+    ["Captain George Stacy", "Denis Leary", "Gwen's father, a police captain who wants the masked vigilante off the streets. He is protective of his daughter. He sees Spider-Man as a danger."],
+    ["Ben Parker", "Martin Sheen", "Peter's uncle, who raised him as his own. He is patient and decent. He tries to teach Peter about responsibility."],
+    ["May Parker", "Sally Field", "Peter's aunt, who worries about his late nights and bruises. She is loving and practical. She suspects more than she says."],
+  ],
+  "amazing-spider-man-2": [
+    ["Peter Parker / Spider-Man", "Andrew Garfield", "Peter loves being Spider-Man and is graduating from high school. His relationship with Gwen is weighed down by a promise he made to her father. He keeps digging into the truth about his parents."],
+    ["Gwen Stacy", "Emma Stone", "Gwen is graduating with big plans of her own, including a possible place at Oxford. She is clever and determined. She refuses to let Peter decide what is safe for her."],
+    ["Max Dillon / Electro", "Jamie Foxx", "A lonely, overlooked Oscorp electrical engineer and Spider-Man fan. An accident gives him the power to control electricity. He wants to be seen."],
+    ["Harry Osborn", "Dane DeHaan", "Peter's childhood friend, who returns to New York to inherit Oscorp. He also inherits a family illness. He believes Spider-Man may be able to help him."],
+    ["May Parker", "Sally Field", "Peter's aunt, who is training to become a nurse. She works long hours to support them. She is honest with Peter about his parents."],
+    ["Aleksei Sytsevich / Rhino", "Paul Giamatti", "A Russian gangster with a short temper. Spider-Man stops him early on. He wants a rematch."],
+  ],
+  "into-the-spider-verse": [
+    ["Miles Morales / Spider-Man", "Shameik Moore", "A Brooklyn teenager who has just started at a new boarding school and misses his old life. He loves art and music. A spider bite gives him powers he does not understand."],
+    ["Peter B. Parker", "Jake Johnson", "A weary, older Spider-Man from another universe whose life has fallen apart. He is tired and out of shape. He agrees, reluctantly, to teach Miles."],
+    ["Gwen Stacy / Spider-Woman", "Hailee Steinfeld", "A Spider-Woman from another dimension, a skilled fighter and drummer. She has lost someone close to her. She keeps others at a distance."],
+    ["Jefferson Davis", "Brian Tyree Henry", "Miles's father, a police officer who is not a fan of Spider-Man. He loves his son and wants the best for him. He finds it hard to say so."],
+    ["Aaron Davis", "Mahershala Ali", "Miles's cool uncle, who encourages his art. He is the adult Miles feels closest to. He does not get along with his brother."],
+    ["Wilson Fisk / Kingpin", "Liev Schreiber", "A powerful crime boss building a machine that reaches into other universes. He is huge and terrifying. He is driven by grief."],
+    ["Spider-Man Noir", "Nicolas Cage", "A black-and-white Spider-Man from the 1930s. He talks like a hard-boiled detective. He is fascinated by things like Rubik's Cubes."],
+  ],
+  "across-the-spider-verse": [
+    ["Miles Morales / Spider-Man", "Shameik Moore", "More than a year into being Spider-Man, Miles is struggling to balance his secret life with his family. His parents feel him slipping away. He misses Gwen."],
+    ["Gwen Stacy / Spider-Woman", "Hailee Steinfeld", "Gwen has joined a society of Spider-People, but misses her friend. Her relationship with her father is strained. She has been keeping a secret from Miles."],
+    ["Miguel O'Hara / Spider-Man 2099", "Oscar Isaac", "The intense leader of the Spider-Society, who protects the Multiverse. He is serious, tired and certain he is right. He does not trust Miles."],
+    ["The Spot", "Jason Schwartzman", "A scientist covered in portals, who starts out as a joke villain. He wants to be taken seriously. His power grows with every jump."],
+    ["Pavitr Prabhakar / Spider-Man India", "Karan Soni", "A cheerful Spider-Man from Mumbattan. He is upbeat and full of energy. He loves his city."],
+    ["Hobie Brown / Spider-Punk", "Daniel Kaluuya", "An anti-establishment Spider-Man from London. He hates rules and loves guitars. He is Gwen's friend."],
+    ["Jessica Drew / Spider-Woman", "Issa Rae", "A pregnant Spider-Woman and a senior member of the Spider-Society. She rides a motorcycle. She believes in Miguel's mission."],
+    ["Rio Morales", "Luna Lauren Vélez", "Miles's mother, who worries about how much he is hiding. She loves him fiercely. She wants him to be himself."],
+  ],
+  "venom": [
+    ["Eddie Brock / Venom", "Tom Hardy", "A crusading investigative reporter whose life falls apart after he challenges the wrong man. He loses his job and his fiancée. He becomes the host of an alien symbiote."],
+    ["Anne Weying", "Michelle Williams", "A lawyer and Eddie's former fiancée. She is principled and clear-headed. She still cares about Eddie despite what he did."],
+    ["Carlton Drake / Riot", "Riz Ahmed", "The brilliant, ruthless head of the Life Foundation. He is experimenting with alien life on humans. He believes he is saving humanity."],
+    ["Dr. Dora Skirth", "Jenny Slate", "A Life Foundation scientist with doubts about her work. She is troubled by what she has seen. She asks Eddie for help."],
+  ],
+  "let-there-be-carnage": [
+    ["Eddie Brock / Venom", "Tom Hardy", "Eddie and Venom are struggling to live together, and arguing about food. Eddie's career is recovering. He is trying to keep Venom under control."],
+    ["Cletus Kasady / Carnage", "Woody Harrelson", "A serial killer on death row, who wants to tell Eddie his story. He is fascinated by Eddie. He has a chilling past."],
+    ["Frances Barrison / Shriek", "Naomie Harris", "Cletus's long-lost love, who has a destructive sonic scream. She has been locked away for years. She wants to be free."],
+    ["Anne Weying", "Michelle Williams", "Eddie's former fiancée, who is now engaged to someone else. She still cares about Eddie. She is pulled into danger."],
+    ["Patrick Mulligan", "Stephen Graham", "A police detective who has been tracking Cletus for years. He has a personal connection to Frances. He does not trust Eddie."],
+  ],
+  "morbius": [
+    ["Dr. Michael Morbius", "Jared Leto", "A brilliant biochemist who has lived with a rare blood disease all his life. He is desperate for a cure for himself and others like him. He tries a dangerous experiment."],
+    ["Milo", "Matt Smith", "Michael's oldest friend, who has the same disease and the money to fund his research. He is charming and reckless. He wants to be strong at any cost."],
+    ["Martine Bancroft", "Adria Arjona", "A fellow scientist and Michael's colleague. She is devoted to their work. She is close to Michael."],
+    ["Dr. Emil Nicholas", "Jared Harris", "The doctor who has looked after Michael and Milo since they were boys. He is kind and worried. He has watched both of them struggle."],
+  ],
+  "madame-web": [
+    ["Cassandra Webb", "Dakota Johnson", "A New York paramedic who begins to see the future. She is a loner who keeps people at a distance. She is forced to protect three strangers."],
+    ["Julia Carpenter", "Sydney Sweeney", "A shy teenager who becomes one of three girls Cassie protects. She is quiet and nervous. She is good at reading people."],
+    ["Mattie Franklin", "Celeste O'Connor", "A rebellious teenager who does not trust anyone. She is tough and impulsive. She is one of the girls being hunted."],
+    ["Anya Corazon", "Isabela Merced", "A resourceful teenager from a family of immigrants. She is clever and practical. She is one of the girls being hunted."],
+    ["Ezekiel Sims", "Tahar Rahim", "A man with spider-like powers who is hunting the girls. He is rich, cold and secretive. He has seen visions of his own future."],
+    ["Ben Parker", "Adam Scott", "A paramedic and Cassie's partner on the ambulance. He is kind and steady. His sister-in-law is expecting a baby."],
+  ],
+  "the-last-dance": [
+    ["Eddie Brock / Venom", "Tom Hardy", "Eddie and Venom are on the run, wanted by the military. They are tired and far from home. They have to rely on each other more than ever."],
+    ["General Rex Strickland", "Chiwetel Ejiofor", "A soldier in charge of capturing the symbiotes. He is disciplined and focused. He sees Eddie as a threat."],
+    ["Dr. Teddy Paine", "Juno Temple", "A scientist studying the symbiotes in a secret facility. She has a personal reason for her interest. She believes they are not all dangerous."],
+    ["Martin Moon", "Rhys Ifans", "A hippie father on a road trip with his family. He believes in aliens. He meets Eddie by chance."],
+  ],
+  "kraven": [
+    ["Sergei Kravinoff / Kraven the Hunter", "Aaron Taylor-Johnson", "The son of a Russian gangster, who gains animal-like powers after a lion attack. He rejects his father's world and becomes a hunter of criminals. He lives by his own code."],
+    ["Nikolai Kravinoff", "Russell Crowe", "Sergei's ruthless father, a powerful crime boss. He values strength above all. He wants his sons to follow him."],
+    ["Dmitri Smerdyakov", "Fred Hechinger", "Sergei's gentle younger half-brother. He is shy and loyal to his father. He is a gifted mimic."],
+    ["Calypso", "Ariana DeBose", "A lawyer with a link to Sergei's past. She knows about the potion that changed him. She helps him when he needs it."],
+    ["Aleksei Sytsevich / Rhino", "Alessandro Nivola", "A crime boss with a grudge. He is ambitious and violent. He is willing to do anything to get ahead."],
+  ],
+  "amazing-spider-man-1977": [
+    ["Peter Parker / Spider-Man", "Nicholas Hammond", "A college student and freelance photographer who fights crime as Spider-Man. He works for the Daily Bugle. He keeps his powers secret."],
+    ["J. Jonah Jameson", "Robert F. Simon", "The demanding publisher of the Daily Bugle. He is suspicious of Spider-Man. He relies on Peter's photographs."],
+  ],
+  "spider-noir": [
+    ["The Spider / Ben Reilly", "Nicolas Cage", "An ageing private investigator in 1930s New York, haunted by his past as the city's only superhero. He is down on his luck and tired. A case pulls him back into the life he left behind."],
+  ],
+  "spider-man-1967": [
+    ["Peter Parker / Spider-Man", "Paul Soles", "A college student who fights crime across New York as Spider-Man. He sells photos to the Daily Bugle to pay his way. He faces a long line of costumed villains."],
+  ],
+  "amazing-friends": [
+    ["Peter Parker / Spider-Man", "Dan Gilvezan", "A college student who shares a secret base with two fellow heroes. He is the team's leader. He lives with Aunt May."],
+    ["Bobby Drake / Iceman", "Frank Welker", "A fun-loving mutant who can create and control ice. He is a former X-Man. He is always cracking jokes."],
+    ["Angelica Jones / Firestar", "Kathy Garver", "A mutant who can control heat and fire. She was created for the show and later joined the comics. She is the team's newest hero."],
+  ],
+  "spider-man-unlimited": [
+    ["Peter Parker / Spider-Man", "Rino Romano", "Spider-Man, who travels to Counter-Earth in a new high-tech suit. He has been blamed for a disaster at home. He joins the humans fighting back on Counter-Earth."],
+  ],
+  "new-animated-series": [
+    ["Peter Parker / Spider-Man", "Neil Patrick Harris", "A college student who has been Spider-Man for a while. He is struggling to balance his studies and his heroics. He faces new villains in a computer-animated New York."],
+    ["Mary Jane Watson", "Lisa Loeb", "Peter's friend and love interest. She is warm and outgoing. She does not know his secret."],
+    ["Harry Osborn", "Ian Ziering", "Peter's best friend, who is still grieving his father. He is wealthy and moody. He blames Spider-Man for his loss."],
+  ],
+  "spider-man-tas": [
+    ["Peter Parker / Spider-Man", "Christopher Daniel Barnes", "A college student balancing studies, a job and a love life with being Spider-Man. He often doubts himself. He keeps going because he believes he has to."],
+    ["Mary Jane Watson", "Sara Ballantine", "Peter's girlfriend, a fun-loving, outgoing actress. She is confident and kind. She becomes a big part of Peter's life."],
+    ["Wilson Fisk / Kingpin", "Roscoe Lee Browne", "A ruthless crime lord who pulls many villains' strings. He hides behind a respectable business. He is Spider-Man's most persistent enemy."],
+    ["J. Jonah Jameson", "Ed Asner", "The Daily Bugle's publisher, a constant critic of Spider-Man. He is loud and stubborn. He is also a devoted family man."],
+  ],
+  "spectacular-spider-man": [
+    ["Peter Parker / Spider-Man", "Josh Keaton", "A teenager in his early days as Spider-Man, balancing high school, a lab internship and the Daily Bugle. He is clever and funny. He is still learning the rules of being a hero."],
+    ["Gwen Stacy", "Lacey Chabert", "Peter's friend and classmate, a brilliant student. She has feelings for Peter. She works with him in the lab."],
+    ["Norman Osborn / Green Goblin", "Steven Weber", "A powerful industrialist and the head of Oscorp. He is cold and demanding. He takes an interest in the new crop of villains."],
+    ["Harry Osborn", "James Arnold Taylor", "Peter's best friend, who struggles under his father's expectations. He is desperate to stand out. He wants his father's approval."],
+    ["Eddie Brock / Venom", "Ben Diskin", "A college student and family friend of the Parkers. He is like a big brother to Peter. Their friendship is tested."],
+  ],
+  "ultimate-spider-man": [
+    ["Peter Parker / Spider-Man", "Drake Bell", "A teenage Spider-Man recruited by S.H.I.E.L.D. to train with a team of young heroes. He is used to working alone. He often talks directly to the audience."],
+    ["Nick Fury", "Chi McBride", "The director of S.H.I.E.L.D., who offers Peter a place on the team. He is stern but believes in Peter. He wants him to become the ultimate Spider-Man."],
+    ["Sam Alexander / Nova", "Logan Miller", "A brash young hero with a cosmic helmet. He loves to show off. He clashes with Peter constantly."],
+    ["Ava Ayala / White Tiger", "Caitlyn Taylor Love", "A martial artist with the power of a tiger amulet. She is serious and focused. She is the team's strategist."],
+    ["Danny Rand / Iron Fist", "Greg Cipes", "A calm martial artist who is always at peace. He trained in a mystical city. He is the team's calm centre."],
+    ["Luke Cage / Power Man", "Ogie Banks", "A super-strong young hero with unbreakable skin. He is easy-going and dependable. He is the team's muscle."],
+  ],
+  "spider-man-2017": [
+    ["Peter Parker / Spider-Man", "Robbie Daymond", "A newly bitten Spider-Man and student at Horizon High, a school for young geniuses. He is learning to be a hero on the job. He is still finding his way."],
+  ],
+  "spidey-amazing-friends": [
+    ["Peter Parker / Spidey", "Benjamin Valic", "The leader of the team, a young Spider-Man. He is cheerful and kind. He works with his friends to solve problems."],
+  ],
+  "friendly-neighborhood": [
+    ["Peter Parker / Spider-Man", "Hudson Thames", "A teenager starting his first year as Spider-Man. He is just starting at a new school. He is still learning what kind of hero he wants to be."],
+    ["Norman Osborn", "Colman Domingo", "A wealthy industrialist who becomes Peter's mentor. He sees great potential in Peter. He takes a keen interest in his future."],
+  ],
+});

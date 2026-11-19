@@ -129,6 +129,8 @@ function renderFile(t) {
     sync();
   }
 
+  renderCast(t);
+
   /* ---------- previous / next in release order ---------- */
   const [prev, next] = neighbours(inRelease);
   document.getElementById("pager").innerHTML =
@@ -139,4 +141,75 @@ function renderFile(t) {
     gsap.from(".folder", { y: 50, rotation: -1.5, opacity: 0, duration: 0.8, ease: "power3.out", clearProps: "opacity,transform" });
     gsap.from(".photo", { x: -30, rotation: -12, duration: 0.9, ease: "back.out(1.6)", delay: 0.2 });
   }
+}
+
+/* ---------- cast & characters ----------
+   Data: js/data/cast-<reality>.js -> window.ARCHIVE_CAST[titleId] = [[character, actor, bio], ...].
+   A list of characters beside a stage (name, actor, bio) in a glass panel over the title's poster art. */
+function renderCast(t) {
+  const cast = (window.ARCHIVE_CAST || {})[t.id];
+  const box = document.getElementById("cast");
+  if (!cast || !cast.length) return;
+  box.hidden = false;
+  const poster = (window.ARCHIVE_POSTERS || {})[t.wiki];
+  // Animated titles, and voice-only roles marked "(voice)" in the data, read "Voiced by".
+  const credit = (actor) => {
+    const isVoice = t.animated || / \(voice\)$/.test(actor);
+    return `${isVoice ? "Voiced by" : "Played by"} <b>${escapeHTML(actor.replace(/ \(voice\)$/, ""))}</b>`;
+  };
+  const initials = (name) => name.replace(/\(.*?\)/g, "").split(/[\s/]+/).filter((w) => /^[A-Z]/.test(w)).slice(0, 2).map((w) => w[0]).join("");
+  const count = String(cast.length).padStart(2, "0");
+
+  box.innerHTML = `
+    <div class="cast-head">
+      <h2 id="cast-title">Cast <span>&amp; characters</span></h2>
+      <p>${cast.length} main character${cast.length === 1 ? "" : "s"} in ${escapeHTML(t.title)}.</p>
+    </div>
+    <div class="cast-deck">
+      <div class="cast-list" role="tablist" aria-label="Characters" aria-orientation="vertical">
+        ${cast.map(([character, actor], i) => `
+          <button class="cast-item" type="button" role="tab" id="cast-tab-${i}" aria-controls="cast-stage" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-i="${i}">
+            <span class="cast-mono" aria-hidden="true">${escapeHTML(initials(character))}</span>
+            <span class="cast-names"><b>${escapeHTML(character)}</b><small>${escapeHTML(actor)}</small></span>
+          </button>`).join("")}
+      </div>
+      <div class="cast-stage" id="cast-stage" role="tabpanel" aria-labelledby="cast-tab-0" aria-live="polite">
+        ${poster ? `<img class="cast-art" src="${escapeHTML(poster)}" alt="" decoding="async">` : ""}
+        <div class="cast-panel glass"></div>
+      </div>
+    </div>`;
+
+  const items = [...box.querySelectorAll(".cast-item")];
+  const stage = box.querySelector(".cast-stage");
+  const panel = box.querySelector(".cast-panel");
+  function show(i, focus = false) {
+    const [character, actor, bio] = cast[i];
+    items.forEach((b, j) => { b.setAttribute("aria-selected", j === i); b.tabIndex = j === i ? 0 : -1; });
+    stage.setAttribute("aria-labelledby", `cast-tab-${i}`);
+    const [first, ...rest] = character.split(" / ");
+    panel.innerHTML = `
+      <p class="cast-count">${String(i + 1).padStart(2, "0")} <span>/ ${count}</span></p>
+      <h3>${escapeHTML(first)}${rest.length ? `<span>${escapeHTML(rest.join(" / "))}</span>` : ""}</h3>
+      <p class="cast-actor">${credit(actor)}</p>
+      <span class="cast-bar" aria-hidden="true"></span>
+      <p class="cast-bio">${escapeHTML(bio)}</p>`;
+    const list = items[i].parentElement; // keep the chosen character in view (scrolls the list only, never the page)
+    if (list.scrollWidth > list.clientWidth) list.scrollLeft = Math.max(0, items[i].offsetLeft - 16);
+    else if (list.scrollHeight > list.clientHeight) list.scrollTop = Math.max(0, items[i].offsetTop - list.clientHeight / 2);
+    if (focus) items[i].focus({ preventScroll: true });
+    if (!prefersReducedMotion) gsap.from(panel.children, { opacity: 0, y: 12, duration: 0.35, stagger: 0.04 });
+  }
+  box.querySelector(".cast-list").addEventListener("click", (e) => {
+    const b = e.target.closest(".cast-item");
+    if (b) show(+b.dataset.i);
+  });
+  box.querySelector(".cast-list").addEventListener("keydown", (e) => {
+    const i = items.indexOf(document.activeElement);
+    if (i < 0) return;
+    const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+    if (step) { e.preventDefault(); show((i + step + items.length) % items.length, true); }
+    if (e.key === "Home") { e.preventDefault(); show(0, true); }
+    if (e.key === "End") { e.preventDefault(); show(items.length - 1, true); }
+  });
+  show(0);
 }

@@ -151,16 +151,43 @@ def write_posters(posters):
     print(f"wrote {out.relative_to(ROOT)} ({len(posters)} posters)")
 
 
+def check_cast(files):
+    """Cast files (js/data/cast-*.js): every key is a known title id, every row is [character, actor, bio], no duplicates."""
+    ids = {t["id"] for titles, _ in files.values() for t in titles}
+    problems, titles_with_cast, rows = [], 0, 0
+    for path in sorted(DATA_DIR.glob("cast-*.js")):
+        src = path.read_text(encoding="utf8")
+        body = src[src.find("Object.assign(window.ARCHIVE_CAST, {"):]
+        for m in re.finditer(r'^  "([^"]+)": \[\n(.*?)^  \],', body, re.S | re.M):
+            tid, block = m.group(1), m.group(2)
+            if tid not in ids:
+                problems.append(f"{path.name}: unknown title id {tid}")
+            seen = set()
+            for line in block.strip().splitlines():
+                row = json.loads(line.strip().rstrip(","))
+                if len(row) != 3 or not all(isinstance(x, str) and x.strip() for x in row):
+                    problems.append(f"{path.name}: {tid}: bad row {row}")
+                elif row[0] in seen:
+                    problems.append(f"{path.name}: {tid}: duplicate character {row[0]}")
+                seen.add(row[0]); rows += 1
+            titles_with_cast += 1
+    print(f"[cast] {titles_with_cast} titles with cast, {rows} characters, {len(problems)} problem(s)")
+    for p in problems:
+        print("   -", p)
+    return problems
+
+
 def main():
     offline = "--offline" in sys.argv
     total = 0
     posters = load_existing_posters()
-    files = {path: parse_reality(path) for path in sorted(DATA_DIR.glob("*.js"))}
+    files = {path: parse_reality(path) for path in sorted(DATA_DIR.glob("*.js")) if not path.stem.startswith("cast-")}
     total += len(check_cross_reality(files))
     for path, (titles, chrono) in files.items():
         total += len(check_structure(path.stem, titles, chrono))
         if not offline:
             total += len(check_posters(path.stem, titles, posters))
+    total += len(check_cast(files))
     if not offline:
         art = [{"id": "page-art", "wiki": w} for w in EXTRA_ART]
         total += len(check_posters("page-art", art, posters))

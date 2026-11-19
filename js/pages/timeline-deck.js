@@ -102,7 +102,7 @@
     const section = reality.sections[entry.section];
     const upcoming = !isReleased(t);
     const isWatched = watched.has(t.id);
-    root.style.setProperty("--power", colorOf(entry));
+    root.style.setProperty("--mark", colorOf(entry)); // phase colour: small markers only; the accent stays red
     $("frame").innerHTML = `${String(deck.index + 1).padStart(2, "0")} <span>/ ${String(items.length).padStart(2, "0")}</span>`;
 
     $("art").innerHTML = `${posterHTML(t)}<span class="dv-ghost">${escapeHTML(t.title.split(/:\s*|\s/).filter(Boolean).pop())}</span>`;

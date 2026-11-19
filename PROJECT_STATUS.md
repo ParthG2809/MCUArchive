@@ -144,3 +144,11 @@ Total: 161 titles (158 released as of 2026-11-12).
 - Synopses for titles released after the archive's research cut-off (Spider-Man: Brand New Day, VisionQuest, X-Men '97 season 2, Spider-Noir)
   and unreleased titles describe only the announced premise and cast.
 - Theme reset (2026-11-19): with an old saved choice (`programme`) the site opens in Deck and clears the old key; picking Archive afterwards persists across pages. No console errors.
+
+## In progress (2026-11-19, step 10: redesign)
+- Done and checked in preview (1440/768/375, no horizontal scroll, only the expected `/api/me` 404 on the static server):
+  single theme, Montserrat + Inter, single red accent, glass over artwork, Cast section for 142 of 161 titles (738 characters).
+  `check_data.py --offline` passes; backend tests 16 pass.
+- Not done yet: cast for the remaining 19 titles (unannounced or unverified credits); a polish pass of account and 404;
+  removing the now-dead Archive-only CSS (list view, comic decorations) from `css/archive.css` and page CSS.
+- Not committed or deployed.

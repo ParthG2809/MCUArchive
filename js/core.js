@@ -272,9 +272,6 @@ function renderChrome(activeKey) {
       </nav>
       <div class="mast-tools">
         <a class="account-link" href="account.html"${activeKey === "account" ? ' aria-current="page"' : ""} hidden>Sign in</a>
-        <div class="theme-switch" role="group" aria-label="Site theme">
-          ${THEMES.map((th) => `<button type="button" data-theme-choice="${th.key}" title="${th.title}">${th.label}</button>`).join("")}
-        </div>
       </div>
     </div>
     <div class="dateline"><div class="wrap"><span>Fan-made archive · Vol. 1</span><span>${ALL_TITLES.length} files on record</span></div></div>`;
@@ -285,7 +282,6 @@ function renderChrome(activeKey) {
 
   document.body.prepend(skip, header);
   document.body.append(footer);
-  setupThemeSwitch(header.querySelector(".theme-switch"));
 
   const accountLink = header.querySelector(".account-link");
   const syncAccountLink = () => {
@@ -303,25 +299,6 @@ function renderChrome(activeKey) {
     document.body.append(badge);
   }
   renderBadge();
-}
-
-/* ---------- theme switch (js/theme.js applies the theme; this is the masthead control) ---------- */
-const THEMES = [
-  { key: "deck",      label: "Deck",      title: "Command Deck: hero-tower theme (default)" },
-  { key: "archive",   label: "Archive",   title: "The Archive: printed-comic theme" },
-  { key: "programme", label: "Programme", title: "The Programme: dark cinema theme" },
-];
-
-function setupThemeSwitch(group) {
-  const sync = () => group.querySelectorAll("[data-theme-choice]").forEach((b) =>
-    b.setAttribute("aria-pressed", b.dataset.themeChoice === window.siteTheme?.get()));
-  group.addEventListener("click", (e) => {
-    const choice = e.target.closest("[data-theme-choice]");
-    if (choice) window.siteTheme?.set(choice.dataset.themeChoice);
-  });
-  document.addEventListener("themechange", sync);
-  sync();
-  if (!window.siteTheme) group.hidden = true; // theme.js missing: nothing to switch
 }
 
 // Six gems light up as each MCU phase is fully watched; the counter covers every released title.

@@ -9,8 +9,8 @@ Marvel-only. No DC or other franchises.
 - GSAP 3.12.5 (+ Flip plugin) loaded from cdnjs. The only third-party frontend library.
 - Backend (accounts only): Django 5.2 LTS in `backend/`, with gunicorn, whitenoise, dj-database-url, psycopg
   (pinned in `backend/requirements.txt`, installed in `backend/.venv`). SQLite locally, Postgres on Render.
-- Fonts from Google Fonts: Alfa Slab One (headlines), Libre Franklin (body), Bungee (signage, years, numbers), Special Elite (typewriter text).
-  Deck theme: Big Shoulders Display + Barlow. Programme theme: Bodoni Moda + Public Sans. Theme fonts load only when that theme is used.
+- Fonts from Google Fonts, exactly two (owner decision 2026-11-19): Montserrat (headings, 600/700/800) and Inter (everything else,
+  400–700). Linked in every page `<head>`. Do not add other fonts.
 - Hosting (owner decision 2026-11-12): the whole site on Render. Django serves the pages and `/api/` from one origin
   (`render.yaml`). Live at https://marvel-archive.onrender.com; every push to `main` redeploys. `vercel.json` / `.vercelignore` are left over from the earlier Vercel plan and unused.
 
@@ -27,11 +27,11 @@ title.html?id=...   Case file for any title (one data-driven template)
 account.html        Sign in / create account / merge this browser's list / sign out
 css/archive.css     Design system: tokens, masthead, shared components
 css/<page>.css      Page-specific styles
-css/theme-deck.css  "Command Deck" theme (default): everything scoped under [data-theme="deck"]
-css/theme-programme.css  "The Programme" theme: everything scoped under [data-theme="programme"]
-js/theme.js         Loaded in every <head>: applies the saved/device theme before first paint
+css/theme-deck.css  The site design ("Command Deck"): type scale, colours, glass, cast section; scoped under [data-theme="deck"]
+js/theme.js         Loaded in every <head>: sets <html data-theme="deck"> before first paint (and clears old theme keys)
 js/core.js          Shared: watch store, poster loader, masthead/footer, helpers
 js/data/<reality>.js  Title data, one file per reality, registered on window.ARCHIVE
+js/data/cast-<reality>.js  Cast & characters per title (window.ARCHIVE_CAST), loaded only by title.html
 js/pages/<page>.js  Page behaviour (timeline-deck.js builds the Deck theme's rail + stage timeline)
 mockups/            Design mockups (V1–V6, V6 is now the Deck theme) and screenshots. Reference only, not deployed
 backend/            Django project: marvel_archive/ (settings, urls), accounts/ (WatchedTitle model, JSON API, tests,
@@ -41,21 +41,21 @@ render.yaml         Render Blueprint (web service + Postgres); admin created by 
 ```
 
 ## Design rules
-- Concept: "The Marvel Archive", printed-comic material (newsprint, ink, hard panel borders, caption boxes,
-  misregistered colour, stamps). Lobby = cinema lobby, timelines = TVA-style records floor, title pages = dossier room.
-- All colours come from CSS custom properties in `css/archive.css`. Phase colours = Infinity Stones
-  (1 Space blue, 2 Mind yellow, 3 Reality red, 4 Power purple, 5 Time green, 6 Soul orange).
-- Avoid generic "AI" patterns: no mono eyebrow labels everywhere, no rounded card grids, no blur glows.
+- One design for the whole site (owner decision 2026-11-19): "Command Deck", graphite + fine dot grid, chamfered panels,
+  big uppercase Montserrat headings, Inter body text. The Archive (comic) and Programme themes and the theme switch were removed.
+  `css/archive.css` is still the structural base (layout, shared components); `css/theme-deck.css` styles everything on top.
+- Colour: near-black surfaces, white/grey text, one accent (`--signal` red, also `--power`). Phase/Infinity Stone colours
+  (1 Space blue, 2 Mind yellow, 3 Reality red, 4 Power purple, 5 Time green, 6 Soul orange) only as small markers
+  (`--mark`, `--c`, `--stone`): dots, diamonds, thin stripes, the stones. Never as large fills. Text contrast at least 4.5:1.
+- Type scale tokens in `css/theme-deck.css` (`--fs-hero`, `--fs-h1`, `--fs-h2`, `--fs-h3`); body 16–17px, line-height 1.55–1.7;
+  labels Inter 600 12px, uppercase, letter-spacing about .08em. No thin weights.
+- Glass (frosted `backdrop-filter`) only over artwork: the sticky masthead, the timeline stage panel, the cast panel
+  (class `glass`). Always inside `@supports`, with a solid fallback. Not on plain cards.
+- Avoid generic "AI" patterns: no mono eyebrow labels everywhere, no rounded card grids, no decorative glows.
 - Must work at phone width, keep keyboard focus visible, and respect `prefers-reduced-motion`.
-- Three themes share one set of markup, chosen in the masthead switch (saved per browser in `marvel-archive:theme-v2`;
-  the old `marvel-archive:theme` key is ignored and cleared so every visitor started on Deck once, owner decision 2026-11-19):
-  "Command Deck" (DEFAULT, owner decision 2026-11-19: graphite + dot grid, chamfered panels, slashed edges, split-weight condensed
-  titles, one "power colour" taken from the data), "The Archive" (comic) and "The Programme" (dark cinema programme).
-  Design reference for Deck: `mockups/v6-deck/system.html`.
-- Every page links `css/theme-programme.css`, `css/theme-deck.css` and `js/theme.js` in `<head>`. Any new component needs
-  Deck and Programme styles. Do not edit Archive styles to suit another theme. Deck-only markup uses the `deck-only` class.
-- Timelines in the Deck theme use the rail + stage layout from `js/pages/timeline-deck.js` (the list view stays for the other themes).
-  Both views must stay in sync: redraw on `watchedchange` and `themechange`.
+- Every page links the two fonts, `css/archive.css`, its page CSS, `css/theme-deck.css` and `js/theme.js` in `<head>`.
+- Timelines use the rail + stage layout from `js/pages/timeline-deck.js`. The old list view (`timeline.js`) is hidden but still
+  renders the data the deck reads; redraw on `watchedchange`.
 
 ## Data rules
 - Each reality file declares `sections` (MCU uses `phases`, converted in core.js), `views` (order tabs),
@@ -65,6 +65,11 @@ render.yaml         Render Blueprint (web service + Postgres); admin created by 
 - Summaries are original synopses in our own words, 2–4 sentences: the premise, main characters and stakes, never the ending or
   twists (owner decision 2026-11-19: synopsis, not a full plot recap). No spoiler markup or redaction; unreleased titles describe only
   the officially announced premise. Before Doomsday `why` notes follow the same no-spoiler rule.
+- Cast (owner decision 2026-11-19): `js/data/cast-<reality>.js`, title id -> `[character, actor, bio]`, 4–8 main characters,
+  original 2–3 sentence bios about the character's role, no endings (owner: never a one-liner). Voice-only roles in live-action
+  titles carry "(voice)" after the actor's name; the case file then shows "Voiced by". Verifiable credits only; unreleased titles list announced cast
+  only; leave a title out if unsure. No actor/character photos (no rights); the stage uses the title's poster.
+  `scripts/check_data.py` validates cast ids and rows.
 - Release status (upcoming vs released) is computed from the `released` date at runtime. Do not hard-code it.
 - Posters: each title's `wiki` field is an English Wikipedia article name (owner has permission to use posters).
   After adding or changing titles, run `python scripts/check_data.py`. It validates the data files and writes
