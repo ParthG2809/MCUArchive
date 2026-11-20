@@ -505,4 +505,7 @@ Object.assign(window.ARCHIVE_CAST, {
     ["Loki", "Tom Hiddleston", "The god of mischief, announced as part of the film's cast. He was last seen holding the Multiverse together. His role in Doomsday has not been revealed."],
     ["Charles Xavier / Professor X", "Patrick Stewart", "The founder of the X-Men, announced as part of the film's cast with other Fox X-Men. Patrick Stewart returns to the role. His role in Doomsday has not been revealed."],
   ],
+  "secret-wars": [
+    ["Victor von Doom / Doctor Doom", "Robert Downey Jr.", "The ruler of Latveria and one of the most dangerous minds in the multiverse. Robert Downey Jr.'s casting was announced alongside the directors at San Diego Comic-Con in July 2024. The rest of the cast and the details of his role have not been revealed."],
+  ],
 });

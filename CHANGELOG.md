@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-11-20: Step 10 (redesign, part 2: full cast, account/404 polish, dead CSS removed)
+- Cast for the last 19 titles (now 161 of 161, 845 characters), from Wikipedia voice/cast credits, bios in our own words:
+  Toei Spider-Man, Spider-Man (1981), Pryde of the X-Men, X-Men: Evolution, Wolverine and the X-Men, X-Men '97 season 2,
+  The Marvel Super Heroes, Fantastic Four (1967, 1994), Iron Man (1994), The Incredible Hulk (1996), Silver Surfer,
+  Iron Man: Armored Adventures, Earth's Mightiest Heroes, Avengers Assemble, Hulk and the Agents of S.M.A.S.H., Guardians of the Galaxy (2015).
+  Unreleased titles list announced cast only: Avengers: Secret Wars (Robert Downey Jr. as Doctor Doom, the only casting Marvel has announced
+  for it) and Spider-Man: Beyond the Spider-Verse (Moore, Steinfeld, Johnson, Schwartzman, each confirmed). Roles voiced by several actors
+  name all of them ("James Avery and Dorian Harewood").
+- 404 page: real `<h1>` with the shared split-weight heading and red bar, caption instead of the old stamp chip, no inline style, clearer text.
+  The missing-case-file notice in `dossier.js` uses the same markup (`h1`, `.notice-actions`).
+- Account page: card heading on the `--fs-h3` scale, faux-bold fixed (weight 900 -> 800, the heaviest Montserrat loaded), links underlined in
+  signal red, merge notice marked in red instead of yellow (single accent), inputs 48px high like the buttons with hover/focus/invalid edges,
+  labels lighter for contrast, card top-aligned with the page title. Account behaviour, CSRF and password rules unchanged.
+- Dead comic-theme CSS removed: `css/archive.css` is now layout only (207 -> 80 lines; all CSS 1,486 -> 999 lines; no comic fonts, halftone, misprint shadows, stamps,
+  bursts, chips); the page CSS files keep layout only; the hidden list view (`.chart`, `.row`, `.record`, index card, filters) has no styles
+  left (its JS and markup stay, `timeline-deck.js` reads it). Overrides in `css/theme-deck.css` that only cancelled those styles are gone,
+  as are unused tokens (`--f-head`, `--f-sign`, `--f-type`, `--manila`, `--paper-2/3`, `--ink-2`, `--red-dark`, `--doom-light`, `--hard*`, `--rule`, `--slash`).
+  Verified with a computed-style and box snapshot of every rendered element on all 10 pages at 1440 and 375px: no element moved or resized.
+- One deliberate hover tweak: the "Shred my records" button's hover text is #0A0A0E (was #121218 from a leftover rule), like every red button.
+
 ## 2026-11-19: Step 10 (redesign, part 1: one theme, new type, cast for the MCU)
 - One design for the whole site: the Archive and Programme themes and the masthead theme switch are removed
   (`css/theme-programme.css` deleted; `js/theme.js` now always sets `data-theme="deck"` and clears old theme keys).

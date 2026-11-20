@@ -1,71 +1,44 @@
-/* Before Doomsday: a war-room briefing sheet */
+/* Before Doomsday: layout only. The look comes from css/theme-deck.css (BEFORE DOOMSDAY section). */
 
-.brief-head { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 64px); padding-top: 48px; align-items: end; }
-.brief-head h1 { font: 400 clamp(52px, 7.6vw, 112px)/0.88 var(--f-head); margin: 20px 0; }
-.brief-head h1 span { color: var(--doom); display: block; }
-.brief-lede { max-width: 52ch; font-size: 18px; }
-.brief-lede a { text-decoration-color: var(--red); text-decoration-thickness: 2px; font-weight: 600; }
+.brief-head { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 64px); align-items: end; }
+.brief-lede { max-width: 52ch; }
+.brief-lede a { font-weight: 600; }
 
-/* countdown: a green-and-ink "Doom clock" plate */
-.clock {
-  background: var(--doom); color: var(--paper); border: var(--rule); box-shadow: var(--hard); padding: 20px 22px 18px;
-  background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,.12) 0 10px, transparent 10px 20px);
-}
-.clock-title { font: 400 15px var(--f-type); letter-spacing: .1em; text-transform: uppercase; color: var(--doom-light); }
-.clock-digits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
-.clock-digits b {
-  display: block; text-align: center; background: var(--ink); color: var(--doom-light); border: 2px solid #0B0A08;
-  font: 400 clamp(34px, 4.4vw, 56px)/1 var(--f-sign); padding: 12px 0 10px;
-}
-.clock-digits span { display: block; text-align: center; margin-top: 6px; font: 400 12px var(--f-type); letter-spacing: .1em; text-transform: uppercase; }
-.clock-date { margin-top: 14px; padding-top: 10px; border-top: 1px dashed rgba(242,234,214,.4); font: 400 18px var(--f-head); }
+/* countdown */
+.clock-title { text-transform: uppercase; }
+.clock-digits { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 12px; }
+.clock-digits b { display: block; }
+.clock-digits span { display: block; margin-top: 6px; text-transform: uppercase; }
+.clock-date { margin-top: 14px; padding-top: 10px; }
 
 /* progress: one segment per entry */
-.readiness { margin-top: 56px; background: var(--sheet); border: var(--rule); box-shadow: var(--hard-sm); padding: 20px clamp(16px, 3vw, 28px); }
+.readiness { margin-top: 56px; }
 .ready-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 20px; }
-.ready-row h2 { font: 400 clamp(24px, 2.6vw, 32px)/1 var(--f-head); }
-.ready-count { font: 400 15px var(--f-type); }
-.ready-count b { font: 400 30px var(--f-sign); color: var(--doom); }
-.ready-track { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(15, 1fr); gap: 4px; }
-.ready-track li { height: 22px; border: 2px solid var(--ink); background: var(--paper-2); transform-origin: bottom; }
-.ready-track li.on { background: var(--doom); background-image: radial-gradient(circle, rgba(242,234,214,.25) 1px, transparent 1.5px); background-size: 5px 5px; }
-.ready-note { margin-top: 10px; font: 400 14px var(--f-type); }
+.ready-track { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(15, 1fr); }
+.ready-track li { transform-origin: bottom; }
+.ready-note { margin-top: 10px; }
 
 /* the list */
-.list-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 10px 32px; margin: 64px 0 22px; padding-bottom: 10px; border-bottom: var(--rule); }
-.list-head h2 { font: 400 clamp(30px, 3.6vw, 46px)/1 var(--f-head); }
-.list-source { font: 400 13px/1.4 var(--f-type); max-width: 56ch; }
+.list-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 10px 32px; margin: 64px 0 22px; padding-bottom: 10px; }
+.list-source { max-width: 56ch; }
 
-.dossiers { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; counter-reset: none; }
-.dossier {
-  position: relative; display: grid; grid-template-columns: 64px 84px minmax(0, 1fr) auto; gap: 18px; align-items: center;
-  background: var(--sheet); border: var(--rule); box-shadow: var(--hard-sm); padding: 12px 18px 12px 0;
-  border-left-width: 10px; border-left-color: var(--stone);
-}
-.dossier-no { font: 400 30px/1 var(--f-sign); text-align: center; color: var(--ink); }
-.dossier-poster { display: block; border: 2px solid var(--ink); }
-.dossier h3 { font: 400 clamp(20px, 2vw, 26px)/1.05 var(--f-head); }
-.dossier h3 a { text-decoration: none; }
-.dossier h3 a:hover { text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 3px; }
-.dossier-meta { margin-top: 4px; font: 600 13px var(--f-body); color: var(--ink-2); }
-.dossier-why { margin-top: 8px; font: 400 16px/1.55 var(--f-type); max-width: 68ch; }
-.dossier-mark { font-size: 12px; padding: 8px 12px; white-space: nowrap; }
-.dossier-mark[aria-pressed="true"] { background: var(--doom); color: var(--paper); }
-
-.dossier.done { background: var(--paper-2); }
+.dossiers { list-style: none; padding: 0; margin: 0; display: grid; }
+.dossier { position: relative; display: grid; gap: 18px; align-items: center; }
+.dossier-no { text-align: center; }
 .dossier.done .dossier-no { color: var(--doom); }
-.dossier-stamp { position: absolute; right: 150px; top: 8px; color: var(--doom); border-color: var(--doom); font-size: 13px; pointer-events: none; }
+.dossier-poster { display: block; }
+.dossier h3 a { text-decoration: none; }
+.dossier-meta { margin-top: 4px; }
+.dossier-why { margin-top: 8px; max-width: 68ch; }
+.dossier-mark { white-space: nowrap; }
 
 @media (max-width: 900px) {
   .brief-head { grid-template-columns: 1fr; }
-  .dossier-stamp { right: 18px; top: auto; bottom: 10px; }
 }
 @media (max-width: 620px) {
-  .dossier { grid-template-columns: 64px minmax(0, 1fr); gap: 10px 14px; padding: 12px 14px 14px 12px; border-left-width: 8px; align-items: start; }
-  .dossier-no { position: absolute; top: -12px; right: 10px; z-index: 2; font-size: 16px; background: var(--yellow); border: 2px solid var(--ink); padding: 3px 7px; }
+  .dossier { gap: 10px 14px; align-items: start; }
+  .dossier-no { position: absolute; z-index: 2; }
   .dossier-poster { grid-row: span 2; }
   .dossier-mark { grid-column: 2; justify-self: start; }
   .dossier h3 { padding-right: 34px; }
-  .ready-track { gap: 2px; }
-  .ready-track li { height: 18px; border-width: 1.5px; }
 }

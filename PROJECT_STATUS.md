@@ -1,6 +1,6 @@
 # Project status: The Marvel Archive
 
-_Last updated: 2026-11-19 (step 9: synopses and typography)_
+_Last updated: 2026-11-20 (step 10, part 2: full cast, account/404 polish, dead CSS removed)_
 
 **Live site:** https://marvel-archive.onrender.com (Render free plan, Blueprint `marvel-archive`, deploys automatically from `main`).
 
@@ -14,8 +14,9 @@ Every page loads all four data files (cross-references and connections span real
 `js/pages/timeline.js` is one generic timeline used by all four reality pages; each reality declares its own
 `sections` (phases / film series / lanes), `views` (order tabs) and optional `refs` (titles borrowed from another reality).
 Posters are pre-resolved into `js/posters.js` by `scripts/check_data.py`. See CLAUDE.md for rules.
-Two themes share the same markup and JS: `js/theme.js` (loaded in every `<head>`) sets `<html data-theme="archive|programme">`;
-`css/theme-programme.css` restyles every page under `[data-theme="programme"]` and leaves the Archive CSS untouched.
+One design ("Command Deck"): `js/theme.js` (loaded in every `<head>`) sets `<html data-theme="deck">`; `css/archive.css` and the page CSS
+files hold layout only, and `css/theme-deck.css` holds every colour/type/shape token and the look of every component.
+(The Archive and Programme themes described in older entries below were removed in step 10.)
 
 ## Implemented
 | Page | Content |
@@ -145,10 +146,18 @@ Total: 161 titles (158 released as of 2026-11-12).
   and unreleased titles describe only the announced premise and cast.
 - Theme reset (2026-11-19): with an old saved choice (`programme`) the site opens in Deck and clears the old key; picking Archive afterwards persists across pages. No console errors.
 
-## In progress (2026-11-19, step 10: redesign)
-- Done and checked in preview (1440/768/375, no horizontal scroll, only the expected `/api/me` 404 on the static server):
-  single theme, Montserrat + Inter, single red accent, glass over artwork, Cast section for 142 of 161 titles (738 characters).
-  `check_data.py --offline` passes; backend tests 16 pass.
-- Not done yet: cast for the remaining 19 titles (unannounced or unverified credits); a polish pass of account and 404;
-  removing the now-dead Archive-only CSS (list view, comic decorations) from `css/archive.css` and page CSS.
-- Not committed or deployed.
+## Step 10 (2026-11-19/20): redesign
+- Part 1 (committed and deployed as ed3c404): single theme, Montserrat + Inter, single red accent, glass over artwork, Cast section.
+- Part 2 (2026-11-20, local only; not committed or deployed):
+  - Cast for all 161 titles (845 characters). `check_data.py --offline`: 0 problems. Unreleased titles list only announced cast:
+    Avengers: Secret Wars has one entry (Robert Downey Jr. as Doctor Doom), Beyond the Spider-Verse four.
+  - Account and 404 polished (see CHANGELOG). Checked on the Django dev server: wrong/empty input errors, focus, sign-up, merge of
+    2 browser titles, sign-out; the throwaway test account and its 2 rows were deleted afterwards. Unknown URLs return the new 404 page.
+  - Dead comic-theme CSS removed. `css/archive.css` and the page CSS files hold layout only; `css/theme-deck.css` holds every token and the look.
+    Verified by a computed-style + box snapshot of every rendered element on all 10 pages (lobby, 4 timelines, case file, My Gauntlet,
+    Before Doomsday, account, 404) at 1440 and 375px before and after: no element moved or resized; the remaining computed differences are
+    on hidden or statically positioned elements only. Hover/press states were checked by reading the rules, not in the browser.
+  - All pages at 768px: no horizontal scroll. Backend tests: 16 pass. Screenshots: `mockups/screens-redesign/account-*`, `404-*`.
+- Known leftovers (not changed, visible behaviour kept): the "done" number on Before Doomsday rows is green (`--doom`), a remnant of the old
+  green accent; a full Infinity Stone glows (`drop-shadow`) on My Gauntlet; `lobby.js` and `dossier.js` still start GSAP motions that CSS
+  blocks with `transform: none !important` (lobby doors, case-file poster); the `misprint` class is still in some markup but has no style.

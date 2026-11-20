@@ -15,10 +15,10 @@ function renderMissingFile() {
   document.title = "File not found | The Marvel Archive";
   document.getElementById("room").innerHTML = `
     <div class="notice-card">
-      <span class="stamp">Missing file</span>
-      <h2>No file on record</h2>
+      <span class="caption">Missing file</span>
+      <h1>No file <span>on record</span></h1>
       <p>That file isn't in the archive. It may have been pruned from the timeline.</p>
-      <p style="margin-top:18px"><a class="btn red" href="mcu.html">Back to the Sacred Timeline</a></p>
+      <p class="notice-actions"><a class="btn red" href="mcu.html">Back to the Sacred Timeline</a></p>
     </div>`;
 }
 

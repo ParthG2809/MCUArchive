@@ -25,9 +25,10 @@ tracker.html        My Gauntlet (watch progress)
 doomsday.html       Before Doomsday (Marvel's official pre-Doomsday watchlist)
 title.html?id=...   Case file for any title (one data-driven template)
 account.html        Sign in / create account / merge this browser's list / sign out
-css/archive.css     Design system: tokens, masthead, shared components
-css/<page>.css      Page-specific styles
-css/theme-deck.css  The site design ("Command Deck"): type scale, colours, glass, cast section; scoped under [data-theme="deck"]
+css/archive.css     Structural base: layout of the masthead and shared components (no colours or fonts)
+css/<page>.css      Page-specific layout only
+css/theme-deck.css  The site design ("Command Deck"): all tokens (colour, type scale, shape), the look of every component, glass,
+                    cast section; scoped under [data-theme="deck"]
 js/theme.js         Loaded in every <head>: sets <html data-theme="deck"> before first paint (and clears old theme keys)
 js/core.js          Shared: watch store, poster loader, masthead/footer, helpers
 js/data/<reality>.js  Title data, one file per reality, registered on window.ARCHIVE
@@ -43,7 +44,8 @@ render.yaml         Render Blueprint (web service + Postgres); admin created by 
 ## Design rules
 - One design for the whole site (owner decision 2026-11-19): "Command Deck", graphite + fine dot grid, chamfered panels,
   big uppercase Montserrat headings, Inter body text. The Archive (comic) and Programme themes and the theme switch were removed.
-  `css/archive.css` is still the structural base (layout, shared components); `css/theme-deck.css` styles everything on top.
+  `css/archive.css` and the page CSS files are layout only; colours, fonts and decoration go in `css/theme-deck.css` (since the comic-theme
+  leftovers were removed on 2026-11-20).
 - Colour: near-black surfaces, white/grey text, one accent (`--signal` red, also `--power`). Phase/Infinity Stone colours
   (1 Space blue, 2 Mind yellow, 3 Reality red, 4 Power purple, 5 Time green, 6 Soul orange) only as small markers
   (`--mark`, `--c`, `--stone`): dots, diamonds, thin stripes, the stones. Never as large fills. Text contrast at least 4.5:1.
@@ -54,7 +56,7 @@ render.yaml         Render Blueprint (web service + Postgres); admin created by 
 - Avoid generic "AI" patterns: no mono eyebrow labels everywhere, no rounded card grids, no decorative glows.
 - Must work at phone width, keep keyboard focus visible, and respect `prefers-reduced-motion`.
 - Every page links the two fonts, `css/archive.css`, its page CSS, `css/theme-deck.css` and `js/theme.js` in `<head>`.
-- Timelines use the rail + stage layout from `js/pages/timeline-deck.js`. The old list view (`timeline.js`) is hidden but still
+- Timelines use the rail + stage layout from `js/pages/timeline-deck.js`. The old list view (`timeline.js`) is hidden and unstyled but still
   renders the data the deck reads; redraw on `watchedchange`.
 
 ## Data rules

@@ -157,4 +157,24 @@ Object.assign(window.ARCHIVE_CAST, {
     ["Peter Parker / Spider-Man", "Hudson Thames", "A teenager starting his first year as Spider-Man. He is just starting at a new school. He is still learning what kind of hero he wants to be."],
     ["Norman Osborn", "Colman Domingo", "A wealthy industrialist who becomes Peter's mentor. He sees great potential in Peter. He takes a keen interest in his future."],
   ],
+  "beyond-the-spider-verse": [
+    ["Miles Morales / Spider-Man", "Shameik Moore", "The Brooklyn teenager who became the Spider-Man of his own universe, returning as the lead of the trilogy's final film. Shameik Moore has confirmed he is voicing Miles again. What his story holds this time has not been revealed."],
+    ["Gwen Stacy / Spider-Woman", "Hailee Steinfeld", "The Spider-Woman of Earth-65 and Miles's closest friend across the multiverse. Hailee Steinfeld's return was confirmed with the film's first footage in 2025. Her role in the story has not been revealed."],
+    ["Peter B. Parker / Spider-Man", "Jake Johnson", "The older, world-weary Spider-Man who once mentored Miles and is now a father. Jake Johnson has spoken about recording his lines for the film. His part in the story has not been revealed."],
+    ["The Spot", "Jason Schwartzman", "A former scientist whose body is covered in portals that let him jump between places and universes. Sony announced him as the villain of both Across and Beyond the Spider-Verse. What he does in this film has not been revealed."],
+  ],
+  "toei-spider-man": [
+    ["Takuya Yamashiro / Spider-Man", "Shinji Tōdō", "A young motorcycle racer given spider powers by a dying warrior from Planet Spider. He fights the Iron Cross Army in a costume much like the comics' Spider-Man. Unlike Peter Parker, he also commands a giant robot, Leopardon."],
+    ["Professor Monster", "Mitsuo Andō", "The ancient alien tyrant who leads the Iron Cross Army. He wants to conquer Earth and sends a new giant monster against Spider-Man in episode after episode. He was behind the destruction of Planet Spider."],
+    ["Amazoness", "Yukie Kagawa", "Professor Monster's cunning lieutenant, a skilled fighter and master of disguise. She carries out many of the army's schemes on Earth herself. She is the villain Takuya meets most often face to face."],
+    ["Shinko Yamashiro", "Izumi Ōyama", "Takuya's younger sister, who lives with him after their father's death. She does not know her brother's secret. Keeping her safe is one of the reasons he hides it."],
+    ["Garia", "Toshiaki Nishizawa", "The last surviving warrior of Planet Spider, who has hunted Professor Monster across space. Near death, he passes his powers and his mission on to Takuya. His gift sets the whole series in motion."],
+  ],
+  "spider-man-1981": [
+    ["Peter Parker / Spider-Man", "Ted Schwartz", "A college student and freelance photographer who fights crime as Spider-Man. He juggles classes, his job at the Daily Bugle and looking after his aunt. Villains from across the Marvel world cross his path, from the Lizard to the Kingpin."],
+    ["J. Jonah Jameson", "William Woodson", "The loud, stubborn publisher of the Daily Bugle. He buys Peter's photos of Spider-Man while running headlines that call the hero a menace. He never suspects who his photographer really is."],
+    ["Aunt May", "Morgan Lofting", "Peter's gentle aunt, who raised him. She worries about his health and his late nights. Keeping her safe and in the dark is part of his double life."],
+    ["Betty Brant", "Mona Marshall", "Jameson's secretary at the Daily Bugle and a friend to Peter. She often helps him around the office. She is one of the few people at the paper who is kind to him."],
+    ["Doctor Doom", "Brad Crandall", "The armoured ruler of Latveria and the series' most frequent villain. He returns in several episodes with new plans to take over the world. Spider-Man keeps standing in his way."],
+  ],
 });

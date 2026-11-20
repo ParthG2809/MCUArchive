@@ -1,143 +1,23 @@
+/* Timeline pages: layout only. The rail + stage deck is styled in css/theme-deck.css (TIMELINES section).
+   The older list view (.index-card, .controls, .filters, .chart) is still rendered by js/pages/timeline.js,
+   because timeline-deck.js reads it, but it is always hidden, so it has no styles of its own. */
+
 /* ---------- page head ---------- */
-.head { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 70px); padding-top: 48px; align-items: start; }
-.head h1 { font: 400 clamp(52px, 7.4vw, 110px)/0.88 var(--f-head); margin: 20px 0 20px; }
-.head h1 span { display: block; color: var(--red); }
-.head p { max-width: 50ch; font-size: 18px; }
-
-/* index card = phase jump list */
-.index-card {
-  background: var(--sheet); border: var(--rule); box-shadow: var(--hard); transform: rotate(1deg);
-  background-image: linear-gradient(transparent 0 46px, var(--red) 46px 48px, transparent 48px), repeating-linear-gradient(transparent 0 33px, rgba(31,95,174,.25) 33px 34px);
-  background-position: 0 0, 0 14px;
-}
-.index-card h2 { font: 400 15px var(--f-sign); letter-spacing: .06em; padding: 14px 18px 0; height: 48px; }
-.index-card ol { list-style: none; padding: 0 0 10px; margin: 0; }
-.index-card button {
-  width: 100%; display: grid; grid-template-columns: 16px 1fr auto; gap: 12px; align-items: center; text-align: left;
-  background: none; border: 0; padding: 0 18px; height: 34px; font: 400 15px var(--f-type); color: var(--ink); cursor: pointer;
-}
-.index-card button:hover { background: rgba(245,197,24,.35); }
-.index-card button i { width: 14px; height: 18px; background: var(--c); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
-.index-card button b { font-weight: 400; font-family: var(--f-sign); font-size: 13px; }
-
-/* ---------- divider-tab toggle ---------- */
-.controls { position: sticky; top: 0; z-index: 30; margin-top: 64px; background: var(--paper); border-bottom: var(--rule); display: flex; align-items: flex-end; gap: 6px; padding-top: 12px; }
-.controls .tabs { display: flex; gap: 6px; }
-.controls .tab {
-  font: 400 15px var(--f-sign); letter-spacing: .04em; padding: 12px 20px 10px; border: var(--rule); border-bottom: 0; cursor: pointer;
-  background: var(--paper-3); color: var(--ink); clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 100%, 0 100%); padding-inline: 28px;
-}
-.controls .tab[aria-pressed="true"] { background: var(--manila); padding-top: 16px; }
-.controls .hint { margin-left: auto; font: 400 14px var(--f-type); padding-bottom: 10px; }
-
-/* ---------- the chart (TVA-style graph paper) ---------- */
-.chart {
-  position: relative; padding: 40px 0 60px;
-  background:
-    linear-gradient(rgba(31,95,174,.09) 1px, transparent 1px) 0 0 / 24px 24px,
-    linear-gradient(90deg, rgba(31,95,174,.09) 1px, transparent 1px) 0 0 / 24px 24px;
-}
-.chart::before { /* the Sacred Timeline itself */
-  content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 5px; transform: translateX(-50%);
-  background: var(--red); box-shadow: 2px 0 0 var(--ink);
-}
-.row { position: relative; display: grid; grid-template-columns: 1fr 110px 1fr; align-items: center; margin-bottom: 26px; }
-.row .record { grid-column: 1; grid-row: 1; justify-self: end; }
-.row.right .record { grid-column: 3; justify-self: start; }
-.node { grid-column: 2; grid-row: 1; justify-self: center; z-index: 2; display: grid; place-items: center; width: 82px; height: 82px; border-radius: 50%;
-  background: var(--sheet); border: var(--rule); box-shadow: inset 0 0 0 6px var(--stone); font: 400 17px var(--f-sign); text-align: center; line-height: 1; padding: 0 6px; }
-.node.text { font-size: 12px; }
-.row.nexus .node { border-radius: 0; background: var(--yellow); box-shadow: none; width: 96px; height: 96px;
-  clip-path: polygon(50% 0, 61% 18%, 82% 9%, 80% 31%, 100% 38%, 85% 53%, 98% 72%, 76% 74%, 72% 96%, 54% 83%, 36% 100%, 30% 79%, 8% 84%, 15% 63%, 0 48%, 18% 37%, 10% 16%, 32% 18%); border: 0; }
-/* connector from node to card */
-.row::after { content: ""; position: absolute; top: 50%; height: 3px; background: var(--ink); left: calc(50% - 60px); width: 60px; z-index: 1; }
-.row.right::after { left: 50%; }
-
-.divider { display: flex; align-items: stretch; margin: 60px 0 34px; position: relative; z-index: 2; scroll-margin-top: 80px; }
-.divider .tabmark { background: var(--stone); color: var(--sheet); border: var(--rule); padding: 10px 22px; font: 400 clamp(26px, 3.4vw, 42px)/1 var(--f-head); box-shadow: var(--hard-sm); text-shadow: 2px 2px 0 var(--ink); }
-.divider .meta { align-self: flex-end; margin-left: 14px; font: 400 15px var(--f-type); background: var(--paper); padding: 2px 6px; }
-
-/* record card */
-.record {
-  position: relative; width: min(100%, 470px); display: grid; grid-template-columns: 112px 1fr; gap: 16px;
-  background: var(--sheet); border: var(--rule); box-shadow: var(--hard); padding: 14px; border-top: 10px solid var(--stone);
-  transition: transform .2s, box-shadow .2s;
-}
-.record:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
-.record .poster { border: 2px solid var(--ink); }
-.clip { position: absolute; top: 4px; left: 30px; width: 18px; height: 46px; border: 3px solid #8C8C8C; border-radius: 10px; z-index: 3; }
-.record .kind { font: 400 12px var(--f-type); letter-spacing: .06em; text-transform: uppercase; color: #5C5245; }
-.record h3 { font: 400 24px/1.02 var(--f-head); margin: 4px 0 8px; }
-.record p { font-size: 15.5px; line-height: 1.6; max-width: 68ch; }
-.record .acts { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px; }
-.record .acts a { font: 800 13px var(--f-body); text-transform: uppercase; text-decoration: none; border-bottom: 3px solid var(--red); }
-.watch-btn { font: 400 12px var(--f-type); letter-spacing: .08em; text-transform: uppercase; background: none; border: 2px dashed #8A7E6C; padding: 4px 8px; cursor: pointer; color: #5C5245; }
-.watched-stamp { position: absolute; left: 6px; top: 40%; mix-blend-mode: normal; background: rgba(251,247,236,.88); font-size: 22px; padding: 4px 12px; transform: rotate(-14deg) scale(.6); opacity: 0; pointer-events: none; transition: transform .25s cubic-bezier(.3,1.6,.5,1), opacity .2s; }
-.record.is-watched .watched-stamp { opacity: .9; transform: rotate(-14deg) scale(1); }
-.record.is-watched .watch-btn { border-style: solid; border-color: var(--red); color: var(--red); }
-.record .burst { width: 86px; height: 86px; font-size: 12px; top: -34px; right: -24px; }
-.record.upcoming { border-style: dashed; border-top-style: solid; }
-
-@media (max-width: 860px) {
-  .head { grid-template-columns: 1fr; }
-  .chart::before { left: 34px; }
-  .row, .row.right { grid-template-columns: 68px minmax(0, 1fr); }
-  .row .record, .row.right .record { grid-column: 2; justify-self: stretch; width: auto; }
-  .node { grid-column: 1; width: 60px; height: 60px; font-size: 13px; }
-  .node.text { font-size: 11px; }
-  .row.nexus .node { width: 66px; height: 66px; }
-  .row::after, .row.right::after { display: none; }
-  .record { grid-template-columns: 84px 1fr; gap: 12px; }
-  .record .burst { right: -6px; }
-  .watched-stamp { font-size: 15px; top: 120px; left: 2px; }
-  .controls .hint { display: none; }
-  .controls .tabs { display: flex; gap: 6px; }
-.controls .tab { padding-inline: 18px; font-size: 13px; }
-}
-/* Phones: the poster floats so the full synopsis can use the whole card width. */
-@media (max-width: 520px) {
-  .record { display: block; }
-  .record > .poster { float: left; width: 76px; margin: 0 12px 8px 0; }
-  .record h3 { font-size: 20px; overflow-wrap: break-word; }
-}
-
-/* ---------- filter row ---------- */
-.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; padding: 14px 0; border-bottom: 1px solid var(--ink); }
-.filters .count { margin-left: auto; font: 400 14px var(--f-type); }
-.empty { text-align: center; font: 400 18px var(--f-type); padding: 60px 0; position: relative; z-index: 2; background: var(--paper); }
-@media (max-width: 860px) { .filters .count { margin-left: 0; width: 100%; } }
-.record h3 .title-link { text-decoration: none; }
-.record h3 .title-link:hover { text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--red); }
-
-/* ---------- tags on records ---------- */
-.tags { display: flex; flex-wrap: wrap; gap: 5px; margin: -2px 0 8px; }
-.tags:empty { display: none; }
-.tag { font: 400 11.5px/1 var(--f-sign); letter-spacing: .03em; padding: 4px 6px; border: 2px solid var(--ink); background: var(--sheet); color: var(--ink); }
-.tag-soon { background: var(--red); color: var(--sheet); }
-.tag-anim { background: var(--cyan); }
-.tag-ref { background: var(--yellow); }
-.tag-recognised { background: var(--stone-5); color: var(--sheet); }
-.tag-disputed { background: var(--stone-6); color: var(--ink); }
-.tag-separate { background: var(--paper-3); }
+.head { display: grid; gap: clamp(28px, 5vw, 70px); align-items: start; }
 
 /* ---------- signature feature panels (Spider-Verse strands, Mutant split, Legacy canon key) ---------- */
 .feature {
-  margin: 56px 0 0; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: 28px; align-items: center;
-  background: var(--sheet); border: var(--rule); box-shadow: var(--hard); padding: 24px;
-  background-image: radial-gradient(circle, rgba(22,19,15,.08) 1px, transparent 1.4px); background-size: 9px 9px;
+  margin: 56px 0 0; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: 28px; align-items: center; padding: 24px;
 }
 .feature figcaption p { margin-top: 14px; font-size: 16px; }
-.feature figcaption a { font-weight: 800; text-decoration-color: var(--red); text-decoration-thickness: 3px; }
+.feature figcaption a { font-weight: 800; }
 .feature svg { width: 100%; height: auto; display: block; overflow: visible; }
-.feature svg .lbl { font: 400 26px var(--f-head); }
-.feature svg .yr { font: 400 15px var(--f-type); fill: var(--ink); letter-spacing: .04em; }
+.feature svg .yr { fill: var(--ink); }
 .canon-key { display: grid; gap: 14px; margin: 0; }
 .canon-key div { display: grid; grid-template-columns: 190px 1fr; gap: 16px; align-items: start; }
 .canon-key dt .tag { font-size: 12px; display: inline-block; }
 .canon-key dd { margin: 0; font-size: 15px; }
 @media (max-width: 860px) {
   .feature { grid-template-columns: 1fr; }
-  .feature svg .lbl { font-size: 34px; }
-  .feature svg .yr { font-size: 22px; }
   .canon-key div { grid-template-columns: 1fr; gap: 6px; }
 }
