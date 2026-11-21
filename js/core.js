@@ -296,7 +296,11 @@ function renderChrome(activeKey) {
     badge.className = "gauntlet-badge";
     badge.href = "tracker.html";
     badge.title = "Your watch progress";
-    document.body.append(badge);
+    // On phones the floating badge would cover the page, so it sits in the masthead instead.
+    const phone = matchMedia("(max-width: 620px)");
+    const placeBadge = () => (phone.matches ? header.querySelector(".mast-tools") : document.body).append(badge);
+    phone.addEventListener("change", placeBadge);
+    placeBadge();
   }
   renderBadge();
 }

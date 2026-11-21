@@ -132,6 +132,10 @@ Total: 161 titles (158 released as of 2026-11-12).
 - Deployed on Vercel 2026-11-22 (Hobby, static, no accounts): https://the-mcu-archive.vercel.app (old mcu-archive-six.vercel.app redirects).
   Project settings: root `./`, preset Other, output `.`, no build/install. Checked: pages 200; /backend/*, render.yaml, /api/me 404.
   Render (with accounts) stays live too; every push to `main` redeploys both.
+- Link previews (2026-11-22): one card for the whole site; `title.html?id=` links show the generic card, not the title's poster
+  (previewers don't run JavaScript; per-title previews would need a page per title). og:image uses the Vercel address on both hosts.
+- Phone masthead (2026-11-22): the badge scrolls away with the masthead (the masthead is not sticky below 900px); on Render the
+  Sign in link and badge add a row on phones. At 320px the menu takes three rows.
 - Git: `main` on GitHub (ParthG2809/MCUArchive). The first commit was rewritten (owner request) to remove a Claude co-author line; it is now 4a1f9db.
 - Deployed on Render 2026-11-12 (free web service + free Postgres). Free-plan limits apply: sleeps after ~15 min idle; free database expires after a limited period.
 

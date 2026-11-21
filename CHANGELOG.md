@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-11-22: Tab icon, link previews, phone masthead
+- New `img/`: `icon.svg` (tab icon, red 616 box), `apple-touch-icon.png` (180x180) and `og-image.png` (1200x630 link-preview card,
+  rendered once from an HTML mock-up with headless Chrome; no new dependency). All 10 pages link the icons; 9 pages (not 404) carry
+  og:title/description/image and `twitter:card`, from each page's existing title and description. og:image points at the Vercel address.
+- Django: `img/*.png|svg` added to the public allow-list (`site_files.py`) and to `build_site`; site-file tests extended (16 tests pass).
+- Masthead: the menu wraps onto extra rows instead of scrolling sideways wherever it has its own row (up to 1500px), so every item is visible
+  (2 rows at 375 and 768px, 3 at 320px). On phones (620px and below) the watch badge sits in the masthead (one marker + count) instead of
+  floating over the page; tablet and desktop keep the floating badge.
+- Checked on the static server at 320, 375, 768 and 1440px: no sideways scroll; only console errors are the expected `/api/me` 404s.
+  With "Sign in" visible (Render), Sign in + badge take their own row under the logo on phones.
+
 ## 2026-11-22: Static copy deployed on Vercel
 - Live at https://the-mcu-archive.vercel.app (no accounts); `mcu-archive-six.vercel.app` redirects to it. Render deploy unchanged.
 - Checked with HTTP requests: pages load; `/backend/manage.py`, `/render.yaml`, `/api/me` return 404.

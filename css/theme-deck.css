@@ -148,14 +148,19 @@
   }
   & .foot { border-top: 1px solid var(--line); font: 400 14px/1.55 var(--f-body); color: var(--text-3); }
 
-  @media (max-width: 1500px) { & .mast-row { gap: 0 18px; } }
+  @media (max-width: 1500px) { & .mast-row { gap: 0 18px; } & .mast-nav { gap: 0 24px; } }
   @media (max-width: 900px) {
     & .masthead { position: static; } /* the wrapped masthead is too tall to keep pinned on small screens */
   }
   @media (max-width: 620px) {
     & .mast-row { gap: 0 10px; }
-    & .logo { font-size: 18px; }
+    & .logo { font-size: 16px; }
     & .mast-tools { order: 0; gap: 10px; }
+    & .mast-nav { gap: 0 16px; }
+    /* compact badge in the masthead: one stone marker and the count (the six stones are on My Gauntlet) */
+    & .mast-tools .gauntlet-badge { gap: 7px; padding: 8px 10px; font-size: 13px; }
+    & .mast-tools .gauntlet-badge .gems { display: none; }
+    & .mast-tools .gauntlet-badge::before { content: ""; width: 6px; height: 6px; transform: rotate(45deg); background: var(--signal); }
   }
 
   /* shared page-head pattern: thin line + heavy line in tall condensed caps */

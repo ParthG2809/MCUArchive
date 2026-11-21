@@ -134,10 +134,12 @@ class EnsureAdminTests(TestCase):
 
 class SiteFileTests(TestCase):
     def test_allowlist(self):
-        for ok in ["index.html", "title.html", "css/archive.css", "js/core.js", "js/data/mcu.js", "js/pages/timeline.js"]:
+        for ok in ["index.html", "title.html", "css/archive.css", "js/core.js", "js/data/mcu.js", "js/pages/timeline.js",
+                   "img/icon.svg", "img/og-image.png", "img/apple-touch-icon.png"]:
             self.assertTrue(is_site_file(ok), ok)
         for blocked in ["CLAUDE.md", "backend/db.sqlite3", "backend/manage.py", "mockups/v5-programme/index.html",
-                        "scripts/check_data.py", "css/../backend/db.sqlite3", ".vercelignore", "js/data/../../CLAUDE.md"]:
+                        "scripts/check_data.py", "css/../backend/db.sqlite3", ".vercelignore", "js/data/../../CLAUDE.md",
+                        "img/../backend/db.sqlite3", "img/page.html", "img/script.js", "img/sub/icon.png", "mockups/screens-redesign/a.png"]:
             self.assertFalse(is_site_file(blocked), blocked)
 
     @override_settings(DEBUG=True)
@@ -145,5 +147,7 @@ class SiteFileTests(TestCase):
         self.assertEqual(self.client.get("/").status_code, 200)
         self.assertEqual(self.client.get("/mcu.html").status_code, 200)
         self.assertEqual(self.client.get("/js/core.js").status_code, 200)
+        self.assertEqual(self.client.get("/img/icon.svg").status_code, 200)
+        self.assertEqual(self.client.get("/img/og-image.png").status_code, 200)
         for blocked in ["/CLAUDE.md", "/backend/db.sqlite3", "/backend/marvel_archive/settings.py", "/mockups/v1-nexus.html"]:
             self.assertEqual(self.client.get(blocked).status_code, 404, blocked)

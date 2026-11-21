@@ -10,14 +10,14 @@ from accounts.site_files import is_site_file
 
 
 class Command(BaseCommand):
-    help = "Copy the public HTML/CSS/JS site into backend/public/."
+    help = "Copy the public HTML/CSS/JS/image site into backend/public/."
 
     def handle(self, *args, **options):
         source, target = settings.SITE_DIR, settings.PUBLIC_ROOT
         if target.exists():
             shutil.rmtree(target)
         copied = 0
-        candidates = [*source.glob("*.html"), *(source / "css").rglob("*"), *(source / "js").rglob("*")]
+        candidates = [*source.glob("*.html"), *(source / "css").rglob("*"), *(source / "js").rglob("*"), *(source / "img").glob("*")]
         for path in sorted(candidates):
             relative = path.relative_to(source).as_posix()
             if path.is_file() and is_site_file(relative):

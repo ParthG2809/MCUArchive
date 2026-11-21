@@ -34,6 +34,7 @@ js/theme.js         Loaded in every <head>: sets <html data-theme="deck"> before
 js/core.js          Shared: watch store, poster loader, masthead/footer, helpers
 js/data/<reality>.js  Title data, one file per reality, registered on window.ARCHIVE
 js/data/cast-<reality>.js  Cast & characters per title (window.ARCHIVE_CAST), loaded only by title.html
+img/                Tab icon (icon.svg), apple-touch-icon.png and the link-preview card og-image.png (1200x630)
 js/pages/<page>.js  Page behaviour (timeline-deck.js builds the Deck theme's rail + stage timeline)
 mockups/            Design mockups (V1–V6, V6 is now the Deck theme) and screenshots. Reference only, not deployed
 backend/            Django project: marvel_archive/ (settings, urls), accounts/ (WatchedTitle model, JSON API, tests,
@@ -56,6 +57,8 @@ render.yaml         Render Blueprint (web service + Postgres); admin created by 
   (class `glass`). Always inside `@supports`, with a solid fallback. Not on plain cards.
 - Avoid generic "AI" patterns: no mono eyebrow labels everywhere, no rounded card grids, no decorative glows.
 - Must work at phone width, keep keyboard focus visible, and respect `prefers-reduced-motion`.
+- Every page `<head>` has the icon links and share tags (og:*, twitter:card); og:image is the absolute Vercel URL
+  (https://the-mcu-archive.vercel.app/img/og-image.png, owner decision 2026-11-22). New pages copy them.
 - Every page links the two fonts, `css/archive.css`, its page CSS, `css/theme-deck.css` and `js/theme.js` in `<head>`.
 - Timelines use the rail + stage layout from `js/pages/timeline-deck.js`. The old list view (`timeline.js`) is hidden and unstyled but still
   renders the data the deck reads; redraw on `watchedchange`.
@@ -83,7 +86,7 @@ render.yaml         Render Blueprint (web service + Postgres); admin created by 
 - Watch list: signed out = localStorage (`marvel-archive:watched`), signed in = the account via `/api/watched`
   (core.js `saveWatched()` syncs the difference). Pages must redraw on the `watchedchange` event; `accountchange` fires on sign in/out.
 - API is same-origin JSON with Django sessions + CSRF (`X-CSRFToken` header). Never disable CSRF or weaken password validation.
-- Only allow-listed files are public (`backend/accounts/site_files.py`: top-level *.html, css/**, js/**). New public file types must be added there.
+- Only allow-listed files are public (`backend/accounts/site_files.py`: top-level *.html, css/**, js/**, img/*.png|svg). New public file types must be added there.
 - Settings come from environment variables (see `backend/marvel_archive/settings.py`); never commit secrets or `.env` files.
 - No password reset yet (needs an email provider; owner decision).
 

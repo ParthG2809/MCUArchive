@@ -50,6 +50,8 @@ a { color: inherit; }
 /* ---------- gauntlet badge (watch progress, every page) ---------- */
 .gauntlet-badge { position: fixed; right: 18px; bottom: 18px; z-index: 60; display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .gauntlet-badge .gems { display: flex; }
+/* on phones core.js moves the badge into the masthead */
+.mast-tools .gauntlet-badge { position: static; }
 
 /* ---------- status notice (e.g. an account save failed) ---------- */
 .site-notice { position: fixed; left: 18px; bottom: 18px; z-index: 70; max-width: min(420px, calc(100% - 36px)); padding: 10px 14px; }
@@ -62,7 +64,8 @@ a { color: inherit; }
 
 @media (max-width: 1500px) {
   .mast-row { flex-wrap: wrap; }
-  .mast-nav { margin-left: 0; width: 100%; overflow-x: auto; order: 3; }
+  /* the menu gets its own row; it wraps instead of scrolling sideways, so every item stays visible */
+  .mast-nav { margin-left: 0; width: 100%; flex-wrap: wrap; order: 3; }
   .mast-tools { margin-left: auto; }
 }
 @media (max-width: 620px) {
