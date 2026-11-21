@@ -4,3 +4,7 @@ scripts
 CLAUDE.md
 PROJECT_STATUS.md
 CHANGELOG.md
+backend
+render.yaml
+.python-version
+.gitignore

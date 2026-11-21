@@ -126,6 +126,9 @@ Total: 161 titles (158 released as of 2026-11-12).
   a limited period. A paid plan avoids both. Check Render's current terms before deploying.
 - The theme preference is still per browser, not saved to the account.
 - When the site is served without Django (e.g. `python -m http.server`), the account link stays hidden and everything works per browser as before.
+- Static-only deploy (e.g. Vercel, 2026-11-21): works without Django, no code changes; `.vercelignore` keeps `backend/`, `render.yaml` and
+  tooling files out of the upload. Accounts are off there (Sign in link hidden; `account.html` says accounts aren't available right now).
+  Not deployed to Vercel yet; Render remains the live host. Owner decision: no site-code changes for Vercel.
 - Git: `main` on GitHub (ParthG2809/MCUArchive). The first commit was rewritten (owner request) to remove a Claude co-author line; it is now 4a1f9db.
 - Deployed on Render 2026-11-12 (free web service + free Postgres). Free-plan limits apply: sleeps after ~15 min idle; free database expires after a limited period.
 

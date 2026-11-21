@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-21: Static-only (Vercel) readiness
+- `.vercelignore` now also excludes `backend/`, `render.yaml`, `.python-version` and `.gitignore`, so a Vercel deploy no longer
+  publishes the Django source.
+- No site code changed (owner decision): on a static host the existing account page already reports accounts as unavailable.
+
 ## 2026-11-20: Step 10 (redesign, part 2: full cast, account/404 polish, dead CSS removed)
 - Cast for the last 19 titles (now 161 of 161, 845 characters), from Wikipedia voice/cast credits, bios in our own words:
   Toei Spider-Man, Spider-Man (1981), Pryde of the X-Men, X-Men: Evolution, Wolverine and the X-Men, X-Men '97 season 2,
