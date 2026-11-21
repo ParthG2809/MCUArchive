@@ -12,7 +12,8 @@ Marvel-only. No DC or other franchises.
 - Fonts from Google Fonts, exactly two (owner decision 2026-11-19): Montserrat (headings, 600/700/800) and Inter (everything else,
   400–700). Linked in every page `<head>`. Do not add other fonts.
 - Hosting (owner decision 2026-11-12): the whole site on Render. Django serves the pages and `/api/` from one origin
-  (`render.yaml`). Live at https://marvel-archive.onrender.com; every push to `main` redeploys. `vercel.json` / `.vercelignore` are left over from the earlier Vercel plan and unused.
+  (`render.yaml`). Live at https://marvel-archive.onrender.com; every push to `main` redeploys. A static copy without accounts is also on Vercel (owner, 2026-11-22): https://the-mcu-archive.vercel.app, using `vercel.json` and
+  `.vercelignore` (keeps `backend/` out). No site-code changes for Vercel (owner decision).
 
 ## Structure
 ```

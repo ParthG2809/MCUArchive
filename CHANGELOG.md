@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-22: Static copy deployed on Vercel
+- Live at https://the-mcu-archive.vercel.app (no accounts); `mcu-archive-six.vercel.app` redirects to it. Render deploy unchanged.
+- Checked with HTTP requests: pages load; `/backend/manage.py`, `/render.yaml`, `/api/me` return 404.
+
 ## 2026-11-21: Static-only (Vercel) readiness
 - `.vercelignore` now also excludes `backend/`, `render.yaml`, `.python-version` and `.gitignore`, so a Vercel deploy no longer
   publishes the Django source.
